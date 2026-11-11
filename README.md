@@ -81,7 +81,7 @@ Untuk masuk ke konsol KMS di `http://localhost:3000/admin`:
 * **URL Login:** `http://localhost:3000/admin/login`
 * **Email:** `admin@zetaraz.com`
 * **Password:** `ZetarazAdmin2026!`
-* **Peran:** `ADMIN` (Dr. Aris Sudarsono - Principal Knowledge Architect)
+* **Peran:** `ADMIN` (Rizky Aditya Pratama Wijaya)
 
 ---
 

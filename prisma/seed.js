@@ -19,10 +19,10 @@ async function main() {
     data: {
       email: 'admin@zetaraz.com',
       passwordHash,
-      name: 'Dr. Aris Sudarsono',
+      name: 'Rizky Aditya Pratama Wijaya',
       role: 'ADMIN',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      bio: 'Principal Knowledge Architect di ZETARAZ. Berfokus pada sistem manajemen pengetahuan enterprise, arsitektur informasi, dan rekayasa ontologi.',
+      bio: 'Penulis dan periset di ZETARAZ. Berfokus pada sistem manajemen pengetahuan enterprise, arsitektur informasi, dan sains data.',
     },
   });
 
