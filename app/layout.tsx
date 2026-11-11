@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { getSiteUrl } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: 'ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman',
     template: '%s | ZETARAZ Knowledge',
@@ -73,7 +74,7 @@ export default function RootLayout({
     '@type': 'WebSite',
     name: 'ZETARAZ Knowledge',
     alternateName: 'ZETARAZ',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    url: getSiteUrl(),
     description: 'Platform berbagi pengetahuan dan pengalaman independen lintas disiplin ilmu.',
     headline: 'Berbagi Pengetahuan, Berbagi Pengalaman',
     inLanguage: 'id-ID',
@@ -81,7 +82,7 @@ export default function RootLayout({
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/search?q={search_term_string}`,
+        urlTemplate: `${getSiteUrl()}/search?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },

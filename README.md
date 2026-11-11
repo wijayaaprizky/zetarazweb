@@ -177,3 +177,48 @@ Dijalankan melalui:
 node scripts/test-all-journeys.js
 ```
 Total 19 Rangkaian Uji Lulus 100%.
+
+### C. Firebase Deployment & Domain Strategy Suite:
+Dijalankan melalui:
+```bash
+node scripts/test-domain-strategy.js
+```
+Total 7 Rangkaian Uji Domain & Konfigurasi Lulus 100%.
+
+---
+
+## 9. Strategi Deployment Firebase App Hosting & Migrasi Custom Domain
+
+Arsitektur aplikasi ZETARAZ Knowledge dirancang secara terisolasi dari domain fisik (*domain-agnostic*), sehingga peluncuran awal dan migrasi domain di masa depan berjalan tanpa hambatan:
+
+### A. Tahap 1: Peluncuran Awal (Default Firebase Domain)
+- **Platform:** [Firebase App Hosting](https://firebase.google.com/docs/app-hosting) (Cloud Run Serverless Compute untuk Next.js 14 SSR/ISR).
+- **Domain Awal:** `<firebase-site-id>.web.app` (dan `<firebase-site-id>.firebaseapp.com`).
+- **Tanpa Biaya Domain di Awal:** Deployment dan pengujian fungsi penuh dapat langsung dilakukan tanpa membeli domain kustom terlebih dahulu.
+- **Konfigurasi Berkas:**
+  - `firebase.json`: Konfigurasi backend App Hosting.
+  - `apphosting.yaml`: Konfigurasi resource CPU, memori, dan environment variable `NEXT_PUBLIC_SITE_URL="https://<firebase-site-id>.web.app"`.
+
+### B. Tahap 2: Migrasi Custom Domain Masa Depan (misal `zetaraz.com`)
+Ketika siap beralih ke domain kustom, transisi dilakukan **hanya melalui konfigurasi DNS dan Firebase Console**, tanpa perlu kompilasi ulang kode atau migrasi basis data:
+
+1. **Konfigurasi Domain di Firebase:**
+   - Buka Firebase Console > Hosting / App Hosting > Tambahkan Custom Domain (`zetaraz.com`).
+   - Tambahkan entri DNS (A Record / CNAME) pada registrar domain sesuai petunjuk Firebase.
+   - Sertifikat SSL/TLS HTTPS diterbitkan secara otomatis dan gratis oleh Google Cloud/Firebase.
+
+2. **Perbarui Variabel Lingkungan di App Hosting:**
+   - Ubah `NEXT_PUBLIC_SITE_URL` menjadi `https://zetaraz.com`.
+   - Aktifkan pengalihan permanen dengan mengisi `CUSTOM_DOMAIN_REDIRECT_TARGET="zetaraz.com"`.
+
+3. **Pengalihan Otomatis 301 (Permanent Redirect):**
+   - File [`middleware.ts`](file:///d:/zetarazweb/middleware.ts) mendeteksi jika ada trafik yang masih mengakses URL lama `*.web.app` atau `*.firebaseapp.com`, dan secara otomatis mengarahkannya (HTTP 301) ke `https://zetaraz.com` dengan tetap mempertahankan path dan query parameter asli. Hal ini menjaga seluruh ekuitas SEO dan tautan yang sudah tersebar.
+
+4. **Pembaruan Google OAuth Authorized Domains:**
+   - Buka Firebase Console > Authentication > Settings > Authorized domains.
+   - Tambahkan `zetaraz.com` ke dalam daftar domain yang diizinkan agar autentikasi Google Sign-In tetap berfungsi lancar.
+
+5. **Independensi Basis Data & Slug:**
+   - Seluruh slug artikel di database disimpan sebagai string murni (misal `membangun-kebiasaan-berbagi-pengetahuan`).
+   - Tidak ada satu pun baris database yang perlu diubah saat berganti domain.
+   - Metadata kanonikal, Open Graph, Sitemap XML (`/sitemap.xml`), dan `robots.txt` secara otomatis menyesuaikan diri dengan domain aktif melalui modul [`lib/siteConfig.ts`](file:///d:/zetarazweb/lib/siteConfig.ts).

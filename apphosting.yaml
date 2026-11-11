@@ -1,0 +1,43 @@
+# apphosting.yaml
+# Firebase App Hosting Configuration for ZETARAZ Knowledge
+
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+
+env:
+  # Initial Firebase Deployment Domain (Update to https://zetaraz.com on custom domain migration)
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: https://zetaraz-knowledge.web.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Target for automatic 301 redirects from *.web.app after custom domain migration (leave empty initially)
+  - variable: CUSTOM_DOMAIN_REDIRECT_TARGET
+    value: ""
+    availability:
+      - RUNTIME
+
+  - variable: DATABASE_URL
+    secret: DATABASE_URL
+    availability:
+      - RUNTIME
+
+  - variable: JWT_SECRET
+    secret: JWT_SECRET
+    availability:
+      - RUNTIME
+
+  - variable: ADMIN_EMAIL
+    value: admin@zetaraz.com
+    availability:
+      - RUNTIME
+
+  - variable: ADMIN_PASSWORD
+    secret: ADMIN_PASSWORD
+    availability:
+      - RUNTIME

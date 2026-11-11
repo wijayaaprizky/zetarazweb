@@ -5,6 +5,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import { formatDateIndonesian } from '@/lib/utils';
+import { getSiteUrl, getCanonicalUrl } from '@/lib/siteConfig';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import TableOfContents from '@/components/TableOfContents';
 import ArticleContent from '@/components/ArticleContent';
@@ -47,8 +48,7 @@ export async function generateMetadata({
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const url = `${siteUrl}/articles/${article.slug}`;
+  const url = getCanonicalUrl(`/articles/${article.slug}`);
 
   return {
     title: article.seoTitle || article.title,
@@ -137,8 +137,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     select: { title: true, slug: true },
   });
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const articleUrl = `${siteUrl}/articles/${article.slug}`;
+  const siteUrl = getSiteUrl();
+  const articleUrl = getCanonicalUrl(`/articles/${article.slug}`);
 
   // JSON-LD structured data: Article + Breadcrumbs
   const jsonLdArticle = {
@@ -155,7 +155,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'ZETARAZ',
+      name: 'ZETARAZ Knowledge',
       logo: {
         '@type': 'ImageObject',
         url: `${siteUrl}/logo.png`,

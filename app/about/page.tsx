@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCanonicalUrl } from '@/lib/siteConfig';
 import {
   BookOpen,
   Sparkles,
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   description:
     'Mengenal ZETARAZ Knowledge: platform independen yang menyediakan informasi, wawasan, pengalaman praktis, dan konten edukatif lintas disiplin ilmu.',
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/about`,
+    canonical: getCanonicalUrl('/about'),
   },
 };
 

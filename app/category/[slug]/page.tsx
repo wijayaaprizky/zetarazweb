@@ -5,6 +5,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
 import { formatDateIndonesian } from '@/lib/utils';
+import { getCanonicalUrl } from '@/lib/siteConfig';
 import {
   BookOpen,
   Calendar,
@@ -30,8 +31,7 @@ export async function generateMetadata({
     return { title: 'Kategori Tidak Ditemukan | ZETARAZ Knowledge' };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const url = `${siteUrl}/category/${category.slug}`;
+  const url = getCanonicalUrl(`/category/${category.slug}`);
 
   return {
     title: `${category.name} — ZETARAZ Knowledge`,
