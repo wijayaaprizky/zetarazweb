@@ -12,8 +12,9 @@ export async function GET(request: Request) {
     const sort = searchParams.get('sort') || 'relevance';
     const limit = parseInt(searchParams.get('limit') || '20', 10);
 
+    // Only search published articles (including those with pending updates)
     const where: any = {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
     };
 
     if (categorySlug && categorySlug !== 'all') {
@@ -28,6 +29,7 @@ export async function GET(request: Request) {
       where.OR = [
         { title: { contains: query } },
         { excerpt: { contains: query } },
+        { publishedContent: { contains: query } },
         { content: { contains: query } },
         { category: { name: { contains: query } } },
         { tags: { some: { tag: { name: { contains: query } } } } },
@@ -41,7 +43,7 @@ export async function GET(request: Request) {
       orderBy = { publishedAt: 'asc' };
     }
 
-    const articles = await prisma.article.findMany({
+    const rawArticles = await prisma.article.findMany({
       where,
       orderBy,
       take: limit,
@@ -52,28 +54,38 @@ export async function GET(request: Request) {
       },
     });
 
+    // Never expose draftContent through search
+    const articles = rawArticles.map((art) => ({
+      ...art,
+      content: art.publishedContent || art.content,
+      draftContent: undefined,
+    }));
+
     // Provide helpful suggestions if no articles found
     let suggestions: string[] = [];
     if (articles.length === 0 && query) {
       suggestions = [
-        'Knowledge Management',
-        'Business Process Management',
-        'Enterprise Architecture',
-        'Artificial Intelligence',
+        'Manajemen Pengetahuan',
+        'Kecerdasan Buatan',
+        'Sains Data',
+        'Arsitektur Enterprise',
+        'Metodologi Penelitian',
         'Keamanan Siber',
-        'Metodologi Riset',
       ];
     }
 
     return NextResponse.json({
       success: true,
       query,
-      total: articles.length,
+      count: articles.length,
       articles,
       suggestions,
     });
   } catch (error: any) {
     console.error('Search API error:', error);
-    return NextResponse.json({ error: 'Gagal melakukan pencarian' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Gagal melakukan pencarian pengetahuan' },
+      { status: 500 }
+    );
   }
 }

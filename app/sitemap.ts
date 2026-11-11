@@ -38,9 +38,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // Dynamic Published Articles only
+  // Dynamic Published Articles only (controlled publishing)
   const articles = await prisma.article.findMany({
-    where: { status: 'PUBLISHED' },
+    where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
     select: { slug: true, updatedAt: true },
   });
 

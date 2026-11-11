@@ -25,10 +25,13 @@ export default async function AdminDashboardPage() {
   // Aggregate stats
   const totalArticles = await prisma.article.count();
   const publishedArticles = await prisma.article.count({
-    where: { status: 'PUBLISHED' },
+    where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
+  });
+  const updateAvailableArticles = await prisma.article.count({
+    where: { publicationStatus: 'UPDATE_AVAILABLE' },
   });
   const draftArticles = await prisma.article.count({
-    where: { status: 'DRAFT' },
+    where: { publicationStatus: 'DRAFT' },
   });
   const totalCategories = await prisma.category.count();
   const totalSubscribers = await prisma.newsletterSubscriber.count();
@@ -82,7 +85,7 @@ export default async function AdminDashboardPage() {
               {totalArticles}
             </div>
             <div className="text-[11px] text-slate-500 mt-1">
-              {publishedArticles} Terbit • {draftArticles} Draf
+              {publishedArticles} Terbit • {updateAvailableArticles > 0 && <span className="text-amber-600 font-bold">{updateAvailableArticles} Ada Pembaruan • </span>}{draftArticles} Draf
             </div>
           </div>
           <div className="w-12 h-12 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center shrink-0">
@@ -198,12 +201,18 @@ export default async function AdminDashboardPage() {
                   <td className="px-5 py-3.5">
                     <span
                       className={`px-2 py-0.5 rounded-full font-bold text-[10px] tracking-wider uppercase ${
-                        art.status === 'PUBLISHED'
+                        art.publicationStatus === 'UPDATE_AVAILABLE'
+                          ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                          : art.publicationStatus === 'PUBLISHED' || art.status === 'PUBLISHED'
                           ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : 'bg-amber-50 text-amber-700 border border-amber-200'
+                          : 'bg-slate-100 text-slate-700 border border-slate-200'
                       }`}
                     >
-                      {art.status}
+                      {art.publicationStatus === 'UPDATE_AVAILABLE'
+                        ? `Update (v${art.draftVersion})`
+                        : art.publicationStatus === 'PUBLISHED' || art.status === 'PUBLISHED'
+                        ? `Publik (v${art.publishedVersion || 1})`
+                        : `Draf (v${art.draftVersion || 1})`}
                     </span>
                   </td>
                   <td className="px-5 py-3.5 font-mono">{art.viewCount}</td>

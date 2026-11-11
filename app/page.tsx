@@ -14,7 +14,10 @@ export const revalidate = 60; // ISR cache revalidation
 export default async function HomePage() {
   // Fetch featured articles
   const featuredArticles = await prisma.article.findMany({
-    where: { status: 'PUBLISHED', isFeatured: true },
+    where: {
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
+      isFeatured: true,
+    },
     orderBy: { publishedAt: 'desc' },
     take: 4,
     include: {
@@ -29,7 +32,7 @@ export default async function HomePage() {
   // Latest articles (excluding the main hero if present)
   const latestArticles = await prisma.article.findMany({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       ...(mainFeatured ? { id: { not: mainFeatured.id } } : {}),
     },
     orderBy: { publishedAt: 'desc' },
@@ -46,7 +49,9 @@ export default async function HomePage() {
     include: {
       _count: {
         select: {
-          articles: { where: { status: 'PUBLISHED' } },
+          articles: {
+            where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
+          },
         },
       },
     },
@@ -55,7 +60,7 @@ export default async function HomePage() {
   // Science & Research category articles
   const scienceResearchArticles = await prisma.article.findMany({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       category: { slug: 'science-research' },
     },
     orderBy: { publishedAt: 'desc' },
@@ -68,7 +73,7 @@ export default async function HomePage() {
 
   // Trending / Popular articles (strictly ordered by viewCount)
   const popularArticles = await prisma.article.findMany({
-    where: { status: 'PUBLISHED' },
+    where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
     orderBy: { viewCount: 'desc' },
     take: 5,
     include: {
@@ -80,7 +85,7 @@ export default async function HomePage() {
   // Learning / Tutorials & Practical Guides
   const learningArticles = await prisma.article.findMany({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       OR: [
         { category: { slug: 'learning' } },
         { contentType: 'TUTORIAL' },

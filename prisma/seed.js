@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log('--- Cleaning previous data ---');
+  await prisma.syncHistory.deleteMany();
+  await prisma.publicationHistory.deleteMany();
+  await prisma.articleVersion.deleteMany();
   await prisma.articleTag.deleteMany();
   await prisma.article.deleteMany();
   await prisma.tag.deleteMany();
@@ -509,7 +512,52 @@ Di ZETARAZ Knowledge, kami mengajak Anda untuk terus membuka diri, membaca, dan 
   for (const art of articles) {
     const { tags, ...artData } = art;
     const createdArticle = await prisma.article.create({
-      data: artData,
+      data: {
+        ...artData,
+        publishedContent: artData.content,
+        draftContent: artData.content,
+        publishedVersion: 1,
+        draftVersion: 1,
+        publicationStatus: 'PUBLISHED',
+        status: 'PUBLISHED',
+        syncStatus: 'SYNCED',
+        googleDocId: `https://docs.google.com/document/d/1${artData.slug.substring(0, 20)}/edit`,
+        googleDocRevision: `rev_${artData.slug}_v1`,
+        lastSyncedAt: new Date(),
+      },
+    });
+
+    await prisma.publicationHistory.create({
+      data: {
+        articleId: createdArticle.id,
+        action: 'PUBLISH',
+        version: 1,
+        publishedBy: 'Rizky Aditya Pratama Wijaya',
+        notes: 'Publikasi perdana terverifikasi ZETARAZ Knowledge',
+        createdAt: artData.publishedAt || new Date(),
+      },
+    });
+
+    await prisma.syncHistory.create({
+      data: {
+        articleId: createdArticle.id,
+        googleDocId: `https://docs.google.com/document/d/1${artData.slug.substring(0, 20)}/edit`,
+        revisionId: `rev_${artData.slug}_v1`,
+        status: 'SUCCESS',
+        draftVersion: 1,
+        message: 'Sinkronisasi awal dokumen Google Docs berhasil dikonversi ke format draf',
+      },
+    });
+
+    await prisma.articleVersion.create({
+      data: {
+        articleId: createdArticle.id,
+        version: 1,
+        title: artData.title,
+        content: artData.content,
+        excerpt: artData.excerpt,
+        createdAt: artData.publishedAt || new Date(),
+      },
     });
 
     if (tags && tags.length > 0) {

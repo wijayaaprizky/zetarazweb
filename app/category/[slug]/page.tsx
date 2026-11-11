@@ -65,7 +65,7 @@ export default async function CategoryPage({
 
   const whereClause: any = {
     categoryId: category.id,
-    status: 'PUBLISHED',
+    publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
   };
 
   if (selectedType && selectedType !== 'ALL') {

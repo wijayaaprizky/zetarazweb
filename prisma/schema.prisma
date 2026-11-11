@@ -43,30 +43,51 @@ model Tag {
 }
 
 model Article {
-  id              String       @id @default(cuid())
-  title           String
-  slug            String       @unique
-  subtitle        String?
-  excerpt         String
-  content         String
-  featuredImage   String
-  imageCaption    String?
-  contentType     String       @default("EDITORIAL") // EDITORIAL, RESEARCH, TUTORIAL, ANALYSIS
-  status          String       @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
-  isFeatured      Boolean      @default(false)
-  viewCount       Int          @default(0)
-  readTimeMinutes Int          @default(5)
-  seoTitle        String?
-  seoDescription  String?
-  canonicalUrl    String?
-  publishedAt     DateTime?
-  categoryId      String
-  category        Category     @relation(fields: [categoryId], references: [id])
-  authorId        String
-  author          User         @relation(fields: [authorId], references: [id])
-  tags            ArticleTag[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  id                 String               @id @default(cuid())
+  title              String
+  slug               String               @unique
+  subtitle           String?
+  excerpt            String
+  
+  // Controlled Publishing & Versioning
+  content            String               // Backward compatibility: mirrors publishedContent (or draftContent if initial draft)
+  publishedContent   String?              // The currently visible public version
+  draftContent       String               @default("") // The latest synchronized Google Docs version
+  publishedVersion   Int                  @default(0) // Current published version number (0 = unreleased)
+  draftVersion       Int                  @default(1) // Latest synchronized version number
+  syncStatus         String               @default("IDLE") // IDLE, SYNCING, SYNCED, SYNC_ERROR
+  publicationStatus  String               @default("DRAFT") // DRAFT, PUBLISHED, UPDATE_AVAILABLE, ARCHIVED
+  status             String               @default("DRAFT") // Backward compatibility mirror: DRAFT, PUBLISHED, ARCHIVED
+  
+  // Google Docs Source of Truth
+  googleDocId        String?              // Google Docs document ID or URL
+  googleDocRevision  String?              // Revision ID or content hash for idempotency
+  lastSyncedAt       DateTime?
+  syncError          String?
+
+  featuredImage      String
+  imageCaption       String?
+  contentType        String               @default("EDITORIAL") // EDITORIAL, RESEARCH, TUTORIAL, ANALYSIS
+  isFeatured         Boolean              @default(false)
+  viewCount          Int                  @default(0)
+  readTimeMinutes    Int                  @default(5)
+  seoTitle           String?
+  seoDescription     String?
+  canonicalUrl       String?
+  publishedAt        DateTime?
+  categoryId         String
+  category           Category             @relation(fields: [categoryId], references: [id])
+  authorId           String
+  author             User                 @relation(fields: [authorId], references: [id])
+  tags               ArticleTag[]
+  
+  // Audit Trails
+  syncLogs           SyncHistory[]
+  publicationLogs    PublicationHistory[]
+  versions           ArticleVersion[]
+
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
 }
 
 model ArticleTag {
@@ -76,6 +97,41 @@ model ArticleTag {
   tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([articleId, tagId])
+}
+
+model SyncHistory {
+  id           String   @id @default(cuid())
+  articleId    String
+  article      Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  googleDocId  String?
+  revisionId   String?
+  status       String   // SUCCESS, FAILED
+  message      String?
+  draftVersion Int
+  createdAt    DateTime @default(now())
+}
+
+model PublicationHistory {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  action      String   // PUBLISH, PUBLISH_UPDATE, DISCARD_UPDATE, ARCHIVE
+  version     Int
+  publishedBy String?
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model ArticleVersion {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  version     Int
+  title       String
+  content     String
+  excerpt     String?
+  createdAt   DateTime @default(now())
+  createdById String?
 }
 
 model NewsletterSubscriber {

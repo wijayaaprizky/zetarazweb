@@ -24,10 +24,18 @@ export async function GET(request: Request) {
     const where: any = {};
 
     if (isAdmin && statusFilter) {
-      where.status = statusFilter;
+      if (statusFilter === 'UPDATE_AVAILABLE') {
+        where.publicationStatus = 'UPDATE_AVAILABLE';
+      } else if (statusFilter === 'DRAFT') {
+        where.publicationStatus = 'DRAFT';
+      } else if (statusFilter === 'PUBLISHED') {
+        where.publicationStatus = { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] };
+      } else {
+        where.status = statusFilter;
+      }
     } else {
-      // Public visitors MUST only see published articles
-      where.status = 'PUBLISHED';
+      // Public visitors MUST only see published articles (including those with pending updates)
+      where.publicationStatus = { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] };
     }
 
     if (categorySlug) {
@@ -58,7 +66,7 @@ export async function GET(request: Request) {
       orderBy = { title: 'asc' };
     }
 
-    const articles = await prisma.article.findMany({
+    const rawArticles = await prisma.article.findMany({
       where,
       orderBy,
       take: limit,
@@ -77,6 +85,18 @@ export async function GET(request: Request) {
       },
     });
 
+    // Public API protection: Never expose draft content through public APIs
+    const articles = rawArticles.map((art) => {
+      if (!isAdmin) {
+        return {
+          ...art,
+          content: art.publishedContent || art.content,
+          draftContent: undefined,
+        };
+      }
+      return art;
+    });
+
     return NextResponse.json({ success: true, articles });
   } catch (error: any) {
     console.error('Articles GET error:', error);
@@ -90,7 +110,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const currentUser = await getCurrentUser();
-    if (!currentUser) {
+    if (!currentUser || (currentUser.role !== 'ADMIN' && currentUser.role !== 'EDITOR')) {
       return NextResponse.json({ error: 'Tidak terotorisasi' }, { status: 401 });
     }
 
@@ -106,6 +126,7 @@ export async function POST(request: Request) {
       categoryId,
       contentType = 'EDITORIAL',
       status = 'DRAFT',
+      googleDocId,
       isFeatured = false,
       seoTitle,
       seoDescription,
@@ -128,6 +149,10 @@ export async function POST(request: Request) {
     }
 
     const readTimeMinutes = calculateReadTime(content);
+    const isPublishingNow = status === 'PUBLISHED';
+    const publicationStatus = isPublishingNow ? 'PUBLISHED' : 'DRAFT';
+    const publishedVersion = isPublishingNow ? 1 : 0;
+    const publishedContent = isPublishingNow ? content : null;
 
     const article = await prisma.article.create({
       data: {
@@ -136,18 +161,27 @@ export async function POST(request: Request) {
         subtitle,
         excerpt,
         content,
-        featuredImage: featuredImage || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80',
+        publishedContent,
+        draftContent: content,
+        publishedVersion,
+        draftVersion: 1,
+        publicationStatus,
+        status: publicationStatus,
+        googleDocId: googleDocId || null,
+        syncStatus: googleDocId ? 'SYNCED' : 'IDLE',
+        featuredImage:
+          featuredImage ||
+          'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80',
         imageCaption,
         categoryId,
         authorId: currentUser.id,
         contentType,
-        status,
         isFeatured: Boolean(isFeatured),
         readTimeMinutes,
         seoTitle: seoTitle || title,
         seoDescription: seoDescription || excerpt,
         canonicalUrl,
-        publishedAt: status === 'PUBLISHED' ? new Date() : null,
+        publishedAt: isPublishingNow ? new Date() : null,
         tags: {
           create: tagIds.map((tagId: string) => ({
             tag: { connect: { id: tagId } },
@@ -159,6 +193,29 @@ export async function POST(request: Request) {
         tags: { include: { tag: true } },
       },
     });
+
+    if (isPublishingNow) {
+      await prisma.publicationHistory.create({
+        data: {
+          articleId: article.id,
+          action: 'PUBLISH',
+          version: 1,
+          publishedBy: currentUser.name,
+          notes: 'Publikasi perdana saat pembuatan artikel.',
+        },
+      });
+
+      await prisma.articleVersion.create({
+        data: {
+          articleId: article.id,
+          version: 1,
+          title,
+          content,
+          excerpt,
+          createdById: currentUser.name,
+        },
+      });
+    }
 
     return NextResponse.json({ success: true, article }, { status: 201 });
   } catch (error: any) {

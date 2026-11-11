@@ -35,7 +35,13 @@ export async function generateMetadata({
     include: { category: true, author: true },
   });
 
-  if (!article || article.status !== 'PUBLISHED') {
+  const isPubliclyAvailable =
+    article &&
+    (article.publicationStatus === 'PUBLISHED' ||
+      article.publicationStatus === 'UPDATE_AVAILABLE' ||
+      article.status === 'PUBLISHED');
+
+  if (!article || !isPubliclyAvailable) {
     return {
       title: 'Artikel Tidak Ditemukan | ZETARAZ Knowledge',
     };
@@ -87,14 +93,23 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     },
   });
 
-  if (!article || article.status !== 'PUBLISHED') {
+  const isPubliclyAvailable =
+    article &&
+    (article.publicationStatus === 'PUBLISHED' ||
+      article.publicationStatus === 'UPDATE_AVAILABLE' ||
+      article.status === 'PUBLISHED');
+
+  if (!article || !isPubliclyAvailable) {
     notFound();
   }
+
+  // Controlled Publishing: Public visitors only see the approved published version
+  const publicContent = article.publishedContent || article.content;
 
   // Related articles in the same category
   const relatedArticles = await prisma.article.findMany({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       categoryId: article.categoryId,
       id: { not: article.id },
     },
@@ -106,7 +121,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   // Previous & Next navigation
   const prevArticle = await prisma.article.findFirst({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       publishedAt: { lt: article.publishedAt || new Date() },
     },
     orderBy: { publishedAt: 'desc' },
@@ -115,7 +130,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const nextArticle = await prisma.article.findFirst({
     where: {
-      status: 'PUBLISHED',
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       publishedAt: { gt: article.publishedAt || new Date() },
     },
     orderBy: { publishedAt: 'asc' },
@@ -318,7 +333,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left Main Article Column (8 cols) */}
             <div className="lg:col-span-8">
-              <ArticleContent content={article.content} />
+              <ArticleContent content={publicContent} />
 
               {/* Tags Section */}
               {article.tags.length > 0 && (
@@ -409,7 +424,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
             {/* Right Sidebar: Table of Contents (4 cols) */}
             <div className="lg:col-span-4 hidden lg:block">
-              <TableOfContents content={article.content} />
+              <TableOfContents content={publicContent} />
             </div>
           </div>
         </div>

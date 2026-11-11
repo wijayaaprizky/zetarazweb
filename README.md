@@ -40,7 +40,48 @@ Disertai fitur **Pencarian Cerdas (`/search` & modal `Ctrl+K`)** untuk penelusur
 
 ---
 
-## 3. Tumpukan Teknologi (Tech Stack)
+## 3. Arsitektur Controlled Publishing (Sinkronisasi Google Docs)
+
+Platform ZETARAZ mengadopsi prinsip **Controlled Publishing**:
+
+> **"Automatic synchronization must NEVER mean automatic publication."**  
+> *Google Docs adalah content source of truth. ZETARAZ CMS adalah publication authority.*
+
+Setiap perubahan pada dokumen Google Docs secara otomatis disinkronkan dan disimpan sebagai draf baru (`draft_content`). Konten publik yang sudah terbit (`published_content`) **tidak pernah** ditimpa secara otomatis sampai administrator memberikan persetujuan publikasi secara eksplisit.
+
+### A. State Versioning Konten:
+- `published_content`: Versi naskah yang sedang aktif dan tampil di website publik.
+- `draft_content`: Versi naskah terbaru hasil sinkronisasi Google Docs / draf editorial.
+- `published_version`: Nomor versi publik saat ini (integer, 0 untuk draf baru, 1..N).
+- `draft_version`: Nomor versi draf tersinkronisasi terbaru (integer, 1..N).
+- `sync_status`: Status sinkronisasi (`IDLE`, `SYNCING`, `SYNCED`, `SYNC_ERROR`).
+- `publication_status`: Status publikasi (`DRAFT`, `PUBLISHED`, `UPDATE_AVAILABLE`, `ARCHIVED`).
+
+### B. Aturan Alur Kerja (Workflow):
+1. **Artikel Baru:**
+   - Sinkronisasi Google Docs menghasilkan draf (`publication_status = 'DRAFT'`).
+   - Halaman publik mengembalikan 404.
+   - Administrator meninjau melalui **Pratinjau Draf**.
+   - Administrator menekan tombol **Publikasikan**.
+   - Baru setelah itu artikel berstatus `PUBLISHED` (v1) dan dapat diakses publik.
+2. **Artikel yang Sudah Terbit:**
+   - Perubahan di Google Docs disinkronkan otomatis sebagai draf baru (`draft_version = published_version + 1`).
+   - `published_content` (v1) tetap live dan aman diakses publik.
+   - Status artikel bertransisi menjadi `UPDATE_AVAILABLE`.
+   - Administrator dapat menggunakan fitur **Bandingkan Versi (Visual Diff Viewer)** untuk membandingkan baris yang ditambah/dihapus secara visual (*Side-by-Side* atau *Unified Diff*).
+   - Administrator menekan **Publikasikan Pembaruan**:
+     - Sistem secara transaksional dan atomik menggantikan versi publik dengan draf yang disetujui (`published_content = draft_content`, `published_version = draft_version`).
+     - Riwayat dicatat pada `PublicationHistory` dan snapshot `ArticleVersion`.
+   - Administrator dapat menekan **Batalkan Draf**:
+     - Draf pembaruan dibuang dan dikembalikan ke versi publik aktif tanpa merusak konten publik.
+3. **Idempotensi & Penanganan Galat:**
+   - Notifikasi duplikat / webhook berulang tidak menciptakan versi draf duplikat.
+   - Jika Google Docs diperbarui lagi sebelum persetujuan, draf yang tertunda diperbarui di tempat (*in-place*), tanpa menyentuh konten publik.
+   - Galat sinkronisasi (`SYNC_ERROR`) mencatat log audit dan **sama sekali tidak merusak** konten publik.
+
+---
+
+## 4. Tumpukan Teknologi (Tech Stack)
 
 * **Framework:** [Next.js 14 (App Router)](https://nextjs.org/) dengan SSR, SSG, dan Metadata API.
 * **Bahasa:** [TypeScript 5](https://www.typescriptlang.org/) dengan *strict type safety*.
@@ -56,7 +97,7 @@ Disertai fitur **Pencarian Cerdas (`/search` & modal `Ctrl+K`)** untuk penelusur
 
 ---
 
-## 4. Pengelolaan Konten Privat (Private CMS / KMS)
+## 5. Pengelolaan Konten Privat (Private CMS / KMS)
 
 Seluruh fungsionalitas manajemen konten bersifat privat dan terlindungi, hanya dapat diakses oleh administrator terautentikasi melalui `/admin/login`:
 
@@ -66,15 +107,16 @@ Seluruh fungsionalitas manajemen konten bersifat privat dan terlindungi, hanya d
 * **Profil Pengelola:** **Rizky Aditya Pratama Wijaya** (Penulis & Administrator)
 
 ### Fitur Dasbor Admin:
-1. **Ringkasan Metrik:** Jumlah artikel terbit, draf, akumulasi pembaca (*views*), kategori, dan pelanggan buletin.
-2. **Editor Artikel:** Editor Markdown interaktif dengan *Live Preview* berdampingan, format heading, tabel, kutipan, blok kode, preset gambar, serta konfigurasi SEO (Title, Description, Canonical).
-3. **Alur Status:** Pengaturan status DRAFT vs PUBLISHED (artikel draf terisolasi total dari publik).
-4. **Manajemen Kategori:** Penambahan dan pengelolaan kategori pengetahuan.
-5. **Daftar Pembaca Buletin:** Pengelolaan data email pembaca terdaftar.
+1. **Ringkasan Metrik:** Jumlah artikel terbit, pembaruan draf yang menunggu persetujuan (*Update Available*), draf, total pembaca (*views*), kategori, dan pelanggan buletin.
+2. **Editor Artikel & Google Docs Card:** Input URL/ID Google Docs dengan tombol *Sinkronkan Sekarang*, status sinkronisasi, dan tanggal sinkronisasi terakhir.
+3. **Pratinjau Draf Khusus:** Halaman `/admin/articles/[id]/preview` yang menampilkan draf dalam layout website sebenarnya sebelum dirilis.
+4. **Visual Diff Viewer:** Pembanding visual naskah publik vs draf dengan hitungan baris ditambah/dihapus (*Side-by-Side* dan *Unified Diff*).
+5. **Riwayat Audit:** Tab audit log untuk *Sync History*, *Publication History*, dan *Article Versions*.
+6. **Dialog Konfirmasi Modal:** Proteksi persetujuan sebelum publikasi atau pembatalan draf.
 
 ---
 
-## 5. Konfigurasi Lingkungan (`.env`)
+## 6. Konfigurasi Lingkungan (`.env`)
 
 ```env
 DATABASE_URL="file:./dev.db"
@@ -86,7 +128,7 @@ NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 
 ---
 
-## 6. Panduan Menjalankan Aplikasi
+## 7. Panduan Menjalankan Aplikasi
 
 ### Persyaratan:
 - Node.js versi 18+ atau 20+ (Tersedia Node.js v20.18.0 LTS).
@@ -112,43 +154,26 @@ npm run db:seed
 
 ---
 
-## 7. Optimasi Mesin Pencari (SEO) & Aksesibilitas
-
-1. **Metadata Dinamis:** Menghasilkan title, meta description, canonical URL, Open Graph, dan Twitter Cards spesifik per artikel.
-2. **Data Terstruktur (JSON-LD):**
-   - Skema `WebSite` pada layout global.
-   - Skema `Article` dan `BreadcrumbList` pada setiap detail artikel.
-3. **Sitemap XML Otomatis:** Tersedia di `/sitemap.xml` memetakan seluruh halaman statis, kategori, dan artikel `PUBLISHED`.
-4. **Robots.txt:** Tersedia di `/robots.txt` dengan izin akses mesin pencari untuk rute publik dan isolasi ketat rute `/admin/` dan `/api/`.
-5. **Kinerja & Responsivitas:** Tata letak *mobile-first*, navigasi *drawer slide-over*, dan rasio kontras teks standar WCAG AA.
-
----
-
 ## 8. Laporan Uji Kualitas (QA Verification Suite)
 
-Pengujian otomatis E2E dijalankan melalui skrip pengujian:
+### A. Controlled Publishing Acceptance Suite:
+Dijalankan melalui:
+```bash
+node scripts/test-controlled-publishing.js
+```
+
+Hasil Pengujian 7 Kriteria Penerimaan:
+- [x] **1. Edit Google Doc:** Mengedit dokumen Google Docs hanya memperbarui draf CMS (`draft_content`), menaikkan `draft_version`, dan menandai status `UPDATE_AVAILABLE`.
+- [x] **2. Konten Publik Tidak Berubah:** Artikel publik tetap menampilkan versi yang sudah disetujui sebelumnya dan tidak membocorkan draf yang belum disetujui.
+- [x] **3. Publish Update:** Mengklik *Publish Update* secara atomik memperbarui versi publik ke versi draf terbaru dan mencatat log audit publikasi.
+- [x] **4. Edit Ulang Dokumen:** Mengedit dokumen kembali menghasilkan draf tertunda berikutnya (`draft_version = 3`) sementara versi publik tetap versi 2.
+- [x] **5. Discard Draft Update:** Membatalkan pembaruan mengembalikan draf ke versi publik saat ini tanpa mengganggu atau merusak konten publik.
+- [x] **6. Publikasi Naskah Baru:** Naskah baru wajib mendapatkan persetujuan eksplisit administrator sebelum dapat diakses publik (mengembalikan 404 sebelum disetujui).
+- [x] **7. Penanganan Galat:** Kegagalan sinkronisasi (misal link rusak / koneksi terputus) mencatat `SYNC_ERROR` dan sama sekali tidak merusak konten publik yang sedang aktif.
+
+### B. End-to-End Regression Suite:
+Dijalankan melalui:
 ```bash
 node scripts/test-all-journeys.js
 ```
-
-### Hasil Verifikasi 14 Rangkaian Uji:
-- [x] **1. Homepage:** Status 200, Brand ZETARAZ, Tagline *"Berbagi Pengetahuan, Berbagi Pengalaman"*, Pesan *"Temukan Pengetahuan. Perluas Wawasan."*
-- [x] **2. Halaman About:** Status 200, Posisi ZETARAZ Knowledge, Standar Kredibilitas & Etika Privasi.
-- [x] **3. 6 Kategori Utama:**
-  - `/category/knowledge`
-  - `/category/technology`
-  - `/category/science-research`
-  - `/category/data-analytics`
-  - `/category/business-management`
-  - `/category/learning`
-- [x] **4. Detail Artikel:** Konten Markdown, nama penulis (Rizky Aditya Pratama Wijaya), dan JSON-LD terverifikasi.
-- [x] **5. Halaman Pencarian:** UI `/search` memuat header dan filter topik.
-- [x] **6. API Pencarian:** `/api/search?q=KMS` mengembalikan hasil relevan.
-- [x] **7. Counter Pembaca Riil:** `/api/articles/[id]/view` meningkatkan viewCount secara atomik.
-- [x] **8. Buletin:** Registrasi email dengan validasi input.
-- [x] **9. Autentikasi Admin:** Validasi kredensial dan penerbitan token JWT HttpOnly.
-- [x] **10. Pembuatan Draf Artikel:** Simpan draf via API terotentikasi.
-- [x] **11. Publikasi Artikel:** Transisi status DRAFT ke PUBLISHED.
-- [x] **12. Penghapusan Artikel:** Proteksi hak akses penghapusan artikel.
-- [x] **13. Sitemap XML:** File `/sitemap.xml` valid.
-- [x] **14. Robots.txt:** File `/robots.txt` memblokir rute admin dan mereferensikan sitemap.
+Total 19 Rangkaian Uji Lulus 100%.
