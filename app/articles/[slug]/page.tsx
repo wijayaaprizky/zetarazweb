@@ -37,7 +37,7 @@ export async function generateMetadata({
 
   if (!article || article.status !== 'PUBLISHED') {
     return {
-      title: 'Artikel Tidak Ditemukan | ZETARAZ',
+      title: 'Artikel Tidak Ditemukan | ZETARAZ Knowledge',
     };
   }
 
@@ -263,7 +263,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     {article.author.name}
                   </div>
                   <div className="text-xs text-slate-500">
-                    {article.author.bio || 'Peneliti & Analis Pengetahuan ZETARAZ'}
+                    {article.author.bio || 'Penulis di ZETARAZ Knowledge'}
                   </div>
                 </div>
               </div>
@@ -366,7 +366,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                     {article.author.bio ||
-                      'Penulis dan periset independen di ZETARAZ, mendedikasikan analisis pada penemuan dan diseminasi pengetahuan bermutu tinggi.'}
+                      'Penulis dan kontributor di ZETARAZ Knowledge, mendedikasikan tulisan pada diseminasi pengetahuan bermutu dan pengalaman praktis.'}
                   </p>
                 </div>
               </div>

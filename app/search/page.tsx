@@ -113,11 +113,14 @@ function SearchContent() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-950 text-teal-400 border border-teal-800 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>ZETARAZ Content Discovery</span>
+            <span>ZETARAZ Knowledge</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight mb-6">
-            Eksplorasi Pengetahuan & Arsip Intelektual
+          <h1 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight mb-2">
+            Temukan Pengetahuan. Perluas Wawasan.
           </h1>
+          <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto mb-6">
+            Berbagi pengetahuan, berbagi pengalaman seputar teknologi, riset, analitika, manajemen, dan pembelajaran.
+          </p>
 
           {/* Search Input Box */}
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto relative flex items-center">
@@ -127,7 +130,7 @@ function SearchContent() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Cari berdasarkan judul, teori, metodologi, atau topik..."
+                placeholder="Cari berdasarkan judul, panduan praktis, teknologi, atau topik..."
                 className="w-full pl-12 pr-28 py-3.5 bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 text-base focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
               {query && (

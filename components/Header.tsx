@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, BookOpen, Compass, Shield, Sparkles } from 'lucide-react';
+import { Search, Menu, Compass } from 'lucide-react';
 import SearchModal from './SearchModal';
 import MobileMenu from './MobileMenu';
 
@@ -15,39 +15,33 @@ export default function Header() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Knowledge', href: '/category/knowledge' },
-    { name: 'Research', href: '/category/research' },
     { name: 'Technology', href: '/category/technology' },
+    { name: 'Science & Research', href: '/category/science-research' },
+    { name: 'Data & Analytics', href: '/category/data-analytics' },
     { name: 'Business & Management', href: '/category/business-management' },
     { name: 'Learning', href: '/category/learning' },
-    { name: 'About ZETARAZ', href: '/about' },
+    { name: 'About', href: '/about' },
   ];
 
   return (
     <>
-      {/* Top Banner / Editorial Status Bar */}
-      <div className="bg-brand-dark text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
+      {/* Top Banner — Tagline & Supporting Message */}
+      <div className="bg-brand-navy text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <span className="inline-flex items-center gap-1.5 text-teal-400 font-medium tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
-              EDISI INDONESIA
+            <span className="inline-flex items-center gap-1.5 text-teal-400 font-semibold tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-teal-400"></span>
+              ZETARAZ KNOWLEDGE
             </span>
-            <span className="text-slate-500 hidden sm:inline">|</span>
-            <span className="text-slate-400 hidden sm:inline italic">
-              "Knowledge. Intelligence. Discovery."
+            <span className="text-slate-600 hidden sm:inline">|</span>
+            <span className="text-slate-200 hidden sm:inline font-medium">
+              Berbagi Pengetahuan, Berbagi Pengalaman.
             </span>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-slate-400 hidden md:inline">
-              Platform Manajemen Pengetahuan & Publikasi Intelektual
+          <div className="flex items-center space-x-3 text-slate-400 text-[11px]">
+            <span className="italic hidden md:inline text-teal-300/90">
+              "Temukan Pengetahuan. Perluas Wawasan."
             </span>
-            <Link
-              href="/admin"
-              className="text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-[11px] bg-slate-800/80 hover:bg-slate-700 px-2 py-0.5 rounded border border-slate-700"
-            >
-              <Shield className="w-3 h-3 text-teal-400" />
-              <span>KMS Portal</span>
-            </Link>
           </div>
         </div>
       </div>
@@ -56,39 +50,39 @@ export default function Header() {
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+            {/* Brand Logo & Wordmark */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center gap-3 group">
-                <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-navy via-brand-dark to-brand-blue flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md group-hover:scale-105 transition-transform border border-slate-700/50">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-navy via-brand-dark to-brand-blue flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md group-hover:scale-105 transition-transform border border-slate-700/50">
                   Z
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-baseline gap-1.5">
                     <span className="font-heading font-black text-2xl tracking-tight text-brand-navy group-hover:text-brand-blue transition-colors">
                       ZETARAZ
                     </span>
-                    <span className="text-[10px] font-bold tracking-widest px-1.5 py-0.5 bg-teal-50 text-brand-teal rounded border border-teal-200/60 uppercase">
-                      KMS
+                    <span className="font-heading font-bold text-base tracking-tight text-brand-teal">
+                      Knowledge
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-500 font-medium tracking-wider uppercase hidden sm:block">
-                    Independent Knowledge Company
+                  <p className="text-[11px] text-slate-500 font-medium tracking-wide hidden sm:block">
+                    Berbagi Pengetahuan, Berbagi Pengalaman
                   </p>
                 </div>
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+            <nav className="hidden xl:flex items-center space-x-1">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className={`px-3 py-2 text-sm font-semibold rounded-md transition-colors ${
+                    className={`px-3 py-2 text-xs xl:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap ${
                       isActive
-                        ? 'text-brand-blue bg-blue-50/80'
+                        ? 'text-brand-blue bg-blue-50'
                         : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
                     }`}
                   >
@@ -103,11 +97,12 @@ export default function Header() {
               {/* Search button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 px-3 py-2 text-slate-600 hover:text-brand-navy hover:bg-slate-100 rounded-lg transition-colors border border-transparent hover:border-slate-200 text-sm"
+                className="flex items-center gap-2 px-3 py-2 text-slate-600 hover:text-brand-navy hover:bg-slate-100 rounded-xl transition-colors border border-slate-200 text-xs sm:text-sm font-medium"
                 aria-label="Cari artikel dan pengetahuan"
               >
                 <Search className="w-4 h-4 text-slate-500" />
-                <span className="hidden md:inline text-xs text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                <span className="hidden sm:inline text-slate-600">Cari topik...</span>
+                <span className="hidden md:inline text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
                   Ctrl+K
                 </span>
               </button>
@@ -115,7 +110,7 @@ export default function Header() {
               {/* Mobile menu trigger */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+                className="xl:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
                 aria-label="Buka menu navigasi"
               >
                 <Menu className="w-6 h-6" />

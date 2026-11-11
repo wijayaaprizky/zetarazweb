@@ -23,11 +23,11 @@ export default function HeroSection({
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 bg-brand-teal rounded-full"></span>
             <h2 className="text-xs font-black uppercase tracking-widest text-brand-navy">
-              Sorotan Utama & Editorial Terpilih
+              Sorotan Pengetahuan Pilihan
             </h2>
           </div>
-          <span className="text-xs text-slate-400 font-medium hidden sm:inline">
-            Edisi Khusus ZETARAZ
+          <span className="text-xs text-brand-teal font-semibold hidden sm:inline">
+            Berbagi Pengetahuan, Berbagi Pengalaman
           </span>
         </div>
 
@@ -36,7 +36,10 @@ export default function HeroSection({
           {/* Main Featured Article (7 cols) */}
           <div className="lg:col-span-7 flex flex-col justify-between group">
             <div>
-              <Link href={`/articles/${mainArticle.slug}`} className="block overflow-hidden rounded-2xl relative aspect-[16/10] mb-5 shadow-lg bg-slate-900">
+              <Link
+                href={`/articles/${mainArticle.slug}`}
+                className="block overflow-hidden rounded-2xl relative aspect-[16/10] mb-5 shadow-lg bg-slate-900"
+              >
                 <Image
                   src={mainArticle.featuredImage}
                   alt={mainArticle.title}
@@ -86,7 +89,7 @@ export default function HeroSection({
                 href={`/articles/${mainArticle.slug}`}
                 className="inline-flex items-center gap-2 text-sm font-bold text-brand-navy hover:text-brand-blue transition-colors group/btn"
               >
-                <span>Baca Telaah Lengkap</span>
+                <span>Baca Selengkapnya</span>
                 <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform text-brand-teal" />
               </Link>
             </div>

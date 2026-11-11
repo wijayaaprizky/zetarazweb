@@ -18,17 +18,17 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-3 border-b border-slate-200 gap-4">
           <div>
             <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-              Wawasan Terbaru
+              Terbitan Terkini
             </span>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-              Publikasi & Analisis Pengetahuan Terkini
+              Artikel & Catatan Pengalaman Terbaru
             </h2>
           </div>
           <Link
             href="/search"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
           >
-            <span>Eksplorasi Seluruh Arsip</span>
+            <span>Jelajahi Semua Tulisan</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

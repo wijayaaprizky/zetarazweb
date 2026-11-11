@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { GraduationCap, ArrowRight, BookOpenCheck, Clock } from 'lucide-react';
+import { GraduationCap, ArrowRight, Clock } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface RecommendedLearningProps {
@@ -20,18 +20,18 @@ export default function RecommendedLearning({ articles }: RecommendedLearningPro
             <div className="flex items-center gap-2 mb-1">
               <GraduationCap className="w-4 h-4 text-brand-teal" />
               <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-                Pengembangan Kapabilitas Intelektual
+                Panduan Praktis & Sumber Belajar
               </span>
             </div>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy">
-              Recommended Learning & Practical Guides
+              Tutorial & Catatan Pengalaman Nyata
             </h2>
           </div>
           <Link
             href="/category/learning"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
           >
-            <span>Seluruh Panduan & Modul</span>
+            <span>Seluruh Panduan & Bahan Belajar</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

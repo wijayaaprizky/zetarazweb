@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Search, BookOpen, Shield, ChevronRight } from 'lucide-react';
+import { X, Search, ChevronRight, BookOpen } from 'lucide-react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export default function MobileMenu({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden flex">
+    <div className="fixed inset-0 z-50 xl:hidden flex">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
@@ -34,13 +34,18 @@ export default function MobileMenu({
       <div className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-200">
         {/* Drawer Header */}
         <div className="flex items-center justify-between p-4 border-b border-slate-200">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-brand-navy flex items-center justify-center text-white font-bold text-lg">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-brand-navy flex items-center justify-center text-white font-bold text-lg">
               Z
             </div>
-            <span className="font-heading font-black text-lg text-brand-navy">
-              ZETARAZ
-            </span>
+            <div>
+              <span className="font-heading font-black text-lg text-brand-navy">
+                ZETARAZ
+              </span>
+              <span className="font-heading font-bold text-sm text-brand-teal ml-1">
+                Knowledge
+              </span>
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -65,7 +70,7 @@ export default function MobileMenu({
         {/* Navigation list */}
         <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
-            Navigasi Utama
+            Pilar Pengetahuan & Navigasi
           </div>
           {links.map((link) => {
             const isActive = pathname === link.href;
@@ -74,7 +79,7 @@ export default function MobileMenu({
                 key={link.name}
                 href={link.href}
                 onClick={onClose}
-                className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
                   isActive
                     ? 'bg-blue-50 text-brand-blue'
                     : 'text-slate-700 hover:bg-slate-50 hover:text-brand-navy'
@@ -85,26 +90,14 @@ export default function MobileMenu({
               </Link>
             );
           })}
-
-          <div className="pt-4 mt-4 border-t border-slate-100">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
-              Sistem Internal
-            </div>
-            <Link
-              href="/admin"
-              onClick={onClose}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100"
-            >
-              <Shield className="w-4 h-4 text-brand-teal" />
-              <span>Admin KMS Dashboard</span>
-            </Link>
-          </div>
         </nav>
 
         {/* Drawer Footer */}
         <div className="p-4 border-t border-slate-200 bg-slate-50 text-xs text-slate-500 text-center">
-          <p className="font-semibold text-slate-700">ZETARAZ</p>
-          <p className="text-[11px] mt-0.5">Independent Knowledge Company</p>
+          <p className="font-semibold text-slate-800">ZETARAZ Knowledge</p>
+          <p className="text-[11px] text-brand-teal font-medium mt-0.5">
+            Berbagi Pengetahuan, Berbagi Pengalaman
+          </p>
         </div>
       </div>
     </div>

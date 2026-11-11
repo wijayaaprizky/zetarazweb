@@ -6,53 +6,48 @@ import Footer from '@/components/Footer';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: {
-    default: 'ZETARAZ — Independent Knowledge Company | KMS & Research Portal',
-    template: '%s | ZETARAZ',
+    default: 'ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman',
+    template: '%s | ZETARAZ Knowledge',
   },
   description:
-    'ZETARAZ adalah platform manajemen pengetahuan independen yang mengintegrasikan sains informasi, metodologi riset empiris, arsitektur enterprise, dan eksplorasi teknologi terpadu.',
+    'ZETARAZ Knowledge adalah platform berbagi pengetahuan dan pengalaman independen. Temukan artikel edukatif, panduan praktis, wawasan sains, teknologi, analitika data, dan manajemen.',
   keywords: [
-    'Knowledge Management System',
-    'KMS',
-    'Manajemen Pengetahuan',
-    'Arsitektur Enterprise',
+    'ZETARAZ Knowledge',
+    'Berbagi Pengetahuan',
+    'Berbagi Pengalaman',
+    'Belajar Mandiri',
+    'Teknologi',
+    'Sains dan Riset',
+    'Data Analytics',
     'Business Process Management',
-    'BPM',
-    'Kecerdasan Buatan',
-    'Sains Data',
-    'Metodologi Riset',
-    'ZETARAZ',
+    'Tutorial Praktis',
+    'Edukasi',
   ],
-  authors: [{ name: 'ZETARAZ Editorial & Research Board' }],
-  creator: 'ZETARAZ',
-  publisher: 'ZETARAZ Independent Knowledge Company',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  authors: [{ name: 'Rizky Aditya Pratama Wijaya' }],
+  creator: 'ZETARAZ Knowledge',
+  publisher: 'ZETARAZ Knowledge',
   openGraph: {
     type: 'website',
     locale: 'id_ID',
     url: '/',
-    siteName: 'ZETARAZ Knowledge Platform',
-    title: 'ZETARAZ — Knowledge. Intelligence. Discovery.',
+    siteName: 'ZETARAZ Knowledge',
+    title: 'ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman',
     description:
-      'Platform manajemen pengetahuan terintegrasi dan portal wawasan ilmiah independen.',
+      'Platform independen untuk menemukan pengetahuan, memperluas wawasan, dan bertukar pengalaman bermakna lintas disiplin ilmu.',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80',
         width: 1200,
         height: 630,
-        alt: 'ZETARAZ Knowledge Management System',
+        alt: 'ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ZETARAZ — Knowledge. Intelligence. Discovery.',
+    title: 'ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman',
     description:
-      'Platform manajemen pengetahuan terintegrasi dan portal wawasan ilmiah independen.',
+      'Platform independen untuk menemukan pengetahuan, memperluas wawasan, dan bertukar pengalaman bermakna lintas disiplin ilmu.',
     images: ['https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80'],
   },
   robots: {
@@ -75,24 +70,13 @@ export default function RootLayout({
 }) {
   const jsonLdOrg = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'ZETARAZ',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-    logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
-    description: 'An Independent Knowledge Company dedicated to knowledge management, education, and research.',
-    slogan: 'Knowledge. Intelligence. Discovery.',
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: 'contact@zetaraz.com',
-      contactType: 'editorial office',
-    },
-  };
-
-  const jsonLdWebSite = {
-    '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'ZETARAZ',
+    name: 'ZETARAZ Knowledge',
+    alternateName: 'ZETARAZ',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    description: 'Platform berbagi pengetahuan dan pengalaman independen lintas disiplin ilmu.',
+    headline: 'Berbagi Pengetahuan, Berbagi Pengalaman',
+    inLanguage: 'id-ID',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -115,10 +99,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
         />
       </head>
       <body className="flex flex-col min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900 font-sans">

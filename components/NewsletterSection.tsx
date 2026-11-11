@@ -26,7 +26,7 @@ export default function NewsletterSection() {
 
       if (res.ok && data.success) {
         setStatus('success');
-        setMessage(data.message || 'Terima kasih telah bergabung dengan ZETARAZ.');
+        setMessage(data.message || 'Terima kasih telah bergabung dengan ZETARAZ Knowledge.');
         setEmail('');
       } else {
         setStatus('error');
@@ -46,15 +46,15 @@ export default function NewsletterSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/60 text-teal-400 text-xs font-semibold mb-4">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>ZETARAZ Intelligence Dispatch</span>
+          <span>ZETARAZ Knowledge Dispatch</span>
         </div>
 
         <h2 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight mb-4">
-          Kurasi Pengetahuan, Riset & Wawasan Strategis Berkala
+          Dapatkan Kurasi Pengetahuan & Pengalaman Berkala
         </h2>
 
-        <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-          Dapatkan ringkasan eksekutif mingguan mengenai metodologi manajemen pengetahuan, arsitektur enterprise, dinamika AI, dan kajian saintifik langsung di kotak masuk Anda.
+        <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+          Dapatkan rangkuman artikel pilihan seputar teknologi, metodologi riset, sains data terapan, dan catatan pengalaman praktis langsung di email Anda.
         </p>
 
         {status === 'success' ? (
@@ -62,7 +62,7 @@ export default function NewsletterSection() {
             <CheckCircle className="w-6 h-6 text-teal-400 shrink-0" />
             <div>
               <h4 className="font-heading font-bold text-teal-300 text-sm">
-                Pendaftaran Berhasil Dikonfirmasi
+                Pendaftaran Berhasil
               </h4>
               <p className="text-xs text-slate-300 mt-0.5">{message}</p>
             </div>
@@ -106,7 +106,7 @@ export default function NewsletterSection() {
             )}
 
             <p className="text-[11px] text-slate-400 mt-4">
-              Privasi Anda dijamin. Kami tidak pernah membagikan email Anda dan Anda dapat berhenti berlangganan kapan saja dengan satu klik.
+              Privasi Anda aman. Kami hanya mengirimkan konten pengetahuan bermanfaat dan Anda bebas berhenti berlangganan kapan saja.
             </p>
           </form>
         )}

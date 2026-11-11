@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FlaskConical, Clock, ArrowRight, ShieldCheck } from 'lucide-react';
+import { FlaskConical, Clock, ArrowRight } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface ResearchInsightsProps {
@@ -20,18 +20,18 @@ export default function ResearchInsights({ articles }: ResearchInsightsProps) {
             <div className="flex items-center gap-2 mb-1">
               <FlaskConical className="w-4 h-4 text-teal-400" />
               <span className="text-xs font-black uppercase tracking-widest text-teal-400">
-                Inisiasi Laboratorium & Investigasi Empiris
+                Penyelidikan Saintifik & Metodologi
               </span>
             </div>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
-              Research & Scientific Insights
+              Science & Research Insights
             </h2>
           </div>
           <Link
-            href="/category/research"
+            href="/category/science-research"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-400 hover:text-teal-300 uppercase tracking-wider group"
           >
-            <span>Seluruh Riset & Publikasi</span>
+            <span>Seluruh Riset & Sains</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -86,7 +86,7 @@ export default function ResearchInsights({ articles }: ResearchInsightsProps) {
                   href={`/articles/${art.slug}`}
                   className="text-xs font-bold text-teal-400 group-hover:text-teal-300 flex items-center gap-1"
                 >
-                  <span>Telaah Riset</span>
+                  <span>Baca Ulasan</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

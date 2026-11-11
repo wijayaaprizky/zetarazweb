@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Eye, TrendingUp, ArrowRight } from 'lucide-react';
-import { formatDateIndonesian } from '@/lib/utils';
+import { Eye, TrendingUp } from 'lucide-react';
 
 interface PopularArticlesProps {
   articles: any[];
@@ -15,7 +14,7 @@ export default function PopularArticles({ articles }: PopularArticlesProps) {
       <div className="flex items-center gap-2 mb-6 pb-3 border-b border-slate-100">
         <TrendingUp className="w-4 h-4 text-brand-blue" />
         <h3 className="font-heading font-extrabold text-base text-brand-navy uppercase tracking-wider">
-          Paling Banyak Dibaca
+          Topik Populer & Trending
         </h3>
       </div>
 

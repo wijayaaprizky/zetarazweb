@@ -27,23 +27,23 @@ export async function generateMetadata({
   });
 
   if (!category) {
-    return { title: 'Kategori Tidak Ditemukan | ZETARAZ' };
+    return { title: 'Kategori Tidak Ditemukan | ZETARAZ Knowledge' };
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const url = `${siteUrl}/category/${category.slug}`;
 
   return {
-    title: `${category.name} — Pengetahuan & Riset | ZETARAZ`,
+    title: `${category.name} — ZETARAZ Knowledge`,
     description:
       category.description ||
-      `Kumpulan artikel, kajian, dan panduan komprehensif dalam domain ${category.name} di platform ZETARAZ.`,
+      `Kumpulan artikel, kajian, dan panduan komprehensif dalam topik ${category.name} di ZETARAZ Knowledge.`,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: `${category.name} | ZETARAZ`,
-      description: category.description || `Eksplorasi domain ${category.name}.`,
+      title: `${category.name} | ZETARAZ Knowledge`,
+      description: category.description || `Eksplorasi topik ${category.name} di ZETARAZ Knowledge.`,
       url,
     },
   };

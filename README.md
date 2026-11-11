@@ -1,104 +1,86 @@
-# ZETARAZ — Independent Knowledge Management Platform (KMS)
-> *"Knowledge. Intelligence. Discovery."*
+# ZETARAZ Knowledge
+> *"Berbagi Pengetahuan, Berbagi Pengalaman."*  
+> *"Temukan Pengetahuan. Perluas Wawasan."*
 
-Platform repositori manajemen pengetahuan (*Knowledge Management System* / KMS) dan portal wawasan intelektual modern yang dirancang untuk skala jangka panjang institusi riset, edukasi, dan konsultasi independen.
-
----
-
-## 1. Arsitektur & Filosofi Sistem
-
-ZETARAZ menggabungkan pengalaman penemuan konten editorial terkemuka (*editorial news portal discovery*) dengan kapabilitas pengorganisasian taksonomi dari platform pembelajaran modern.
-
-### Pilar Domain Pengetahuan Utama:
-1. **Knowledge:** Manajemen pengetahuan terstruktur, SECI model, arsitektur kognitif, sains informasi.
-2. **Research:** Metodologi penelitian ilmiah empiris, laboratorium, analisis literatur sistematis, falsifiability.
-3. **Technology:** Kecerdasan buatan, model bahasa besar (LLM), sains data, keamanan siber (Zero Trust).
-4. **Business & Management:** Business Process Management (BPMN 2.0), Arsitektur Enterprise (TOGAF ADM), tata kelola adaptif.
-5. **Learning:** Panduan praktis, studi kasus terapan, kurikulum mandiri, budaya *continuous learning*.
+**ZETARAZ Knowledge** adalah platform independen berbagi pengetahuan yang menyajikan informasi, wawasan, pengalaman praktis, panduan langkah-demi-langkah (tutorial), dan konten edukatif lintas disiplin ilmu.
 
 ---
 
-## 2. Tumpukan Teknologi (Tech Stack)
+## 1. Posisi & Identitas Platform
 
-* **Kerangka Kerja (Framework):** [Next.js 14 (App Router)](https://nextjs.org/) dengan Server-Side Rendering (SSR) & Static Site Generation (SSG).
+ZETARAZ Knowledge dirancang dengan positioning yang tegas:
+- **BUKAN Blog Pribadi / Jurnal Harian:** Tidak berisi catatan kegiatan personal atau opini tanpa konteks.
+- **BUKAN Situs Korporat / Konsultan Komersial:** Tidak memasarkan jasa komersial atau ambisi korporasi pada antarmuka publik.
+- **BUKAN Produk KMS Publik yang Dijual:** Seluruh kapabilitas manajemen konten dan administrasi disimpan rapat dan privat khusus administrator pengelola.
+- **ADALAH Wadah Berbagi Pengetahuan Terbuka:** Portal informasi dan pengetahuan digital independen dengan kurasi editorial bermutu tinggi, memprioritaskan kemudahan menemukan informasi (*content discovery*), kenyamanan membaca (*reading experience*), dan pembelajaran praktis.
+
+### Atribut Brand:
+- **Knowledge-driven:** Berbasis pengetahuan mendalam dan rujukan kredibel.
+- **Inclusive & Accessible:** Disajikan tanpa jargon elitis agar nyaman dipelajari siapa saja.
+- **Credible & Informative:** Menjunjung kejujuran intelektual, pemisahan fakta dan opini.
+- **Modern & Practical:** Menghubungkan telaah konseptual dengan studi kasus nyata dan panduan terapan.
+- **Independent:** Mandiri dan objektif.
+
+---
+
+## 2. Navigasi Publik (Public Navigation)
+
+Struktur navigasi utama dirancang jernih dan intuitif untuk eksplorasi pengetahuan:
+
+1. **Home (`/`):** Portal editorial beranda yang memuat *Featured Stories*, *Latest Knowledge Feed*, *Popular Articles* (berdasarkan metrik pembaca riil), *Explore Categories*, *Research & Insights*, dan *Recommended Learning*.
+2. **Knowledge (`/category/knowledge`):** Fondasi manajemen pengetahuan, organisasi informasi, dan literasi kognitif.
+3. **Technology (`/category/technology`):** Kecerdasan buatan, arsitektur perangkat lunak, dan keamanan digital.
+4. **Science & Research (`/category/science-research`):** Metodologi riset empiris, telaah ilmiah, dan pembuktian berbasis data.
+5. **Data & Analytics (`/category/data-analytics`):** *Modern data stack*, analitika prediktif, pemodelan data, dan *business intelligence*.
+6. **Business & Management (`/category/business-management`):** Arsitektur enterprise, tata kelola proses bisnis, dan strategi operasional.
+7. **Learning (`/category/learning`):** Tutorial praktis, studi kasus lapangan, panduan teknis, dan sumber belajar mandiri.
+8. **About (`/about`):** Pengenalan nilai, etika keterbukaan, kredibilitas editorial, dan komitmen privasi.
+
+Disertai fitur **Pencarian Cerdas (`/search` & modal `Ctrl+K`)** untuk penelusuran kata kunci instan dengan *query highlighting*.
+
+---
+
+## 3. Tumpukan Teknologi (Tech Stack)
+
+* **Framework:** [Next.js 14 (App Router)](https://nextjs.org/) dengan SSR, SSG, dan Metadata API.
 * **Bahasa:** [TypeScript 5](https://www.typescriptlang.org/) dengan *strict type safety*.
-* **Sistem Desain (UI/UX):** [Tailwind CSS](https://tailwindcss.com/) dengan skema warna kurasi editorial:
+* **Styling & Desain UI:** [Tailwind CSS](https://tailwindcss.com/) dengan palet editorial modern:
   - **Midnight Navy:** `#14243A`
   - **Deep Blue:** `#1D4ED8`
   - **Fresh Teal:** `#0F9D8A`
-  - **Light Surface:** `#F5F8FC`
-  - **Dark Charcoal:** `#202938`
-* **Basis Data & ORM:** [Prisma ORM 5](https://www.prisma.io/) dengan SQLite untuk *zero-dependency* lokal, 100% siap ditransisikan ke PostgreSQL.
-* **Autentikasi & Keamanan:** JWT HttpOnly Cookies, enkripsi sandi dengan `bcryptjs`.
+  - **Light Background:** `#F5F8FC`
+  - **Charcoal Text:** `#202938`
+* **Basis Data & ORM:** [Prisma ORM 5](https://www.prisma.io/) dengan SQLite (`prisma/dev.db`), mudah dimigrasikan ke PostgreSQL/MySQL.
+* **Autentikasi & Keamanan:** JSON Web Tokens (JWT) dalam HttpOnly Cookie, hashing sandi `bcryptjs`.
 * **Ikonografi:** [Lucide React](https://lucide.dev/).
 
 ---
 
-## 3. Fitur Utama Platform
+## 4. Pengelolaan Konten Privat (Private CMS / KMS)
 
-### A. Pengalaman Publik (Public Experience)
-* **Editorial Hero Section:** Menyorot satu artikel telaah utama secara dominan dengan gambar resolusi tinggi dan 2–3 artikel pendukung.
-* **Latest Knowledge Grid:** Umpan publikasi bergaya majalah berita modern dengan label domain, ringkasan, penulis, estimasi waktu baca, dan tanggal publikasi.
-* **Explore Categories:** Kartu visual interaktif untuk 5 pilar disiplin ilmu dengan ikon tematik.
-* **Research & Insights:** Bagian khusus berlatar gelap elegan untuk kajian saintifik dan bukti empiris.
-* **Popular / Most Read:** Diurutkan secara otentik berdasarkan metrik hitungan pembaca aktual (`viewCount`), bukan data acak palsu.
-* **Interactive Reading Experience:**
-  - *Reading Progress Bar* waktu nyata di bagian atas layar.
-  - *Table of Contents (Daftar Isi)* dinamis yang di-generate otomatis dari heading Markdown dengan *active scroll highlighting*.
-  - Pemformatan Markdown lengkap: tabel perbandingan, diagram ASCII, blok kode, kutipan (*blockquote*), dan rujukan literatur.
-  - Tombol berbagi (*Share to X, LinkedIn, WhatsApp, Salin Tautan*).
-  - Penambahan otomatis jumlah pembaca (`POST /api/articles/[id]/view`).
-* **Sistem Pencarian Cerdas:**
-  - Pencarian lintas judul, cuplikan, isi konten, kategori, dan tag.
-  - *Keyword highlighting* pada kata kunci yang cocok.
-  - Filter kategori, tipe konten (Editorial, Riset, Tutorial, Analisis), dan pengurutan relevansi.
-  - Saran topik penelusuran jika tidak ada hasil.
-  - *Shortcut keyboard* `Ctrl+K` / `Cmd+K`.
-* **Buletin Intelijen ZETARAZ:** Form pendaftaran email dengan validasi regex, deteksi duplikasi, dan penyimpanan ke tabel `NewsletterSubscriber`.
-
-### B. Konsol Manajemen Pengetahuan (KMS Admin Dashboard)
-* **Akses Terproteksi:** Autentikasi administrator melalui `/admin/login` dengan sesi JWT terenkripsi.
-* **Ringkasan Analisis:** Dasbor metrik total artikel, pembaca, domain kategori, dan draf.
-* **Manajemen Artikel:**
-  - Tabel filter status (*Published* vs *Draft*) dan kategori.
-  - Alur Simpan Draf dan Publikasikan (konten draf **tidak pernah** terekspos ke publik).
-  - Penghapusan aman dengan dialog modal konfirmasi.
-  - Pemilihan status *Featured* untuk tampil di Hero utama.
-* **Editor Markdown Visual:**
-  - Bilah alat pemformatan cepat (H2, H3, Blockquote, Code Block, Table, List).
-  - Tab *Pratinjau Langsung (Live Preview)* berdampingan sebelum publikasi.
-  - Preset gambar editorial berkualitas tinggi.
-  - Konfigurasi SEO mandiri (SEO Title, Meta Description, Canonical URL).
-* **Manajemen Kategori:** Tambah kategori baru dengan slug otomatis dan deskripsi.
-* **Manajemen Pelanggan Buletin:** Pantau daftar pelanggan terdaftar.
-
----
-
-## 4. Kredensial Administrator Default
-
-Untuk masuk ke konsol KMS di `http://localhost:3000/admin`:
+Seluruh fungsionalitas manajemen konten bersifat privat dan terlindungi, hanya dapat diakses oleh administrator terautentikasi melalui `/admin/login`:
 
 * **URL Login:** `http://localhost:3000/admin/login`
 * **Email:** `admin@zetaraz.com`
 * **Password:** `ZetarazAdmin2026!`
-* **Peran:** `ADMIN` (Rizky Aditya Pratama Wijaya)
+* **Profil Pengelola:** **Rizky Aditya Pratama Wijaya** (Penulis & Administrator)
+
+### Fitur Dasbor Admin:
+1. **Ringkasan Metrik:** Jumlah artikel terbit, draf, akumulasi pembaca (*views*), kategori, dan pelanggan buletin.
+2. **Editor Artikel:** Editor Markdown interaktif dengan *Live Preview* berdampingan, format heading, tabel, kutipan, blok kode, preset gambar, serta konfigurasi SEO (Title, Description, Canonical).
+3. **Alur Status:** Pengaturan status DRAFT vs PUBLISHED (artikel draf terisolasi total dari publik).
+4. **Manajemen Kategori:** Penambahan dan pengelolaan kategori pengetahuan.
+5. **Daftar Pembaca Buletin:** Pengelolaan data email pembaca terdaftar.
 
 ---
 
 ## 5. Konfigurasi Lingkungan (`.env`)
 
-File `.env.example` telah disediakan:
-
 ```env
-# Koneksi Basis Data (SQLite untuk lokal, atau postgresql://user:pass@host:5432/zetaraz)
 DATABASE_URL="file:./dev.db"
-
-# Kunci Rahasia JWT & Sesi Administrator (Minimal 32 karakter unik untuk produksi)
 JWT_SECRET="zetaraz-production-secure-jwt-key-2026-kms-platform"
 ADMIN_EMAIL="admin@zetaraz.com"
 ADMIN_PASSWORD="ZetarazAdmin2026!"
-
-# URL Situs Publik (untuk metadata SEO dan sitemap)
 NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
 
@@ -107,7 +89,7 @@ NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ## 6. Panduan Menjalankan Aplikasi
 
 ### Persyaratan:
-- Node.js versi 18+ atau 20+ (Telah terpasang versi v20.18.0 LTS).
+- Node.js versi 18+ atau 20+ (Tersedia Node.js v20.18.0 LTS).
 - npm atau pnpm.
 
 ### Menjalankan Mode Development:
@@ -116,13 +98,13 @@ npm run dev
 ```
 Akses di browser: `http://localhost:3000`
 
-### Menjalankan Mode Produksi (Telah Dikompilasi):
+### Menjalankan Mode Produksi:
 ```bash
 npm run build
 npm run start
 ```
 
-### Melakukan Migrasi dan Seeding Basis Data Ulang:
+### Reset & Seeding Basis Data:
 ```bash
 npm run db:push
 npm run db:seed
@@ -130,49 +112,43 @@ npm run db:seed
 
 ---
 
-## 7. Implementasi SEO Teknis & Metadata
+## 7. Optimasi Mesin Pencari (SEO) & Aksesibilitas
 
-1. **Meta Tag Komprehensif:** Setiap artikel menghasilkan judul dan deskripsi unik, kanonikal URL, OpenGraph (*og:title*, *og:description*, *og:image*, *og:type="article"*), dan Twitter Cards.
-2. **Data Terstruktur JSON-LD:**
-   - Skema `Organization` dan `WebSite` pada layout global.
-   - Skema `Article` dan `BreadcrumbList` pada setiap halaman artikel.
-3. **Sitemap XML Dinamis:** Tersedia di `/sitemap.xml` yang mengindeks otomatis seluruh halaman statis, kategori, dan artikel berstatus `PUBLISHED`.
-4. **Robots.txt:** Tersedia di `/robots.txt` dengan instruksi `Allow: /` dan `Disallow: /admin/` serta `Disallow: /api/`.
-5. **Performa & Aksesibilitas:**
-   - HTML semantik (`<header>`, `<main>`, `<article>`, `<nav>`, `<footer>`).
-   - Rasio kontras warna standar WCAG AA.
-   - Atribut gambar alt deskriptif.
+1. **Metadata Dinamis:** Menghasilkan title, meta description, canonical URL, Open Graph, dan Twitter Cards spesifik per artikel.
+2. **Data Terstruktur (JSON-LD):**
+   - Skema `WebSite` pada layout global.
+   - Skema `Article` dan `BreadcrumbList` pada setiap detail artikel.
+3. **Sitemap XML Otomatis:** Tersedia di `/sitemap.xml` memetakan seluruh halaman statis, kategori, dan artikel `PUBLISHED`.
+4. **Robots.txt:** Tersedia di `/robots.txt` dengan izin akses mesin pencari untuk rute publik dan isolasi ketat rute `/admin/` dan `/api/`.
+5. **Kinerja & Responsivitas:** Tata letak *mobile-first*, navigasi *drawer slide-over*, dan rasio kontras teks standar WCAG AA.
 
 ---
 
-## 8. Laporan Uji Kualitas (QA Suite)
+## 8. Laporan Uji Kualitas (QA Verification Suite)
 
-Pengujian otomatis E2E telah dijalankan melalui skrip pengujian `node scripts/test-all-journeys.js`:
-
-```
-=== HASIL PENGUJIAN END-TO-END ZETARAZ ===
-[PASS] 1. Homepage loads (Status 200 & Title present)
-[PASS] 2. About page loads (Status 200 & Editorial standards)
-[PASS] 3. Category page loads (Knowledge category)
-[PASS] 4. Article detail page loads & metadata present
-[PASS] 5. Search API functional (/api/search?q=KMS)
-[PASS] 6. Real View Counter API increments view count
-[PASS] 7. Newsletter subscription endpoint stores subscriber
-[PASS] 8. Admin login authentication issues secure token cookie
-[PASS] 9. Admin article creation (Save draft)
-[PASS] 10. Admin article update (Transition from DRAFT to PUBLISHED)
-[PASS] 11. Admin article deletion with authorization check
-[PASS] 12. Technical SEO: sitemap.xml renders valid XML
-[PASS] 13. Technical SEO: robots.txt disallows admin & allows sitemap
-
-Total Pengujian: 13 | Lulus: 13 | Gagal: 0
-Hasil: 100% LULUS
+Pengujian otomatis E2E dijalankan melalui skrip pengujian:
+```bash
+node scripts/test-all-journeys.js
 ```
 
----
-
-## 9. Rencana Pengembangan Masa Depan (Roadmap)
-
-1. **Dukungan Multi-bahasa (i18n):** Arsitektur skema telah dipersiapkan untuk penambahan kolom `locale` ('id' / 'en') dan integrasi `next-intl`.
-2. **Integrasi Provider Email Marketing:** Mengarahkan `app/api/newsletter/route.ts` ke penyedia seperti Resend, Mailchimp, atau Sendgrid jika kunci API telah ditambahkan.
-3. **Penyimpanan Berkas Media Cloud:** Mendukung S3 / Google Cloud Storage untuk pengunggahan gambar lokal di samping URL presisi saat ini.
+### Hasil Verifikasi 14 Rangkaian Uji:
+- [x] **1. Homepage:** Status 200, Brand ZETARAZ, Tagline *"Berbagi Pengetahuan, Berbagi Pengalaman"*, Pesan *"Temukan Pengetahuan. Perluas Wawasan."*
+- [x] **2. Halaman About:** Status 200, Posisi ZETARAZ Knowledge, Standar Kredibilitas & Etika Privasi.
+- [x] **3. 6 Kategori Utama:**
+  - `/category/knowledge`
+  - `/category/technology`
+  - `/category/science-research`
+  - `/category/data-analytics`
+  - `/category/business-management`
+  - `/category/learning`
+- [x] **4. Detail Artikel:** Konten Markdown, nama penulis (Rizky Aditya Pratama Wijaya), dan JSON-LD terverifikasi.
+- [x] **5. Halaman Pencarian:** UI `/search` memuat header dan filter topik.
+- [x] **6. API Pencarian:** `/api/search?q=KMS` mengembalikan hasil relevan.
+- [x] **7. Counter Pembaca Riil:** `/api/articles/[id]/view` meningkatkan viewCount secara atomik.
+- [x] **8. Buletin:** Registrasi email dengan validasi input.
+- [x] **9. Autentikasi Admin:** Validasi kredensial dan penerbitan token JWT HttpOnly.
+- [x] **10. Pembuatan Draf Artikel:** Simpan draf via API terotentikasi.
+- [x] **11. Publikasi Artikel:** Transisi status DRAFT ke PUBLISHED.
+- [x] **12. Penghapusan Artikel:** Proteksi hak akses penghapusan artikel.
+- [x] **13. Sitemap XML:** File `/sitemap.xml` valid.
+- [x] **14. Robots.txt:** File `/robots.txt` memblokir rute admin dan mereferensikan sitemap.

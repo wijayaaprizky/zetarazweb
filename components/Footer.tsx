@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, MapPin, Globe, ArrowUpRight, Shield, BookOpen } from 'lucide-react';
+import { Mail, MapPin, Sparkles, BookOpen } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -11,37 +11,42 @@ export default function Footer() {
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-blue to-teal-500 flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-teal-500 flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md">
                 Z
               </div>
               <div>
-                <span className="font-heading font-black text-2xl tracking-tight text-white">
-                  ZETARAZ
-                </span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-heading font-black text-2xl tracking-tight text-white">
+                    ZETARAZ
+                  </span>
+                  <span className="font-heading font-bold text-base tracking-tight text-teal-400">
+                    Knowledge
+                  </span>
+                </div>
                 <span className="block text-[10px] text-teal-400 font-bold uppercase tracking-widest">
-                  An Independent Knowledge Company
+                  Berbagi Pengetahuan, Berbagi Pengalaman
                 </span>
               </div>
             </div>
 
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm">
-              ZETARAZ merepresentasikan konvergensi pengetahuan, inteligensi, logika, dan penemuan. Kami membangun ekosistem manajemen pengetahuan terpadu untuk memandu transformasi institusi dan kemajuan intelektual masyarakat.
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-sm font-normal">
+              ZETARAZ Knowledge adalah wadah independen untuk membaca, memahami, dan berbagi wawasan bermakna. Kami menghadirkan telaah terstruktur, catatan pengalaman lapangan, serta panduan praktis lintas disiplin ilmu yang mudah dipelajari oleh siapa saja.
             </p>
 
             <div className="pt-2 flex items-center space-x-3 text-xs text-slate-300">
-              <span className="italic font-serif text-teal-400 font-medium">
-                "Knowledge. Intelligence. Discovery."
+              <span className="italic font-serif text-teal-300 font-medium">
+                "Temukan Pengetahuan. Perluas Wawasan."
               </span>
             </div>
 
-            <div className="pt-4 flex items-center gap-4 text-xs">
-              <div className="flex items-center gap-1.5 text-slate-400">
+            <div className="pt-3 flex items-center gap-4 text-xs text-slate-400">
+              <div className="flex items-center gap-1.5">
                 <MapPin className="w-4 h-4 text-teal-400" />
-                <span>Jakarta, Indonesia</span>
+                <span>Indonesia</span>
               </div>
-              <div className="flex items-center gap-1.5 text-slate-400">
+              <div className="flex items-center gap-1.5">
                 <Mail className="w-4 h-4 text-teal-400" />
-                <span>contact@zetaraz.com</span>
+                <span>kontak@zetaraz.org</span>
               </div>
             </div>
           </div>
@@ -49,32 +54,37 @@ export default function Footer() {
           {/* Pillars / Categories */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Pilar Pengetahuan
+              Kategori Pengetahuan
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link href="/category/knowledge" className="hover:text-white transition-colors">
-                  Knowledge Systems
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/research" className="hover:text-white transition-colors">
-                  Scientific Research & Labs
+                  Knowledge
                 </Link>
               </li>
               <li>
                 <Link href="/category/technology" className="hover:text-white transition-colors">
-                  Technology & AI
+                  Technology
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/science-research" className="hover:text-white transition-colors">
+                  Science & Research
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/data-analytics" className="hover:text-white transition-colors">
+                  Data & Analytics
                 </Link>
               </li>
               <li>
                 <Link href="/category/business-management" className="hover:text-white transition-colors">
-                  Business & Management (BPM)
+                  Business & Management
                 </Link>
               </li>
               <li>
                 <Link href="/category/learning" className="hover:text-white transition-colors">
-                  Continuous Learning
+                  Learning & Guides
                 </Link>
               </li>
             </ul>
@@ -83,61 +93,56 @@ export default function Footer() {
           {/* Navigation & Resources */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Navigasi Platform
+              Jelajahi Platform
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
-                  Beranda Utama
+                  Beranda
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  Tentang ZETARAZ
+                  Tentang ZETARAZ Knowledge
                 </Link>
               </li>
               <li>
                 <Link href="/search" className="hover:text-white transition-colors">
-                  Pencarian Pengetahuan
+                  Pencarian Topik
                 </Link>
               </li>
               <li>
                 <Link href="/sitemap.xml" className="hover:text-white transition-colors">
-                  Sitemap XML
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="text-teal-400 hover:text-teal-300 transition-colors flex items-center gap-1 font-semibold">
-                  <Shield className="w-3 h-3" /> KMS Admin Portal
+                  Peta Situs (Sitemap)
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Editorial & Legal */}
+          {/* Editorial & Information */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Prinsip & Legalitas
+              Nilai & Informasi
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/about#editorial-standards" className="hover:text-white transition-colors">
-                  Standar Integritas Ilmiah
+                <Link href="/about#visi-misi" className="hover:text-white transition-colors">
+                  Semangat Berbagi Wawasan
                 </Link>
               </li>
               <li>
-                <Link href="/about#peer-review" className="hover:text-white transition-colors">
-                  Protokol Peninjauan Sejawat
+                <Link href="/about#kredibilitas" className="hover:text-white transition-colors">
+                  Kejujuran & Kredibilitas
                 </Link>
               </li>
               <li>
-                <Link href="/about#privacy-policy" className="hover:text-white transition-colors">
-                  Kebijakan Privasi
+                <Link href="/about#kebijakan-privasi" className="hover:text-white transition-colors">
+                  Privasi Pembaca
                 </Link>
               </li>
               <li>
-                <Link href="/about#terms-of-use" className="hover:text-white transition-colors">
-                  Ketentuan Layanan
+                <Link href="/about#ketentuan" className="hover:text-white transition-colors">
+                  Etika Pengetahuan Terbuka
                 </Link>
               </li>
             </ul>
@@ -149,17 +154,17 @@ export default function Footer() {
       <div className="bg-slate-950/80 border-t border-slate-800/80 py-6 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-500">
-            © {new Date().getFullYear()} ZETARAZ. Hak Cipta Dilindungi Undang-Undang. Dibangun untuk ekosistem pengetahuan jangka panjang.
+            © {new Date().getFullYear()} ZETARAZ Knowledge. Berbagi Pengetahuan, Berbagi Pengalaman. Terbuka untuk semua pembelajar.
           </p>
           <div className="flex items-center space-x-6 text-slate-500 text-xs">
-            <Link href="/about#privacy-policy" className="hover:text-slate-400 transition-colors">
+            <Link href="/about#kebijakan-privasi" className="hover:text-slate-400 transition-colors">
               Privasi
             </Link>
-            <Link href="/about#terms-of-use" className="hover:text-slate-400 transition-colors">
+            <Link href="/about#ketentuan" className="hover:text-slate-400 transition-colors">
               Ketentuan
             </Link>
             <span className="text-slate-700">|</span>
-            <span className="text-teal-500 font-mono text-[11px]">v1.0.0-production</span>
+            <span className="text-teal-400 font-medium">Inisiatif Pengetahuan Terbuka</span>
           </div>
         </div>
       </div>

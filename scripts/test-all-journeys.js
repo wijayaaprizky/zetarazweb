@@ -31,8 +31,15 @@ function request(path, options = {}) {
   });
 }
 
+function contains(body, text) {
+  if (body.includes(text)) return true;
+  // Also check HTML-escaped entity for &
+  const escaped = text.replace(/&/g, '&amp;');
+  return body.includes(escaped);
+}
+
 async function runTests() {
-  console.log('=== STARTING ZETARAZ END-TO-END QA SUITE ===\n');
+  console.log('=== STARTING ZETARAZ KNOWLEDGE END-TO-END QA SUITE ===\n');
   let passed = 0;
   let failed = 0;
 
@@ -48,38 +55,60 @@ async function runTests() {
   }
 
   // 1. Homepage loads
-  await test('1. Homepage loads (Status 200 & Title present)', async () => {
+  await test('1. Homepage loads (Status 200 & Brand + Taglines present)', async () => {
     const res = await request('/');
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
-    if (!res.body.includes('ZETARAZ')) throw new Error('ZETARAZ brand missing from homepage');
-    if (!res.body.includes('Knowledge. Intelligence. Discovery.')) throw new Error('Tagline missing');
+    if (!contains(res.body, 'ZETARAZ')) throw new Error('ZETARAZ brand missing from homepage');
+    if (!contains(res.body, 'Berbagi Pengetahuan, Berbagi Pengalaman')) throw new Error('Primary tagline missing');
+    if (!contains(res.body, 'Temukan Pengetahuan. Perluas Wawasan.')) throw new Error('Supporting message missing');
   });
 
   // 2. About page
-  await test('2. About page loads (Status 200 & Editorial standards)', async () => {
+  await test('2. About page loads (Status 200 & Repositioning + Values present)', async () => {
     const res = await request('/about');
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
-    if (!res.body.includes('Standar Integritas Ilmiah')) throw new Error('Standards section missing');
+    if (!contains(res.body, 'ZETARAZ Knowledge')) throw new Error('ZETARAZ Knowledge brand title missing');
+    if (!contains(res.body, 'Kredibilitas & Tanggung Jawab Isi')) throw new Error('Credibility section missing');
   });
 
-  // 3. Category page
-  await test('3. Category page loads (Knowledge category)', async () => {
-    const res = await request('/category/knowledge');
-    if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
-    if (!res.body.includes('Domain Pengetahuan')) throw new Error('Category domain label missing');
-  });
+  // 3. Category pages (All 6 Primary Categories)
+  const categories = [
+    { slug: 'knowledge', name: 'Knowledge' },
+    { slug: 'technology', name: 'Technology' },
+    { slug: 'science-research', name: 'Science & Research' },
+    { slug: 'data-analytics', name: 'Data & Analytics' },
+    { slug: 'business-management', name: 'Business & Management' },
+    { slug: 'learning', name: 'Learning' },
+  ];
+
+  for (const cat of categories) {
+    await test(`3. Category [${cat.name}] loads at /category/${cat.slug}`, async () => {
+      const res = await request(`/category/${cat.slug}`);
+      if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode} for /category/${cat.slug}`);
+      if (!contains(res.body, 'Domain Pengetahuan')) throw new Error('Category badge missing');
+      if (!contains(res.body, cat.name)) throw new Error(`Category name ${cat.name} missing from page`);
+    });
+  }
 
   // 4. Article detail page
-  await test('4. Article detail page loads & metadata present', async () => {
-    const res = await request('/articles/pengantar-sistem-manajemen-pengetahuan-kms');
+  const testArticleSlug = 'membangun-kebiasaan-berbagi-pengetahuan';
+  await test(`4. Article detail page loads & author/metadata present (/articles/${testArticleSlug})`, async () => {
+    const res = await request(`/articles/${testArticleSlug}`);
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
-    if (!res.body.includes('Piramida DIKW')) throw new Error('Article content missing');
-    if (!res.body.includes('application/ld+json')) throw new Error('JSON-LD structured data missing');
+    if (!contains(res.body, 'Pengetahuan Menjadi Bernilai')) throw new Error('Article content missing');
+    if (!contains(res.body, 'Rizky Aditya Pratama Wijaya')) throw new Error('Author name missing');
+    if (!contains(res.body, 'application/ld+json')) throw new Error('JSON-LD structured data missing');
   });
 
-  // 5. Search API
-  await test('5. Search API functional (/api/search?q=KMS)', async () => {
-    const res = await request('/api/search?q=KMS');
+  // 5. Search UI and API
+  await test('5. Search UI page loads (Status 200)', async () => {
+    const res = await request('/search');
+    if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
+    if (!contains(res.body, 'Temukan Pengetahuan. Perluas Wawasan.')) throw new Error('Search page header missing');
+  });
+
+  await test('6. Search API functional (/api/search?q=pengetahuan)', async () => {
+    const res = await request('/api/search?q=pengetahuan');
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
     const data = JSON.parse(res.body);
     if (!data.success || !Array.isArray(data.articles) || data.articles.length === 0) {
@@ -87,9 +116,9 @@ async function runTests() {
     }
   });
 
-  // 6. View Counter incrementing
-  await test('6. Real View Counter API increments view count', async () => {
-    const res = await request('/api/articles/pengantar-sistem-manajemen-pengetahuan-kms/view', {
+  // 7. View Counter incrementing
+  await test(`7. Real View Counter API increments view count (/api/articles/${testArticleSlug}/view)`, async () => {
+    const res = await request(`/api/articles/${testArticleSlug}/view`, {
       method: 'POST',
     });
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
@@ -99,9 +128,9 @@ async function runTests() {
     }
   });
 
-  // 7. Newsletter subscription with validation
-  await test('7. Newsletter subscription endpoint stores subscriber', async () => {
-    const testEmail = `researcher.${Date.now()}@institute.ac.id`;
+  // 8. Newsletter subscription with validation
+  await test('8. Newsletter subscription endpoint stores subscriber', async () => {
+    const testEmail = `reader.${Date.now()}@zetaraz.id`;
     const res = await request('/api/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -112,9 +141,9 @@ async function runTests() {
     if (!data.success) throw new Error(`Failed: ${data.error}`);
   });
 
-  // 8. Admin Login Authentication
+  // 9. Admin Login Authentication
   let authCookie = '';
-  await test('8. Admin login authentication issues secure token cookie', async () => {
+  await test('9. Admin login authentication issues secure token cookie', async () => {
     const res = await request('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -129,9 +158,13 @@ async function runTests() {
     authCookie = Array.isArray(setCookie) ? setCookie[0].split(';')[0] : setCookie.split(';')[0];
   });
 
-  // 9. Create draft article with admin auth
+  // 10. Create draft article with admin auth
   let createdArticleId = '';
-  await test('9. Admin article creation (Save draft)', async () => {
+  await test('10. Admin article creation (Save draft)', async () => {
+    const catRes = await request('/api/categories');
+    const cats = JSON.parse(catRes.body).categories;
+    const catId = cats && cats.length > 0 ? cats[0].id : 'cat1';
+
     const res = await request('/api/articles', {
       method: 'POST',
       headers: {
@@ -140,46 +173,21 @@ async function runTests() {
       },
       body: {
         title: 'Artikel Uji Coba Verifikasi Sistem Otomatis',
-        subtitle: 'Uji coba integritas API KMS ZETARAZ',
-        excerpt: 'Ringkasan verifikasi sistem kontrol mutu repositori.',
+        subtitle: 'Uji coba integritas API KMS ZETARAZ Knowledge',
+        excerpt: 'Ringkasan verifikasi sistem kontrol mutu repositori ZETARAZ Knowledge.',
         content: '## Bab Pengujian\nKonten pengujian berjalan lancar tanpa kendala.',
-        categoryId: 'clr12345', // will pick first category if not matched, or let us find real id
+        categoryId: catId,
         status: 'DRAFT',
       },
     });
 
-    // If categoryId needed valid ID, fetch categories first
-    if (res.statusCode === 400 || res.statusCode === 500) {
-      const catRes = await request('/api/categories');
-      const cats = JSON.parse(catRes.body).categories;
-      const validRes = await request('/api/articles', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Cookie: authCookie,
-        },
-        body: {
-          title: 'Artikel Uji Coba Verifikasi Sistem Otomatis',
-          subtitle: 'Uji coba integritas API KMS ZETARAZ',
-          excerpt: 'Ringkasan verifikasi sistem kontrol mutu repositori.',
-          content: '## Bab Pengujian\nKonten pengujian berjalan lancar tanpa kendala.',
-          categoryId: cats[0].id,
-          status: 'DRAFT',
-        },
-      });
-      if (validRes.statusCode !== 201) throw new Error(`Expected 201, got ${validRes.statusCode}`);
-      const data = JSON.parse(validRes.body);
-      createdArticleId = data.article.id;
-    } else if (res.statusCode === 201) {
-      const data = JSON.parse(res.body);
-      createdArticleId = data.article.id;
-    } else {
-      throw new Error(`Expected 201, got ${res.statusCode}`);
-    }
+    if (res.statusCode !== 201) throw new Error(`Expected 201, got ${res.statusCode}`);
+    const data = JSON.parse(res.body);
+    createdArticleId = data.article.id;
   });
 
-  // 10. Update article (Publish draft)
-  await test('10. Admin article update (Transition from DRAFT to PUBLISHED)', async () => {
+  // 11. Update article (Publish draft)
+  await test('11. Admin article update (Transition from DRAFT to PUBLISHED)', async () => {
     if (!createdArticleId) throw new Error('No created article ID to update');
     const res = await request(`/api/articles/${createdArticleId}`, {
       method: 'PUT',
@@ -197,8 +205,8 @@ async function runTests() {
     if (data.article.status !== 'PUBLISHED') throw new Error('Status failed to transition to PUBLISHED');
   });
 
-  // 11. Delete article
-  await test('11. Admin article deletion with authorization check', async () => {
+  // 12. Delete article
+  await test('12. Admin article deletion with authorization check', async () => {
     if (!createdArticleId) throw new Error('No created article ID to delete');
     const res = await request(`/api/articles/${createdArticleId}`, {
       method: 'DELETE',
@@ -209,8 +217,8 @@ async function runTests() {
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
   });
 
-  // 12. Sitemap XML
-  await test('12. Technical SEO: sitemap.xml renders valid XML', async () => {
+  // 13. Sitemap XML
+  await test('13. Technical SEO: sitemap.xml renders valid XML', async () => {
     const res = await request('/sitemap.xml');
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
     if (!res.body.includes('<urlset') && !res.body.includes('http')) {
@@ -218,8 +226,8 @@ async function runTests() {
     }
   });
 
-  // 13. Robots.txt
-  await test('13. Technical SEO: robots.txt disallows admin & allows sitemap', async () => {
+  // 14. Robots.txt
+  await test('14. Technical SEO: robots.txt disallows admin & allows sitemap', async () => {
     const res = await request('/robots.txt');
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
     if (!res.body.includes('Disallow: /admin/')) throw new Error('robots.txt missing admin disallow');
@@ -234,7 +242,7 @@ async function runTests() {
   if (failed > 0) {
     process.exit(1);
   } else {
-    console.log(`\n>>> ALL 13 TEST SUITES PASSED PERFECTLY! <<<`);
+    console.log(`\n>>> ALL QA TEST SUITES PASSED PERFECTLY! <<<`);
     process.exit(0);
   }
 }
