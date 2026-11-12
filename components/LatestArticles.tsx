@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowRight, User, BookOpen, Send, ShieldCheck, Sparkles } from 'lucide-react';
+import { Clock, Calendar, ArrowRight, BookOpen, Sparkles } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface LatestArticlesProps {
@@ -11,148 +11,131 @@ interface LatestArticlesProps {
 export default function LatestArticles({ articles }: LatestArticlesProps) {
   if (!articles || articles.length === 0) {
     return (
-      <div>
-        <div className="mb-6 pb-3 border-b border-slate-200 flex items-center justify-between">
-          <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-              Kurasi Editorial
-            </span>
-            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-              Ruang Terbitan & Naskah Pengetahuan
-            </h2>
-          </div>
-          <span className="text-xs text-slate-400 hidden sm:inline">
-            Standar Penulisan Terbuka
-          </span>
+      <div className="py-12 text-center text-slate-400">
+        <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mx-auto mb-3">
+          <BookOpen className="w-6 h-6" />
         </div>
-
-        <div className="bg-gradient-to-br from-slate-50 to-teal-50/40 border border-slate-200/90 rounded-2xl p-8 sm:p-12 text-center my-4 relative overflow-hidden">
-          <div className="w-14 h-14 rounded-2xl bg-teal-50 text-brand-teal flex items-center justify-center mx-auto mb-5 border border-teal-200 shadow-sm">
-            <BookOpen className="w-7 h-7" />
-          </div>
-
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-teal-200 text-teal-800 text-[11px] font-bold uppercase tracking-wider mb-3">
-            <Sparkles className="w-3 h-3 text-brand-teal" />
-            <span>Kurasi Naskah Sedang Berjalan</span>
-          </span>
-
-          <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-slate-900 mb-3">
-            Koleksi Naskah Terbaru Sedang Dipersiapkan
-          </h3>
-
-          <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed mb-8 font-normal">
-            ZETARAZ Knowledge menjunjung tinggi kurasi mendalam untuk memastikan setiap tulisan menyajikan rujukan primer yang sahih dan pengalaman lapangan yang aplikatif. Kami menyambut kontribusi naskah dari para praktisi, peneliti, dan akademisi.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact?topic=submission"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-navy hover:bg-brand-blue text-white text-xs font-bold rounded-xl transition-all shadow-md"
-            >
-              <Send className="w-3.5 h-3.5 text-teal-400" />
-              <span>Ajukan Naskah / Pengalaman</span>
-            </Link>
-            <Link
-              href="/about#kredibilitas"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl transition-all border border-slate-200 shadow-sm"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-teal" />
-              <span>Standar Kredibilitas Redaksi</span>
-            </Link>
-          </div>
-        </div>
+        <h3 className="font-heading font-bold text-slate-700 text-sm">Belum Ada Artikel Baru</h3>
+        <p className="text-xs text-slate-400 mt-1">Artikel akan segera hadir setelah kurasi selesai.</p>
       </div>
     );
   }
 
+  const getCategoryTheme = (slug: string) => {
+    switch (slug) {
+      case 'teknologi':
+        return 'bg-blue-50 text-blue-700 border-blue-200/80';
+      case 'tata-kelola':
+        return 'bg-indigo-50 text-indigo-700 border-indigo-200/80';
+      case 'hobby':
+        return 'bg-amber-50 text-amber-700 border-amber-200/80';
+      case 'sosial':
+        return 'bg-teal-50 text-teal-700 border-teal-200/80';
+      default:
+        return 'bg-slate-100 text-slate-700 border-slate-200';
+    }
+  };
+
   return (
     <div>
-      <div className="mb-6 pb-3 border-b border-slate-200 flex items-center justify-between">
+      {/* Header Row */}
+      <div className="mb-8 pb-3 border-b border-slate-200/80 flex items-center justify-between">
         <div>
-          <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
+          <span className="text-xs font-black uppercase tracking-widest text-teal-600">
             Terbitan Terkini
           </span>
-          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-            Artikel & Catatan Pengalaman Terbaru
+          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight mt-1">
+            Artikel & Catatan Wawasan Terbaru
           </h2>
         </div>
         <Link
           href="/articles"
-          className="text-xs font-bold text-brand-teal hover:text-brand-navy flex items-center gap-1 uppercase tracking-wider"
+          className="text-xs font-bold text-teal-600 hover:text-slate-900 flex items-center gap-1 uppercase tracking-wider transition-colors"
         >
           <span>Semua Terbitan</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
 
+      {/* 2-Column Responsive Card Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        {articles.map((art) => (
-          <article
-            key={art.id}
-            className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all group flex flex-col justify-between"
-          >
-            <div>
-              <Link
-                href={`/articles/${art.slug}`}
-                className="relative aspect-[16/10] block overflow-hidden bg-slate-100"
-              >
-                <Image
-                  src={art.featuredImage}
-                  alt={art.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/95 text-brand-navy rounded-full shadow-sm backdrop-blur-sm border border-slate-200">
-                    {art.contentType}
-                  </span>
+        {articles.map((art) => {
+          const badgeClass = getCategoryTheme(art.category?.slug || '');
+
+          return (
+            <article
+              key={art.id}
+              className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex flex-col justify-between group"
+            >
+              <div>
+                {/* Thumbnail Image */}
+                <Link
+                  href={`/articles/${art.slug}`}
+                  className="relative aspect-[16/10] block overflow-hidden bg-slate-900"
+                >
+                  <Image
+                    src={art.featuredImage}
+                    alt={art.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Link>
+
+                {/* Card Body */}
+                <div className="p-6">
+                  {/* Category Pill & Meta */}
+                  <div className="flex items-center justify-between text-xs mb-3">
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full font-semibold border ${badgeClass}`}>
+                      {art.category?.name || 'Wawasan'}
+                    </span>
+                    <time className="text-slate-400 font-medium text-[11px]">
+                      {formatDateIndonesian(art.publishedAt)}
+                    </time>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-heading font-extrabold text-lg text-slate-900 group-hover:text-sky-600 transition-colors duration-200 leading-snug tracking-tight mb-2.5 line-clamp-2">
+                    <Link href={`/articles/${art.slug}`}>
+                      {art.title}
+                    </Link>
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
+                    {art.excerpt}
+                  </p>
                 </div>
-              </Link>
-
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-                  <span className="font-bold text-brand-teal uppercase tracking-wider text-[11px]">
-                    {art.category?.name}
-                  </span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {formatDateIndonesian(art.publishedAt)}
-                  </span>
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    {art.readTimeMinutes} menit baca
-                  </span>
-                </div>
-
-                <h3 className="font-heading font-bold text-lg text-slate-900 group-hover:text-brand-blue transition-colors leading-snug line-clamp-2 mb-2.5">
-                  <Link href={`/articles/${art.slug}`}>
-                    {art.title}
-                  </Link>
-                </h3>
-
-                <p className="text-slate-600 text-sm leading-relaxed line-clamp-3">
-                  {art.excerpt}
-                </p>
               </div>
-            </div>
 
-            <div className="p-6 pt-0 border-t border-slate-100 flex items-center justify-between mt-4">
-              <span className="text-xs text-slate-600 font-medium">
-                {art.author?.name}
-              </span>
-              <Link
-                href={`/articles/${art.slug}`}
-                className="text-xs font-bold text-brand-teal group-hover:text-brand-navy flex items-center gap-1"
-              >
-                <span>Baca Lengkap</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </article>
-        ))}
+              {/* Card Footer */}
+              <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between text-xs bg-slate-50/50">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  {art.author?.avatar ? (
+                    <img
+                      src={art.author.avatar}
+                      alt={art.author.name}
+                      className="w-6 h-6 rounded-full object-cover shrink-0 ring-1 ring-slate-200"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[10px]">
+                      {art.author?.name?.charAt(0) || 'Z'}
+                    </div>
+                  )}
+                  <span className="text-slate-700 font-medium truncate">
+                    {art.author?.name || 'Redaksi ZETARAZ'}
+                  </span>
+                </div>
+
+                <div className="inline-flex items-center gap-1 text-slate-400 shrink-0 font-medium">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{art.readTimeMinutes} mnt baca</span>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );
