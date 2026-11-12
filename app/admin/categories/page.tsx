@@ -1,7 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FolderTree, Plus, CheckCircle, Loader2, BookOpen } from 'lucide-react';
+import {
+  FolderTree,
+  Plus,
+  CheckCircle,
+  Loader2,
+  BookOpen,
+  Trash2,
+  AlertTriangle,
+} from 'lucide-react';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -14,6 +22,10 @@ export default function AdminCategoriesPage() {
   const [icon, setIcon] = useState('BookOpen');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  // Delete modal state
+  const [categoryToDelete, setCategoryToDelete] = useState<any | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchCategories = async () => {
     setIsLoading(true);
@@ -60,9 +72,35 @@ export default function AdminCategoriesPage() {
         setFeedback({ type: 'error', message: data.error || 'Gagal membuat kategori.' });
       }
     } catch {
-      setFeedback({ type: 'error', message: 'Gangguan server.' });
+      setFeedback({ type: 'error', message: 'Gangguan server saat membuat kategori.' });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteCategory = async () => {
+    if (!categoryToDelete) return;
+    setIsDeleting(true);
+
+    try {
+      const res = await fetch(`/api/categories/${categoryToDelete.id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setFeedback({ type: 'success', message: data.message || `Kategori "${categoryToDelete.name}" berhasil dihapus.` });
+        setCategoryToDelete(null);
+        fetchCategories();
+      } else {
+        setFeedback({ type: 'error', message: data.error || 'Gagal menghapus kategori.' });
+        setCategoryToDelete(null);
+      }
+    } catch {
+      setFeedback({ type: 'error', message: 'Gangguan server saat menghapus kategori.' });
+      setCategoryToDelete(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -76,6 +114,25 @@ export default function AdminCategoriesPage() {
           Kategori menentukan struktur taksonomi dan navigasi utama platform ZETARAZ
         </p>
       </div>
+
+      {feedback && (
+        <div
+          className={`p-4 rounded-xl text-xs font-semibold flex items-center justify-between ${
+            feedback.type === 'success'
+              ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+              : 'bg-rose-50 text-rose-800 border border-rose-200'
+          }`}
+        >
+          <span>{feedback.message}</span>
+          <button
+            type="button"
+            onClick={() => setFeedback(null)}
+            className="text-xs underline ml-2 opacity-80 hover:opacity-100"
+          >
+            Tutup
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left: Categories List (7 cols) */}
@@ -94,9 +151,12 @@ export default function AdminCategoriesPage() {
           ) : (
             <div className="divide-y divide-slate-100">
               {categories.map((cat) => (
-                <div key={cat.id} className="p-4 hover:bg-slate-50/70 transition-colors flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
+                <div
+                  key={cat.id}
+                  className="p-4 hover:bg-slate-50/70 transition-colors flex items-start justify-between gap-4"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span className="font-heading font-bold text-sm text-slate-900">
                         {cat.name}
                       </span>
@@ -104,13 +164,26 @@ export default function AdminCategoriesPage() {
                         /{cat.slug}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
                       {cat.description || 'Tidak ada deskripsi.'}
                     </p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-teal-50 text-brand-teal text-xs font-bold shrink-0">
-                    {cat._count?.articles || 0} Artikel
-                  </span>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="px-2.5 py-1 rounded-full bg-teal-50 text-brand-teal text-xs font-bold">
+                      {cat._count?.articles || 0} Artikel
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() => setCategoryToDelete(cat)}
+                      className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                      title={`Hapus Kategori ${cat.name}`}
+                      aria-label={`Hapus Kategori ${cat.name}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -123,18 +196,6 @@ export default function AdminCategoriesPage() {
             <Plus className="w-4 h-4 text-brand-teal" />
             <span>Tambah Kategori Baru</span>
           </h3>
-
-          {feedback && (
-            <div
-              className={`p-3 rounded-xl text-xs font-semibold mb-4 ${
-                feedback.type === 'success'
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                  : 'bg-rose-50 text-rose-800 border border-rose-200'
-              }`}
-            >
-              {feedback.message}
-            </div>
-          )}
 
           <form onSubmit={handleCreate} className="space-y-4">
             <div>
@@ -195,6 +256,57 @@ export default function AdminCategoriesPage() {
           </form>
         </div>
       </div>
+
+      {/* Delete Category Confirmation Modal */}
+      {categoryToDelete && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-3 text-rose-600 mb-4">
+              <div className="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center shrink-0">
+                <AlertTriangle className="w-5 h-5 text-rose-600" />
+              </div>
+              <h3 className="font-heading font-bold text-lg text-slate-900">
+                Hapus Kategori Pengetahuan
+              </h3>
+            </div>
+
+            <p className="text-sm text-slate-600 leading-relaxed mb-4">
+              Apakah Anda yakin ingin menghapus kategori{' '}
+              <strong className="text-slate-900">"{categoryToDelete.name}"</strong>?
+            </p>
+
+            {(categoryToDelete._count?.articles || 0) > 0 ? (
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs mb-4">
+                <strong>Peringatan Integritas:</strong> Kategori ini masih memiliki{' '}
+                <strong>{categoryToDelete._count.articles} artikel terkait</strong>. Anda harus memindahkan atau menghapus artikel tersebut terlebih dahulu sebelum kategori ini dapat dihapus.
+              </div>
+            ) : (
+              <p className="text-xs text-slate-400 mb-4">
+                Kategori ini tidak memiliki artikel terkait dan dapat dihapus dengan aman dari sistem.
+              </p>
+            )}
+
+            <div className="mt-6 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setCategoryToDelete(null)}
+                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteCategory}
+                disabled={isDeleting || (categoryToDelete._count?.articles || 0) > 0}
+                className="px-4 py-2 text-xs font-bold bg-rose-600 hover:bg-rose-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl shadow-sm transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                {isDeleting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                <span>Hapus Kategori</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
