@@ -57,11 +57,11 @@ export default async function HomePage() {
     },
   });
 
-  // Science & Research category articles
+  // Deep Dive & Analysis (Tata Kelola / Teknologi)
   const scienceResearchArticles = await prisma.article.findMany({
     where: {
       publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
-      category: { slug: 'science-research' },
+      category: { slug: { in: ['tata-kelola', 'teknologi'] } },
     },
     orderBy: { publishedAt: 'desc' },
     take: 2,
@@ -82,12 +82,12 @@ export default async function HomePage() {
     },
   });
 
-  // Learning / Tutorials & Practical Guides
+  // Learning / Tutorials & Practical Guides (Hobby, Sosial, Tutorial, Experience)
   const learningArticles = await prisma.article.findMany({
     where: {
       publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       OR: [
-        { category: { slug: 'learning' } },
+        { category: { slug: { in: ['hobby', 'sosial'] } } },
         { contentType: 'TUTORIAL' },
         { contentType: 'EXPERIENCE' },
       ],

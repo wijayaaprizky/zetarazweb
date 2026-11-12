@@ -20,18 +20,18 @@ export default function ResearchInsights({ articles }: ResearchInsightsProps) {
             <div className="flex items-center gap-2 mb-1">
               <FlaskConical className="w-4 h-4 text-teal-400" />
               <span className="text-xs font-black uppercase tracking-widest text-teal-400">
-                Penyelidikan Saintifik & Metodologi
+                Kajian & Analisis Mendalam
               </span>
             </div>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
-              Science & Research Insights
+              Sorotan Tata Kelola & Teknologi
             </h2>
           </div>
           <Link
-            href="/category/science-research"
+            href="/category/tata-kelola"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-400 hover:text-teal-300 uppercase tracking-wider group"
           >
-            <span>Seluruh Riset & Sains</span>
+            <span>Seluruh Kajian Analitis</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

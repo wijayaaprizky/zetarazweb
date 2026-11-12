@@ -7,20 +7,12 @@ import {
   Search,
   Menu,
   ChevronDown,
-  BookOpen,
   Cpu,
-  FlaskConical,
-  BarChart3,
   Briefcase,
-  GraduationCap,
-  Archive,
+  Palette,
+  Users,
   FileText,
-  Sparkles,
-  Info,
-  Heart,
-  HelpCircle,
   Send,
-  LifeBuoy,
   ArrowRight,
 } from 'lucide-react';
 import SearchModal from './SearchModal';
@@ -32,129 +24,58 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Dropdown states
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isArticlesDropdownOpen, setIsArticlesDropdownOpen] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleMouseEnter = (menu: string) => {
+  const handleMouseEnter = () => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setActiveDropdown(menu);
+    setIsArticlesDropdownOpen(true);
   };
 
   const handleMouseLeave = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
+      setIsArticlesDropdownOpen(false);
     }, 150);
   };
 
   // Close dropdown on route change
   useEffect(() => {
-    setActiveDropdown(null);
+    setIsArticlesDropdownOpen(false);
   }, [pathname]);
 
   const categoryItems = [
     {
-      name: 'Knowledge',
-      slug: 'knowledge',
-      desc: 'Konsep dasar, literasi kognitif, & organisasi informasi',
-      icon: BookOpen,
-      color: 'text-emerald-500 bg-emerald-50 group-hover:bg-emerald-100',
-    },
-    {
-      name: 'Technology',
-      slug: 'technology',
-      desc: 'Kecerdasan buatan, rekayasa perangkat lunak, & keamanan siber',
+      name: 'Teknologi',
+      slug: 'teknologi',
+      desc: 'Kecerdasan buatan, rekayasa perangkat lunak, keamanan siber, & teknologi informasi',
       icon: Cpu,
-      color: 'text-blue-500 bg-blue-50 group-hover:bg-blue-100',
+      color: 'text-blue-600 bg-blue-50 group-hover:bg-blue-100 border border-blue-100',
     },
     {
-      name: 'Science & Research',
-      slug: 'science-research',
-      desc: 'Metodologi saintifik, ulasan bukti empiris, & telaah literatur',
-      icon: FlaskConical,
-      color: 'text-teal-500 bg-teal-50 group-hover:bg-teal-100',
-    },
-    {
-      name: 'Data & Analytics',
-      slug: 'data-analytics',
-      desc: 'Sains data, teknik visualisasi, & analitika terapan',
-      icon: BarChart3,
-      color: 'text-cyan-500 bg-cyan-50 group-hover:bg-cyan-100',
-    },
-    {
-      name: 'Business & Management',
-      slug: 'business-management',
-      desc: 'Proses bisnis (BPM), arsitektur enterprise, & manajemen tim',
+      name: 'Tata Kelola',
+      slug: 'tata-kelola',
+      desc: 'Manajemen proses (BPM), arsitektur enterprise, & tata kelola operasional terstruktur',
       icon: Briefcase,
-      color: 'text-indigo-500 bg-indigo-50 group-hover:bg-indigo-100',
+      color: 'text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100 border border-indigo-100',
     },
     {
-      name: 'Learning',
-      slug: 'learning',
-      desc: 'Tutorial langkah-demi-langkah & catatan pengalaman lapangan',
-      icon: GraduationCap,
-      color: 'text-amber-500 bg-amber-50 group-hover:bg-amber-100',
+      name: 'Hobby',
+      slug: 'hobby',
+      desc: 'Fotografi, penulisan jurnal, eksplorasi kreasi santai, & merawat minat positif',
+      icon: Palette,
+      color: 'text-amber-600 bg-amber-50 group-hover:bg-amber-100 border border-amber-100',
+    },
+    {
+      name: 'Sosial',
+      slug: 'sosial',
+      desc: 'Dinamika komunitas, literasi publik, etika interaksi sosial, & dialog terbuka',
+      icon: Users,
+      color: 'text-teal-600 bg-teal-50 group-hover:bg-teal-100 border border-teal-100',
     },
   ];
 
-  const publicationItems = [
-    {
-      name: 'Semua Artikel & Kajian',
-      href: '/articles',
-      desc: 'Katalog terbitan naskah pengetahuan terverifikasi',
-      icon: FileText,
-    },
-    {
-      name: 'Arsip Kronologis',
-      href: '/archive',
-      desc: 'Rekam jejak publikasi berdasarkan tahun dan bulan',
-      icon: Archive,
-    },
-    {
-      name: 'Direktori Topik & Tag',
-      href: '/search',
-      desc: 'Pencarian cepat berdasarkan kata kunci & subjek spesifik',
-      icon: Search,
-    },
-  ];
-
-  const initiativeItems = [
-    {
-      name: 'Tentang ZETARAZ',
-      href: '/about',
-      desc: 'Filosofi, visi-misi, dan semangat berbagi wawasan terbuka',
-      icon: Info,
-    },
-    {
-      name: 'Layanan & Program',
-      href: '/services',
-      desc: 'Kurasi redaksi, repositori, dan kerja sama edukatif',
-      icon: Sparkles,
-    },
-    {
-      name: 'Testimoni Pembaca',
-      href: '/testimonials',
-      desc: 'Ulasan dan refleksi dari akademisi, mahasiswa, & praktisi',
-      icon: Heart,
-    },
-    {
-      name: 'Pusat Tanya Jawab (FAQ)',
-      href: '/faq',
-      desc: 'Pertanyaan seputar inisiatif, sitasi, dan kurasi naskah',
-      icon: HelpCircle,
-    },
-    {
-      name: 'Pusat Bantuan (Support)',
-      href: '/support',
-      desc: 'Panduan navigasi, kendala teknis, dan laporan bug',
-      icon: LifeBuoy,
-    },
-    {
-      name: 'Hubungi Redaksi',
-      href: '/contact',
-      desc: 'Formulir kontak langsung dan alamat surel resmi',
-      icon: Send,
-    },
-  ];
+  const isArticlesActive =
+    pathname?.startsWith('/category') || pathname?.startsWith('/articles') || pathname === '/archive';
 
   return (
     <>
@@ -205,74 +126,81 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Desktop Navigation with Dropdowns */}
-            <nav className="hidden lg:flex items-center space-x-1">
+            {/* Desktop Navigation: Exactly 3 Menu Items (Beranda, Daftar Artikel ▾, Tentang) */}
+            <nav className="hidden lg:flex items-center space-x-2">
               {/* 1. Beranda */}
               <Link
                 href="/"
-                className={`px-3.5 py-2 text-xs lg:text-sm font-semibold rounded-lg transition-colors ${
+                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
                   pathname === '/'
-                    ? 'text-brand-blue bg-blue-50'
+                    ? 'text-brand-blue bg-blue-50 font-bold'
                     : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
                 }`}
               >
                 Beranda
               </Link>
 
-              {/* 2. Pilar Pengetahuan (Mega Dropdown) */}
+              {/* 2. Daftar Artikel (Dropdown: Teknologi, Tata Kelola, Hobby, Sosial) */}
               <div
                 className="relative"
-                onMouseEnter={() => handleMouseEnter('categories')}
+                onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
                 <button
                   type="button"
-                  onClick={() => setActiveDropdown(activeDropdown === 'categories' ? null : 'categories')}
-                  className={`px-3.5 py-2 text-xs lg:text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
-                    pathname?.startsWith('/category')
-                      ? 'text-brand-blue bg-blue-50'
+                  onClick={() => setIsArticlesDropdownOpen(!isArticlesDropdownOpen)}
+                  className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+                    isArticlesActive
+                      ? 'text-brand-blue bg-blue-50 font-bold'
                       : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
                   }`}
-                  aria-expanded={activeDropdown === 'categories'}
+                  aria-expanded={isArticlesDropdownOpen}
                 >
-                  <span>Pilar Pengetahuan</span>
+                  <span>Daftar Artikel</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      activeDropdown === 'categories' ? 'rotate-180 text-brand-teal' : 'text-slate-400'
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      isArticlesDropdownOpen ? 'rotate-180 text-brand-teal' : 'text-slate-400'
                     }`}
                   />
                 </button>
 
                 {/* Dropdown Panel */}
-                {activeDropdown === 'categories' && (
-                  <div className="absolute top-full left-0 w-[540px] bg-white rounded-2xl shadow-xl border border-slate-200 p-4 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150">
+                {isArticlesDropdownOpen && (
+                  <div className="absolute top-full left-0 w-[520px] bg-white rounded-2xl shadow-xl border border-slate-200 p-4 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150">
                     <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-2 border-b border-slate-100 flex items-center justify-between">
-                      <span>6 Domain Ilmu Pengetahuan</span>
+                      <span>Klasifikasi Artikel</span>
                       <Link
-                        href="/#kategori"
-                        className="text-brand-teal hover:underline normal-case text-xs font-semibold"
+                        href="/articles"
+                        className="text-brand-teal hover:underline normal-case text-xs font-semibold flex items-center gap-1"
                       >
-                        Lihat Ikhtisar →
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Semua Artikel ({'12+'})</span>
                       </Link>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 pt-2">
+                    {/* 4 Classification Cards */}
+                    <div className="grid grid-cols-2 gap-2.5 pt-3">
                       {categoryItems.map((cat) => {
                         const Icon = cat.icon;
+                        const isCatActive = pathname === `/category/${cat.slug}`;
                         return (
                           <Link
                             key={cat.slug}
                             href={`/category/${cat.slug}`}
-                            className="p-2.5 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-3 group"
+                            className={`p-3 rounded-xl transition-all flex items-start gap-3 group ${
+                              isCatActive
+                                ? 'bg-teal-50/70 border border-teal-200'
+                                : 'hover:bg-slate-50 border border-transparent'
+                            }`}
                           >
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${cat.color}`}>
+                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${cat.color}`}>
                               <Icon className="w-4 h-4" />
                             </div>
                             <div className="min-w-0">
-                              <div className="font-heading font-bold text-xs text-slate-900 group-hover:text-brand-blue transition-colors">
+                              <div className="font-heading font-bold text-sm text-slate-900 group-hover:text-brand-blue transition-colors">
                                 {cat.name}
                               </div>
-                              <p className="text-[11px] text-slate-500 line-clamp-1 leading-snug">
+                              <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed mt-0.5">
                                 {cat.desc}
                               </p>
                             </div>
@@ -280,122 +208,38 @@ export default function Header() {
                         );
                       })}
                     </div>
+
+                    {/* Dropdown Footer: Link to all articles */}
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between px-2">
+                      <Link
+                        href="/archive"
+                        className="text-xs text-slate-500 hover:text-brand-navy transition-colors font-medium"
+                      >
+                        Lihat Arsip Kronologis
+                      </Link>
+                      <Link
+                        href="/articles"
+                        className="text-xs font-bold text-brand-blue hover:text-brand-navy flex items-center gap-1 transition-colors"
+                      >
+                        <span>Jelajahi Seluruh Tulisan</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* 3. Publikasi & Arsip (Dropdown) */}
-              <div
-                className="relative"
-                onMouseEnter={() => handleMouseEnter('publications')}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveDropdown(activeDropdown === 'publications' ? null : 'publications')}
-                  className={`px-3.5 py-2 text-xs lg:text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
-                    pathname?.startsWith('/articles') || pathname === '/archive'
-                      ? 'text-brand-blue bg-blue-50'
-                      : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
-                  }`}
-                  aria-expanded={activeDropdown === 'publications'}
-                >
-                  <span>Publikasi & Arsip</span>
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                      activeDropdown === 'publications' ? 'rotate-180 text-brand-teal' : 'text-slate-400'
-                    }`}
-                  />
-                </button>
-
-                {/* Dropdown Panel */}
-                {activeDropdown === 'publications' && (
-                  <div className="absolute top-full left-0 w-[320px] bg-white rounded-2xl shadow-xl border border-slate-200 p-3 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150 space-y-1">
-                    {publicationItems.map((item, idx) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={idx}
-                          href={item.href}
-                          className="p-2.5 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-3 group"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-teal-50 text-brand-teal flex items-center justify-center shrink-0 border border-teal-100">
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <div className="font-heading font-bold text-xs text-slate-900 group-hover:text-brand-blue transition-colors">
-                              {item.name}
-                            </div>
-                            <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              {/* 4. Layanan & Program */}
+              {/* 3. Tentang */}
               <Link
-                href="/services"
-                className={`px-3.5 py-2 text-xs lg:text-sm font-semibold rounded-lg transition-colors ${
-                  pathname === '/services'
-                    ? 'text-brand-blue bg-blue-50'
+                href="/about"
+                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
+                  pathname === '/about'
+                    ? 'text-brand-blue bg-blue-50 font-bold'
                     : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
                 }`}
               >
-                Layanan & Program
+                Tentang
               </Link>
-
-              {/* 5. Inisiatif & Informasi (Dropdown) */}
-              <div
-                className="relative"
-                onMouseEnter={() => handleMouseEnter('initiative')}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveDropdown(activeDropdown === 'initiative' ? null : 'initiative')}
-                  className={`px-3.5 py-2 text-xs lg:text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
-                    ['/about', '/testimonials', '/faq', '/support', '/advertise', '/contact'].includes(pathname)
-                      ? 'text-brand-blue bg-blue-50'
-                      : 'text-slate-700 hover:text-brand-navy hover:bg-slate-50'
-                  }`}
-                  aria-expanded={activeDropdown === 'initiative'}
-                >
-                  <span>Inisiatif ▾</span>
-                </button>
-
-                {/* Dropdown Panel */}
-                {activeDropdown === 'initiative' && (
-                  <div className="absolute top-full right-0 w-[340px] bg-white rounded-2xl shadow-xl border border-slate-200 p-3 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150 space-y-1">
-                    {initiativeItems.map((item, idx) => {
-                      const Icon = item.icon;
-                      return (
-                        <Link
-                          key={idx}
-                          href={item.href}
-                          className="p-2.5 rounded-xl hover:bg-slate-50 transition-colors flex items-start gap-3 group"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200 group-hover:bg-teal-50 group-hover:text-brand-teal transition-colors">
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <div className="font-heading font-bold text-xs text-slate-900 group-hover:text-brand-blue transition-colors">
-                              {item.name}
-                            </div>
-                            <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
             </nav>
 
             {/* Right actions: Search + Contributor CTA */}
@@ -442,13 +286,6 @@ export default function Header() {
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        links={[
-          { name: 'Beranda', href: '/' },
-          { name: 'Semua Artikel', href: '/articles' },
-          { name: 'Arsip Pengetahuan', href: '/archive' },
-          { name: 'Layanan & Program', href: '/services' },
-          { name: 'Tentang ZETARAZ', href: '/about' },
-        ]}
         onOpenSearch={() => {
           setIsMobileMenuOpen(false);
           setIsSearchOpen(true);

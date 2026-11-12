@@ -56,37 +56,32 @@ export default function Footer() {
           {/* Pillars / Categories (Col 3) */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Kategori Pengetahuan
+              Klasifikasi Artikel
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/category/knowledge" className="hover:text-white transition-colors">
-                  Knowledge
+                <Link href="/category/teknologi" className="hover:text-white transition-colors">
+                  Teknologi
                 </Link>
               </li>
               <li>
-                <Link href="/category/technology" className="hover:text-white transition-colors">
-                  Technology
+                <Link href="/category/tata-kelola" className="hover:text-white transition-colors">
+                  Tata Kelola
                 </Link>
               </li>
               <li>
-                <Link href="/category/science-research" className="hover:text-white transition-colors">
-                  Science & Research
+                <Link href="/category/hobby" className="hover:text-white transition-colors">
+                  Hobby
                 </Link>
               </li>
               <li>
-                <Link href="/category/data-analytics" className="hover:text-white transition-colors">
-                  Data & Analytics
+                <Link href="/category/sosial" className="hover:text-white transition-colors">
+                  Sosial
                 </Link>
               </li>
-              <li>
-                <Link href="/category/business-management" className="hover:text-white transition-colors">
-                  Business & Management
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/learning" className="hover:text-white transition-colors">
-                  Learning & Guides
+              <li className="pt-2 border-t border-slate-800">
+                <Link href="/articles" className="text-teal-400 hover:text-teal-300 font-semibold transition-colors">
+                  Semua Artikel →
                 </Link>
               </li>
             </ul>

@@ -28,7 +28,7 @@ export default function RecommendedLearning({ articles }: RecommendedLearningPro
             </h2>
           </div>
           <Link
-            href="/category/learning"
+            href="/articles"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
           >
             <span>Seluruh Panduan & Bahan Belajar</span>

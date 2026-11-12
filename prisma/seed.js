@@ -25,7 +25,7 @@ async function main() {
       name: 'Rizky Aditya Pratama Wijaya',
       role: 'ADMIN',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      bio: 'Penulis dan kurator di ZETARAZ Knowledge. Berbagi pengetahuan dan pengalaman seputar manajemen informasi, teknologi, dan arsitektur sistem.',
+      bio: 'Penulis dan kurator di ZETARAZ Knowledge. Berbagi pengetahuan dan pengalaman seputar manajemen informasi, teknologi, tata kelola, dan minat kreatif.',
     },
   });
 
@@ -36,69 +36,48 @@ async function main() {
       name: 'Farah Zulaikha, M.Sc.',
       role: 'EDITOR',
       avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
-      bio: 'Peminat sains data dan kecerdasan buatan. Berfokus pada penulisan edukatif dan panduan praktis analitika.',
+      bio: 'Peminat sains data, teknologi, dan literasi sosial. Berfokus pada penulisan edukatif dan panduan praktis analitika.',
     },
   });
 
-  console.log('--- Creating Categories according to Public Navigation ---');
-  // 6 Main Categories
-  const catKnowledge = await prisma.category.create({
+  console.log('--- Creating 4 Core Categories (Teknologi, Tata Kelola, Hobby, Sosial) ---');
+  const catTeknologi = await prisma.category.create({
     data: {
-      name: 'Knowledge',
-      slug: 'knowledge',
-      description: 'Prinsip organisasi informasi, metodologi berbagi pengetahuan, literasi kognitif, dan konsep dasar lintas disiplin ilmu.',
-      icon: 'BookOpen',
+      name: 'Teknologi',
+      slug: 'teknologi',
+      description: 'Kecerdasan buatan, rekayasa perangkat lunak, keamanan siber, dan eksplorasi perkakas digital modern.',
+      icon: 'Cpu',
       order: 1,
     },
   });
 
-  const catTechnology = await prisma.category.create({
+  const catTataKelola = await prisma.category.create({
     data: {
-      name: 'Technology',
-      slug: 'technology',
-      description: 'Kecerdasan buatan, rekayasa perangkat lunak, keamanan siber, dan eksplorasi perkakas digital modern.',
-      icon: 'Cpu',
+      name: 'Tata Kelola',
+      slug: 'tata-kelola',
+      description: 'Manajemen proses bisnis (BPM), arsitektur enterprise, perencanaan sistem, dan tata kelola operasional terstruktur.',
+      icon: 'Briefcase',
       order: 2,
     },
   });
 
-  const catScienceResearch = await prisma.category.create({
+  const catHobby = await prisma.category.create({
     data: {
-      name: 'Science & Research',
-      slug: 'science-research',
-      description: 'Metodologi penelitian saintifik, ulasan bukti empiris, penalaran logis, dan telaah literatur ilmiah terbuka.',
-      icon: 'FlaskConical',
+      name: 'Hobby',
+      slug: 'hobby',
+      description: 'Eksplorasi minat kreatif, fotografi cerita, penulisan jurnal mandiri, dan kegiatan positif perawat ketajaman pikiran.',
+      icon: 'Palette',
       order: 3,
     },
   });
 
-  const catDataAnalytics = await prisma.category.create({
+  const catSosial = await prisma.category.create({
     data: {
-      name: 'Data & Analytics',
-      slug: 'data-analytics',
-      description: 'Sains data, teknik visualisasi, analitika statistik, dan praktik pengolahan data terstruktur untuk pemecahan masalah.',
-      icon: 'BarChart3',
+      name: 'Sosial',
+      slug: 'sosial',
+      description: 'Dinamika komunitas, literasi informasi publik, etika interaksi digital, dan semangat kolaborasi masyarakat terbuka.',
+      icon: 'Users',
       order: 4,
-    },
-  });
-
-  const catBusinessManagement = await prisma.category.create({
-    data: {
-      name: 'Business & Management',
-      slug: 'business-management',
-      description: 'Manajemen proses bisnis (BPM), arsitektur organisasi, perencanaan strategis, dan praktik operasional efektif.',
-      icon: 'Briefcase',
-      order: 5,
-    },
-  });
-
-  const catLearning = await prisma.category.create({
-    data: {
-      name: 'Learning',
-      slug: 'learning',
-      description: 'Panduan langkah-demi-langkah, catatan pengalaman praktis, studi kasus nyata, dan bahan belajar mandiri.',
-      icon: 'GraduationCap',
-      order: 6,
     },
   });
 
@@ -110,10 +89,12 @@ async function main() {
     { name: 'Artificial Intelligence', slug: 'artificial-intelligence' },
     { name: 'Data Science', slug: 'data-science' },
     { name: 'Cybersecurity', slug: 'cybersecurity' },
-    { name: 'Metodologi Riset', slug: 'metodologi-riset' },
     { name: 'BPM', slug: 'bpm' },
     { name: 'Enterprise Architecture', slug: 'enterprise-architecture' },
     { name: 'Continuous Learning', slug: 'continuous-learning' },
+    { name: 'Kreativitas & Hobi', slug: 'kreativitas-hobi' },
+    { name: 'Literasi Digital', slug: 'literasi-digital' },
+    { name: 'Komunitas & Sosial', slug: 'komunitas-sosial' },
   ];
 
   const createdTags = {};
@@ -121,9 +102,10 @@ async function main() {
     createdTags[t.slug] = await prisma.tag.create({ data: t });
   }
 
-  console.log('--- Creating 10+ Detailed Knowledge & Experience Articles ---');
+  console.log('--- Creating 13 Curated Articles across the 4 Categories ---');
 
   const articles = [
+    // ==================== 1. SOSIAL ====================
     {
       title: 'Membangun Kebiasaan Berbagi Pengetahuan: Menjaga Wawasan Tetap Hidup dan Bermakna',
       slug: 'membangun-kebiasaan-berbagi-pengetahuan',
@@ -134,13 +116,13 @@ async function main() {
       isFeatured: true,
       viewCount: 1650,
       readTimeMinutes: 6,
-      categoryId: catKnowledge.id,
+      categoryId: catSosial.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Jaringan pemikiran: Setiap pengalaman yang dibagikan membuka perspektif baru bagi orang lain.',
       seoTitle: 'Membangun Kebiasaan Berbagi Pengetahuan | ZETARAZ Knowledge',
       seoDescription: 'Ulasan pentingnya berbagi pengetahuan dan pengalaman secara inklusif untuk merawat wawasan dan pemahaman bersama.',
-      tags: ['knowledge-sharing', 'continuous-learning', 'pengalaman-praktis'],
+      tags: ['knowledge-sharing', 'continuous-learning', 'komunitas-sosial'],
       publishedAt: new Date('2026-10-15T09:00:00Z'),
       content: `## Pengetahuan Menjadi Bernilai Saat Diteruskan
 
@@ -171,6 +153,8 @@ Tantangan terbesar adalah banyak pengalaman berharga tidak pernah dituliskan. Sa
 
 Berbagi pengetahuan bukan tentang pamer kepandaian, melainkan tentang membuka pintu agar orang lain dapat melangkah lebih jauh.`
     },
+
+    // ==================== 2. TATA KELOLA ====================
     {
       title: 'Catatan Praktis Manajemen Proses Bisnis (BPM): Dari Alur Kerja ke Kolaborasi Sehari-hari',
       slug: 'catatan-praktis-manajemen-proses-bisnis-bpm',
@@ -181,7 +165,7 @@ Berbagi pengetahuan bukan tentang pamer kepandaian, melainkan tentang membuka pi
       isFeatured: true,
       viewCount: 1320,
       readTimeMinutes: 7,
-      categoryId: catBusinessManagement.id,
+      categoryId: catTataKelola.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Pemetaan proses: Mengurai kerumitan operasional menjadi alur kerja yang mudah dipahami seluruh tim.',
@@ -201,19 +185,6 @@ Di sinilah **Business Process Management (BPM)** hadir sebagai kerangka berpikir
 
 Proses kerja yang sehat tidak dirancang sekali lalu dibiarkan selamanya. Ia dirawat melalui siklus perbaikan terus-menerus:
 
-\`\`\`
-   [ 1. Amati & Petakan Alur Nyata ]
-                 |
-                 v
-   [ 2. Temukan Titik Hambatan (Bottleneck) ]
-                 |
-                 v
-   [ 3. Sederhanakan & Uji Coba Perubahan ]
-                 |
-                 v
-   [ 4. Bagikan Cara Baru ke Seluruh Tim ]
-\`\`\`
-
 1. **Amati & Petakan (*Mapping*):** Tuliskan apa yang sebenarnya terjadi di lapangan, bukan apa yang idealnya tertulis di aturan lama.
 2. **Identifikasi Hambatan (*Bottlenecks*):** Cari di mana berkas menumpuk paling lama atau bagian mana yang paling sering memicu pertanyaan berulang.
 3. **Sederhanakan (*Simplify*):** Hilangkan persetujuan ganda yang tidak memberikan nilai tambah nyata.
@@ -221,6 +192,8 @@ Proses kerja yang sehat tidak dirancang sekali lalu dibiarkan selamanya. Ia dira
 
 Dengan melihat alur secara visual, tim dapat berkolaborasi mencari solusi tanpa saling menyalahkan.`
     },
+
+    // ==================== 3. TATA KELOLA ====================
     {
       title: 'Mengenal Dasar Arsitektur Enterprise: Menjembatani Kebutuhan Nyata dengan Solusi Teknologi',
       slug: 'mengenal-dasar-arsitektur-enterprise',
@@ -231,7 +204,7 @@ Dengan melihat alur secara visual, tim dapat berkolaborasi mencari solusi tanpa 
       isFeatured: true,
       viewCount: 1140,
       readTimeMinutes: 8,
-      categoryId: catBusinessManagement.id,
+      categoryId: catTataKelola.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Struktur arsitektur: Menjaga keteraturan sistem agar tetap adaptif terhadap kebutuhan masa depan.',
@@ -249,251 +222,357 @@ Ketika sebuah sistem bertumbuh tanpa rencana matang, kita sering mendapati aplik
 
 ## Empat Sudut Pandang Arsitektur
 
-Secara umum, arsitektur sistem ditinjau dari empat lapisan:
+Secara umum, EA membagi sistem ke dalam empat lapisan mendasar:
 
-* **Lapisan Kebutuhan & Aktivitas (*Business*):** Apa tujuan yang ingin dicapai dan aktivitas apa yang dijalankan.
-* **Lapisan Data & Informasi (*Data*):** Informasi apa saja yang mengalir dan bagaimana struktur datanya dijaga agar valid.
-* **Lapisan Aplikasi (*Application*):** Aplikasi dan perangkat lunak apa yang digunakan untuk mengolah data tersebut.
-* **Lapisan Teknologi & Infrastruktur (*Technology*):** Server, jaringan, sistem operasi, dan perangkat keras yang menopang seluruh aplikasi.
+1. **Arsitektur Bisnis:** Proses kerja utama, struktur tim, dan tujuan yang ingin dicapai.
+2. **Arsitektur Data:** Di mana informasi penting disimpan dan bagaimana data dialirkan secara aman.
+3. **Arsitektur Aplikasi:** Aplikasi apa saja yang digunakan dan bagaimana mereka berinteraksi lewat API.
+4. **Arsitektur Teknologi / Infrastruktur:** Server, jaringan, komputasi awan (*cloud*), dan perangkat pendukung.
 
-Memahami keterkaitan keempat lapisan ini membantu siapa saja—baik teknisi maupun pegiat manajemen—dalam mengambil keputusan yang rasional dan berkelanjutan.`
+Kunci keberhasilan EA bukan pada tebalnya dokumen dokumentasi, melainkan pada kejelasan komunikasi antar pengambil keputusan dan tim pengembang.`
     },
+
+    // ==================== 4. TEKNOLOGI ====================
     {
-      title: 'Bagaimana Kecerdasan Buatan Membantu Pengolahan Pengetahuan Sehari-hari',
+      title: 'Bagaimana Kecerdasan Buatan Membantu Pengolahan Pengetahuan: Dari Data Menjadi Pemahaman',
       slug: 'bagaimana-kecerdasan-buatan-membantu-pengolahan-pengetahuan',
-      subtitle: 'Pemanfaatan model bahasa modern sebagai mitra berpikir untuk membaca literatur, menyusun ringkasan, dan memicu ide baru.',
-      excerpt: 'Kecerdasan Buatan (AI) kini dapat diakses siapa saja untuk membantu merangkum informasi panjang, mencari keterkaitan antar konsep, dan mempercepat proses belajar.',
-      contentType: 'TUTORIAL',
+      subtitle: 'Menelaah peran model bahasa besar (LLM) dan otomasi cerdas sebagai asisten berpikir, bukan pengganti nalar kritis.',
+      excerpt: 'Kecerdasan buatan membuka babak baru dalam cara kita mengorganisasi wawasan. Namun kunci utamanya tetap berada pada kemampuan manusia memvalidasi konteks dan menguji kebenaran.',
+      contentType: 'KNOWLEDGE',
       status: 'PUBLISHED',
       isFeatured: false,
-      viewCount: 1890,
+      viewCount: 1480,
       readTimeMinutes: 7,
-      categoryId: catTechnology.id,
+      categoryId: catTeknologi.id,
       authorId: editor.id,
-      featuredImage: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Kolaborasi manusia dan mesin: AI sebagai alat bantu eksplorasi ide dan penajaman wawasan.',
-      seoTitle: 'AI untuk Pengolahan Pengetahuan Sehari-hari | ZETARAZ Knowledge',
-      seoDescription: 'Panduan praktis memanfaatkan kecerdasan buatan (AI) untuk sintesis informasi, riset literatur, dan pembelajaran mandiri.',
-      tags: ['artificial-intelligence', 'knowledge-sharing', 'tutorial'],
-      publishedAt: new Date('2026-10-25T11:00:00Z'),
-      content: `## Kecerdasan Buatan Sebagai Mitra Belajar
+      featuredImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Sinergi kognitif: Menjadikan teknologi sebagai mitra untuk mengeksplorasi wawasan lebih mendalam.',
+      seoTitle: 'Kecerdasan Buatan & Pengolahan Pengetahuan | ZETARAZ Knowledge',
+      seoDescription: 'Ulasan praktis penerapan AI dan LLM dalam manajemen pengetahuan pribadi serta organisasi.',
+      tags: ['artificial-intelligence', 'knowledge-sharing', 'pengalaman-praktis'],
+      publishedAt: new Date('2026-10-25T14:00:00Z'),
+      content: `## Melampaui Euforia Teknologi
 
-Dahulu, mencari dan menyaring ratusan referensi memerlukan waktu berminggu-minggu di perpustakaan. Kini, kehadiran model bahasa besar (*Large Language Models*) memungkinkan kita berdialog dengan dokumen, mengekstraksi poin-poin utama, dan menguji pemahaman kita terhadap suatu konsep secara interaktif.
+Kehadiran model bahasa besar (*Large Language Models / LLM*) telah mengubah lanskap pencarian dan pengolahan teks secara dramatis. Jika sebelumnya kita membutuhkan waktu berjam-jam untuk merangkum dokumen panjang atau menyusun draf awal, kini kita dapat memperoleh bantuan dalam hitungan detik.
 
-Namun, agar AI benar-benar bermanfaat dan tidak justru menyesatkan, kita perlu memahami cara memanfaatkannya secara tepat.
+Namun, pertanyaan pentingnya adalah: **Apakah informasi yang lebih cepat secara otomatis membuat kita lebih berpengetahuan?**
 
 ---
 
-## Praktik Baik Menggunakan AI untuk Belajar
+## AI sebagai Mitra Berpikir (*Thinking Partner*)
 
-1. **Gunakan Sebagai Pemicu Diskusi, Bukan Jawaban Mutlak:** Perlakukan AI seperti rekan diskusi yang pintar namun terkadang bisa keliru (*hallucination*). Selalu lakukan cek silang (*fact checking*) terhadap sumber primer.
-2. **Ajukan Perintah (*Prompt*) dengan Konteks yang Jelas:** Jelaskan latar belakang masalah dan format jawaban yang Anda harapkan. Alih-alih bertanya "Jelaskan data analytics", lebih baik tanyakan "Jelaskan perbedaan data analytics deskriptif dan prediktif beserta contoh kasus di perpustakaan".
-3. **Minta Penjelasan dari Sudut Pandang Berbeda:** Minta AI untuk menjelaskan sebuah topik dengan analogi sederhana atau dari perspektif yang berlawanan untuk mengasah nalar kritis.
+Cara terbaik memanfaatkan AI dalam manajemen pengetahuan adalah menjadikannya sebagai *sparring partner* intelektual:
 
-Dengan pendekatan yang bijak, teknologi AI menjadi katalis luar biasa dalam memperluas wawasan dan mempermudah kita memahami ilmu-ilmu baru.`
+* **Meringkas dan Menemukan Pola:** Mengidentifikasi tema utama dari kumpulan catatan lapangan atau transkrip wawancara.
+* **Menantang Asumsi (*Devil's Advocate*):** Meminta model untuk memberikan kritik terhadap argumen yang sedang kita bangun.
+* **Memformat Struktur Tulisan:** Membantu menata outline atau merapikan bahasa agar lebih mudah dibaca oleh pemula.
+
+Tetap ingat: **Kebenaran fakta dan kedalaman empati tetap menjadi domain mutlak manusia.** Selalu lakukan verifikasi mandiri atas setiap rujukan yang dihasilkan oleh mesin.`
     },
+
+    // ==================== 5. TEKNOLOGI ====================
     {
-      title: 'Dasar Sains Data: Mengubah Catatan dan Angka Mentah Menjadi Wawasan Bermanfaat',
+      title: 'Dasar Sains Data: Mengubah Catatan Menjadi Wawasan Terukur yang Bermakna',
       slug: 'dasar-sains-data-mengubah-catatan-menjadi-wawasan',
-      subtitle: 'Memahami alur dasar pengolahan data dari pengumpulan, pembersihan, eksplorasi grafik, hingga penarikan kesimpulan jujur.',
-      excerpt: 'Data yang melimpah tidak ada artinya jika kita tidak tahu cara mengajukan pertanyaan yang tepat dan membaca pesan di balik angka-angka tersebut.',
+      subtitle: 'Langkah demi langkah memahami data numerik dan kategori untuk menarik kesimpulan yang bertanggung jawab.',
+      excerpt: 'Data tanpa narasi hanyalah deretan angka dingin. Sains data membantu kita mendengarkan cerita yang tersimpan di balik angka tersebut.',
       contentType: 'TUTORIAL',
       status: 'PUBLISHED',
       isFeatured: false,
-      viewCount: 1420,
-      readTimeMinutes: 7,
-      categoryId: catDataAnalytics.id,
+      viewCount: 990,
+      readTimeMinutes: 9,
+      categoryId: catTeknologi.id,
       authorId: editor.id,
       featuredImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Grafik analitika: Membaca cerita dan tren yang tersembunyi di balik baris data.',
-      seoTitle: 'Dasar Sains Data & Analitika Praktis | ZETARAZ Knowledge',
-      seoDescription: 'Pelajari dasar-dasar analitika data: eksplorasi data, pembersihan data mentah, visualisasi grafik, dan interpretasi statistik.',
-      tags: ['data-science', 'tutorial', 'pengalaman-praktis'],
-      publishedAt: new Date('2026-10-28T14:00:00Z'),
-      content: `## Memulai Perjalanan Sains Data
+      imageCaption: 'Eksplorasi analitika: Membaca pola tersembunyi lewat representasi visual yang jernih.',
+      seoTitle: 'Dasar Sains Data untuk Pemula | ZETARAZ Knowledge',
+      seoDescription: 'Panduan ramah pemula tentang siklus analitika data, pembersihan data, dan penyajian grafik informatif.',
+      tags: ['data-science', 'tutorial', 'knowledge-sharing'],
+      publishedAt: new Date('2026-10-28T11:20:00Z'),
+      content: `## Mengapa Kita Perlu Memahami Data?
 
-Sains data kerap digambarkan sebagai bidang yang sangat rumit dan penuh rumus matematika tingkat tinggi. Namun pada intinya, sains data adalah **seni mendengarkan cerita yang ingin disampaikan oleh data**.
-
-Apakah pengunjung perpustakaan meningkat di akhir pekan? Kategori materi apa yang paling banyak dicari? Pertanyaan-pertanyaan praktis seperti inilah yang menjadi titik awal analitika data.
+Dalam dunia yang dipenuhi klaim dan opini, data kuantitatif memberikan jangkar objektivitas. Ketika kita mampu mengumpulkan data dengan jujur dan menganalisisnya secara cermat, kita dapat mengambil keputusan yang didasari bukti riil, bukan sekadar firasat semata.
 
 ---
 
-## Empat Tahap Inti dalam Eksplorasi Data
+## Siklus Sederhana Analitika Data
 
-* **1. Memahami Masalah (*Define the Question*):** Jangan mulai dengan data, mulailah dengan pertanyaan. Apa keputusan atau wawasan yang ingin kita peroleh?
-* **2. Membersihkan Data (*Data Cleansing*):** Tahap yang sering memakan waktu paling banyak. Memperbaiki data yang salah ketik, menghapus baris duplikat, dan merapikan format tanggal.
-* **3. Eksplorasi Visual (*Exploratory Data Analysis*):** Menggambar grafik batang, scatter plot, atau distribusi untuk melihat kebiasaan dan anomali (*outliers*).
-* **4. Interpretasi yang Beretika:** Menafsirkan temuan apa adanya tanpa memaksakan angka agar sesuai dengan prasangka awal kita.
+Untuk memulai proyek analisis sederhana, ada lima tahapan pokok yang biasa dilalui:
 
-Data adalah cermin kenyataan; membacanya dengan teliti membantu kita mengambil langkah yang lebih tepat.`
+1. **Definisikan Pertanyaan:** Pertanyaan yang tepat jauh lebih penting daripada rumus yang rumit.
+2. **Kumpulkan & Bersihkan Data (*Data Cleaning*):** 70% waktu biasanya dihabiskan untuk merapikan ejaan, menangani data hilang (*missing values*), dan menyeragamkan satuan.
+3. **Analisis Deskriptif:** Hitung rata-rata, median, dan sebaran nilai untuk memahami karakter data secara menyeluruh.
+4. **Visualisasikan:** Gunakan diagram batang atau garis yang sederhana. Hindari grafik 3D yang membingungkan mata.
+5. **Tafsirkan & Ceritakan:** Jelaskan apa arti temuan tersebut bagi pembaca awam dengan bahasa yang jelas.`
     },
+
+    // ==================== 6. TEKNOLOGI ====================
     {
-      title: 'Prinsip Dasar Keamanan Siber: Melindungi Identitas dan Data Digital Kita',
+      title: 'Prinsip Dasar Keamanan Siber untuk Pengguna Sehari-hari: Melindungi Aset Digital Pribadi',
       slug: 'prinsip-dasar-keamanan-siber',
-      subtitle: 'Langkah-langkah esensial menjaga keamanan akun, mengenali upaya phishing, dan menerapkan verifikasi dua langkah.',
-      excerpt: 'Keamanan digital bukan hanya urusan tim IT perusahaan besar. Setiap orang yang berinteraksi di internet perlu memahami kebiasaan higienis keamanan siber.',
-      contentType: 'KNOWLEDGE',
+      subtitle: 'Panduan praktis menjaga privasi, mengelola kata sandi, dan mewaspadai manipulasi sosial (phishing) di internet.',
+      excerpt: 'Keamanan digital bukan hanya urusan pakar IT. Setiap orang yang berselancar di internet berhak dan mampu melindungi data pribadinya dengan langkah sederhana.',
+      contentType: 'TUTORIAL',
       status: 'PUBLISHED',
       isFeatured: false,
       viewCount: 1210,
       readTimeMinutes: 6,
-      categoryId: catTechnology.id,
+      categoryId: catTeknologi.id,
       authorId: admin.id,
-      featuredImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Keamanan digital: Melindungi batas privasi dan integritas data dari akses tak sah.',
-      seoTitle: 'Prinsip Dasar Keamanan Siber untuk Semua | ZETARAZ Knowledge',
-      seoDescription: 'Panduan mudah memahami keamanan siber: kata sandi yang kuat, 2FA, pencegahan rekayasa sosial (phishing), dan enkripsi.',
-      tags: ['cybersecurity', 'knowledge-sharing', 'tutorial'],
-      publishedAt: new Date('2026-11-01T08:00:00Z'),
-      content: `## Menjaga Ruang Digital Kita Tetap Aman
+      featuredImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Keamanan digital: Membangun pertahanan berlapis untuk melindungi data berharga.',
+      seoTitle: 'Dasar Keamanan Siber Pribadi | ZETARAZ Knowledge',
+      seoDescription: 'Tips praktis menjaga akun digital, mengenali tautan mencurigakan, dan mengaktifkan autentikasi dua faktor.',
+      tags: ['cybersecurity', 'tutorial', 'pengalaman-praktis'],
+      publishedAt: new Date('2026-11-01T09:10:00Z'),
+      content: `## Mengapa Keamanan Digital Begitu Krusial?
 
-Di zaman serba terhubung, kita menyimpan data perbankan, riwayat komunikasi pribadi, dan dokumen pekerjaan di perangkat digital kita. Sebagian besar insiden kebocoran akun terjadi bukan karena peretasan canggih terhadap enkripsi, melainkan karena kebiasaan keamanan yang lalai—seperti kata sandi yang sama di semua situs atau terkecoh tautan palsu (*phishing*).
-
----
-
-## Tiga Kebiasaan Higienis yang Wajib Dilakukan
-
-1. **Gunakan Pengelola Kata Sandi (*Password Manager*):** Jangan menghafal kata sandi rumit untuk puluhan akun. Gunakan pengelola kata sandi terpercaya agar tiap akun memiliki sandi unik dan panjang.
-2. **Aktifkan Autentikasi Dua Faktor (2FA):** 2FA adalah lapisan pelindung terpenting. Meskipun seseorang mengetahui kata sandi Anda, mereka tetap tidak dapat masuk tanpa kode konfirmasi di perangkat fisik Anda.
-3. **Selalu Curiga Terhadap Pesan yang Mendesak:** Penyerang rekayasa sosial sering memanfaatkan kepanikan atau iming-iming hadiah mendesak untuk memancing kita mengklik tautan berbahaya.
-
-Menjaga keamanan diri di ruang maya adalah bentuk tanggung jawab digital yang melindungi diri kita dan orang-orang di sekitar kita.`
-    },
-    {
-      title: 'Pengantar Metodologi Penelitian: Dari Rasa Ingin Tahu Menuju Bukti yang Sahih',
-      slug: 'pengantar-metodologi-penelitian',
-      subtitle: 'Memahami cara merumuskan pertanyaan yang dapat diuji, mengumpulkan bukti sistematis, dan menguji kebenaran hipotesis.',
-      excerpt: 'Metodologi penelitian adalah cara kita melatih akal sehat agar tidak mudah tertipu oleh asumsi pribadi atau informasi yang tidak berdasar.',
-      contentType: 'RESEARCH',
-      status: 'PUBLISHED',
-      isFeatured: false,
-      viewCount: 1390,
-      readTimeMinutes: 8,
-      categoryId: catScienceResearch.id,
-      authorId: admin.id,
-      featuredImage: 'https://images.unsplash.com/photo-1507668077129-56e32842fceb?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Laboratorium penyelidikan: Menguji kebenaran pernyataan melalui observasi dan metode terstruktur.',
-      seoTitle: 'Pengantar Metodologi Penelitian | ZETARAZ Knowledge',
-      seoDescription: 'Pelajari dasar-dasar metodologi penelitian ilmiah: perumusan masalah, observasi empiris, pengujian hipotesis, dan kejujuran data.',
-      tags: ['metodologi-riset', 'knowledge-sharing', 'continuous-learning'],
-      publishedAt: new Date('2026-11-03T10:00:00Z'),
-      content: `## Semangat Penyelidikan Saintifik
-
-Apa yang membedakan klaim ilmiah dari sekadar kabar angin atau opini pribadi? Jawabannya terletak pada **metodologi**.
-
-Sebuah pengetahuan ilmiah dibangun melalui proses pengamatan yang transparan, dapat diulang oleh peneliti lain (*replicable*), dan terbuka untuk dibuktikan salah jika fakta di lapangan memang tidak mendukung (*falsifiable*).
+Hampir seluruh aspek hidup kita kini memiliki jejak digital: rekening bank, komunikasi keluarga, riwayat kesehatan, hingga dokumen pekerjaan. Ancaman terbesar sering kali bukan datang dari peretasan canggih perangkat keras, melainkan dari kelalaian kecil dalam mengenali manipulasi sosial (*social engineering*).
 
 ---
 
-## Langkah-Langkah Pokok Penyelidikan
+## 4 Kebiasaan Utama Penjaga Akun
 
-\`\`\`
-1. Observasi Fenomena & Rasa Ingin Tahu
-                 |
-                 v
-2. Perumusan Masalah yang Jelas & Spesifik
-                 |
-                 v
-3. Tinjauan Pustaka & Pengetahuan yang Sudah Ada
-                 |
-                 v
-4. Pengumpulan Bukti & Data Lapangan
-                 |
-                 v
-5. Analisis Kritis & Penarikan Simpulan Terbuka
-\`\`\`
-
-Riset yang baik dimulai dengan kerendahan hati intelektual: mengakui apa yang belum kita ketahui dan berani mengoreksi pemikiran lama saat bukti baru ditemukan.`
+* **Aktifkan Verifikasi Dua Langkah (2FA / MFA):** Selalu gunakan aplikasi authenticator daripada SMS jika memungkinkan.
+* **Gunakan Pengelola Kata Sandi (*Password Manager*):** Jangan pernah menggunakan satu kata sandi yang sama untuk beberapa layanan berbeda.
+* **Periksa Alamat Pengirim Sebelum Mengeklik:** Pesan yang mendesak atau menawarkan hadiah tak masuk akal hampir selalu merupakan upaya penipuan (*phishing*).
+* **Perbarui Perangkat Secara Berkala:** Pembaruan sistem operasi biasanya berisi tambalan keamanan penting untuk menutup celah yang baru ditemukan.`
     },
+
+    // ==================== 7. TATA KELOLA ====================
     {
-      title: 'Membaca Bukti Ilmiah dan Menilai Kredibilitas Informasi',
-      slug: 'membaca-bukti-ilmiah-dan-menilai-kredibilitas-informasi',
-      subtitle: 'Membedakan korelasi dari hubungan sebab-akibat serta mewaspadai klaim sensasional yang mencatut sains.',
-      excerpt: 'Di tengah banjir informasi internet, kemampuan menyaring mana bukti kuat dan mana sekadar cocoklogi adalah ketrampilan literasi paling berharga.',
-      contentType: 'RESEARCH',
-      status: 'PUBLISHED',
-      isFeatured: false,
-      viewCount: 970,
-      readTimeMinutes: 7,
-      categoryId: catScienceResearch.id,
-      authorId: editor.id,
-      featuredImage: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Penelaahan kritis: Menimbang bukti dengan teliti sebelum menarik kesimpulan.',
-      seoTitle: 'Membaca Bukti Ilmiah & Kredibilitas Informasi | ZETARAZ Knowledge',
-      seoDescription: 'Kiat mengenali kredibilitas informasi: piramida bukti ilmiah, perbedaan korelasi dan kausalitas, serta verifikasi sumber primer.',
-      tags: ['metodologi-riset', 'knowledge-sharing', 'continuous-learning'],
-      publishedAt: new Date('2026-11-05T09:30:00Z'),
-      content: `## Tidak Semua Klaim Memiliki Bobot yang Sama
-
-Sering kita jumpai judul berita dengan awalan "Menurut Penelitian Terbaru...". Namun jika ditelusuri ke naskah aslinya, penelitian tersebut mungkin hanya diuji pada sampel yang sangat kecil atau bahkan sekadar jajak pendapat daring tanpa kontrol metodologis.
-
-Memahami **hierarki bukti ilmiah** membantu kita bersikap adil dan rasional dalam menerima kabar.
-
----
-
-## Prinsip Penting: Korelasi Bukan Kausalitas
-
-Dua hal yang terjadi bersamaan tidak otomatis memiliki hubungan sebab-akibat (*correlation does not imply causation*). Sebagai contoh, penjualan es krim meningkat bersamaan dengan tingkat orang tenggelam di kolam renang; bukan karena es krim menyebabkan tenggelam, melainkan karena keduanya sama-sama dipengaruhi oleh cuaca panas musim kemarau.
-
-Menyadari hal ini mencegah kita dari mengambil kesimpulan yang salah dalam kehidupan sehari-hari.`
-    },
-    {
-      title: 'Pengalaman Mengelola Perubahan: Belajar Beradaptasi dengan Cara Kerja Baru',
+      title: 'Pengalaman Mengelola Perubahan: Merawat Adopsi Cara Kerja Baru di Tengah Tim',
       slug: 'pengalaman-mengelola-perubahan-cara-kerja-baru',
-      subtitle: 'Refleksi pengalaman nyata saat mengenalkan sistem baru dan bagaimana komunikasi yang terbuka mempermudah adaptasi tim.',
-      excerpt: 'Menerapkan teknologi baru selalu lebih mudah daripada mengubah kebiasaan lama. Kuncinya terletak pada empati, mendengarkan keluhan, dan memberi ruang belajar.',
+      subtitle: 'Pelajaran nyata tentang mengapa resistensi sering kali bukan soal penolakan, melainkan soal rasa takut akan ketidakpastian.',
+      excerpt: 'Mengenalkan sistem atau perkakas baru selalu diiringi tantangan manusiawi. Kuncinya terletak pada empati, komunikasi transparan, dan pendampingan bertahap.',
       contentType: 'EXPERIENCE',
       status: 'PUBLISHED',
       isFeatured: false,
-      viewCount: 1250,
+      viewCount: 870,
       readTimeMinutes: 7,
-      categoryId: catBusinessManagement.id,
+      categoryId: catTataKelola.id,
       authorId: admin.id,
-      featuredImage: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Dialog terbuka: Menjembatani kebiasaan lama menuju cara kerja baru yang lebih efektif.',
-      seoTitle: 'Pengalaman Mengelola Perubahan Cara Kerja | ZETARAZ Knowledge',
-      seoDescription: 'Catatan pengalaman praktis mengelola perubahan organisasi, mengatasi resistensi, dan membangun komunikasi tim yang saling percaya.',
-      tags: ['pengalaman-praktis', 'bpm', 'knowledge-sharing'],
-      publishedAt: new Date('2026-11-07T11:15:00Z'),
-      content: `## Mengapa Adaptasi Sering Terasa Berat?
+      featuredImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Kolaborasi tim: Mendengarkan kekhawatiran sebelum menerapkan prosedur kerja baru.',
+      seoTitle: 'Catatan Manajemen Perubahan Tim | ZETARAZ Knowledge',
+      seoDescription: 'Refleksi praktis implementasi sistem baru dan strategi merawat adaptasi tim secara manusiawi.',
+      tags: ['bpm', 'pengalaman-praktis', 'knowledge-sharing'],
+      publishedAt: new Date('2026-11-03T13:45:00Z'),
+      content: `## Di Balik Penolakan Sistem Baru
 
-Ketika sebuah alat kerja baru diperkenalkan, reaksi pertama yang muncul dari tim sering kali adalah keengganan. Reaksi ini wajar: orang merasa nyaman dengan rutinitas yang sudah mereka kuasai, dan hal baru selalu membawa rasa cemas akan kemungkinan melakukan kesalahan.
+Sering kali para perancang sistem merasa heran: "Mengapa aplikasi yang sudah kita buat sebagus ini tidak mau digunakan oleh tim lapangan?"
 
-Dari berbagai pengalaman mendampingi proses perubahan, faktor teknologi hanya menyumbang 20% keberhasilan; 80% sisanya adalah tentang **bagaimana manusia di dalamnya diajak bicara dan didengarkan**.
+Setelah duduk bersama dan mendengarkan, jawabannya jarang berhubungan dengan fitur teknologi. Penyebab utamanya adalah **beban kognitif**: orang merasa pekerjaan lamanya yang sudah terbiasa kini terasa lambat karena harus mempelajari tombol baru, format baru, dan alur pelaporan baru.
 
 ---
 
-## Tiga Hal yang Terbukti Membantu
+## Strategi Pendampingan Empatik
 
-* **Jelaskan 'Mengapa', Bukan Hanya 'Bagaimana':** Orang rela belajar hal rumit jika mereka paham apa manfaatnya bagi kemudahan kerja mereka sendiri di masa depan.
-* **Rayakan Keberhasilan Kecil Awal:** Berikan apresiasi kepada anggota tim yang pertama kali mencoba alur baru, agar rasa percaya diri menular ke rekan lainnya.
-* **Buka Ruang Kritik yang Aman:** Dengarkan masukan mengenai bagian alur yang terasa kaku dan jangan ragu melakukan penyesuaian lapangan.
-
-Perubahan yang langgeng adalah perubahan yang dirangkul bersama secara sukarela.`
+1. **Libatkan Sejak Perancangan Awal:** Jangan menunggu sistem selesai 100% sebelum meminta pendapat pengguna akhir.
+2. **Uji Coba pada Kelompok Kecil (*Pilot Project*):** Temukan perbaikan cepat (*quick wins*) yang langsung meringankan beban harian mereka.
+3. **Dokumentasikan Panduan Sederhana:** Buat lembar contekan (*cheat sheet*) 1 halaman daripada buku manual tebal 100 halaman.`
     },
+
+    // ==================== 8. HOBBY ====================
     {
-      title: 'Belajar Sepanjang Hayat: Menumbuhkan Rasa Ingin Tahu yang Tak Pernah Padam',
-      slug: 'belajar-sepanjang-hayat-continuous-learning',
-      subtitle: 'Menjaga kegembiraan belajar, berani melupakan kebiasaan usang (unlearn), dan membuka diri pada wawasan baru setiap hari.',
-      excerpt: 'Dalam dunia yang terus bergerak, kemampuan untuk belajar, berhenti mempraktikkan cara usang, dan mempelajari hal baru adalah kekuatan sejati setiap pembelajar mandiri.',
-      contentType: 'PERSPECTIVE',
+      title: 'Menemukan Keseimbangan Hidup Melalui Hobi Kreatif: Eksplorasi Minat di Luar Rutinitas',
+      slug: 'menemukan-keseimbangan-hidup-melalui-hobi-kreatif',
+      subtitle: 'Bagaimana meluangkan waktu untuk hobi non-pekerjaan mampu menyegarkan kembali pikiran dan menjaga kesehatan mental.',
+      excerpt: 'Di tengah tuntutan produktivitas yang tiada henti, memiliki hobi yang ditekuni tanpa beban target komersial adalah bentuk kepedulian terbaik pada diri sendiri.',
+      contentType: 'EXPERIENCE',
       status: 'PUBLISHED',
       isFeatured: false,
-      viewCount: 1720,
+      viewCount: 1120,
+      readTimeMinutes: 5,
+      categoryId: catHobby.id,
+      authorId: admin.id,
+      featuredImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Ruang kreasi: Menemukan kedamaian dan ketenangan lewat kegiatan yang disukai sepenuh hati.',
+      seoTitle: 'Menemukan Keseimbangan Hidup Melalui Hobi Kreatif | ZETARAZ Knowledge',
+      seoDescription: 'Catatan reflektif tentang pentingnya merawat hobi dan minat kreatif untuk menjaga kejernihan berpikir dan keseimbangan batin.',
+      tags: ['kreativitas-hobi', 'pengalaman-praktis', 'continuous-learning'],
+      publishedAt: new Date('2026-11-05T08:00:00Z'),
+      content: `## Hobi Bukan Sekadar Pengisi Waktu Luang
+
+Dalam budaya yang mengagungkan kesibukan, kita sering merasa bersalah jika melakukan sesuatu yang "tidak menghasilkan uang". Padahal, psikologi kognitif menunjukkan bahwa otak manusia membutuhkan ruang eksplorasi bebas tanpa tekanan evaluasi.
+
+Hobi kreatif—mulai dari fotografi jalanan, melukis, berkebun di teras rumah, hingga merakit peranti audio—berperan sebagai katup pelepas stres (*stress release*) yang luar biasa ampuh.
+
+---
+
+## Tiga Manfaat Nyata Merawat Minat Pribadi
+
+* **Memasuki Kondisi *Flow*:** Saat tenggelam dalam sebuah aktivitas kreatif, rasa cemas terhadap hari esok dan penyesalan masa lalu sejenak mereda. Kita hadir seutuhnya di momen sekarang.
+* **Mengasah Ketajaman Mengamati:** Seseorang yang gemar fotografi akan belajar melihat sudut pandang cahaya yang luput dari pandangan orang biasa. Keterampilan mengamati ini secara tidak sadar memperkaya analisis kita saat kembali ke meja kerja.
+* **Bebas dari Tuntutan Kesempurnaan:** Dalam hobi, kegagalan bukan bencana melainkan bagian dari kesenangan mencoba. Anda tidak perlu menjadi maestro untuk menikmati proses melukis cat air atau menyeduh kopi manual.
+
+Luangkan setidaknya 30 menit setiap pekan untuk melakukan apa yang benar-benar Anda sukai, demi merawat kebahagiaan batin.`
+    },
+
+    // ==================== 9. HOBBY ====================
+    {
+      title: 'Seni Merawat Fokus dengan Membaca dan Menulis Jurnal Mandiri',
+      slug: 'seni-merawat-fokus-dengan-membaca-dan-menulis-jurnal',
+      subtitle: 'Mengurai benang kusut pemikiran harian lewat goresan pena dan lembaran buku di era banjir notifikasi.',
+      excerpt: 'Menulis jurnal bukan soal menyusun karya sastra indah, melainkan tentang memberi tempat bagi isi kepala kita untuk bernapas dengan jujur.',
+      contentType: 'TUTORIAL',
+      status: 'PUBLISHED',
+      isFeatured: false,
+      viewCount: 940,
       readTimeMinutes: 6,
-      categoryId: catLearning.id,
+      categoryId: catHobby.id,
       authorId: editor.id,
-      featuredImage: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&auto=format&fit=crop&q=80',
-      imageCaption: 'Semangat belajar: Menjelajahi cakrawala pengetahuan baru dengan rasa ingin tahu yang tulus.',
-      seoTitle: 'Belajar Sepanjang Hayat (Continuous Learning) | ZETARAZ Knowledge',
-      seoDescription: 'Esai reflektif mengenai pentingnya continuous learning, unlearning, dan kegembiraan menjelajahi ilmu-ilmu baru sepanjang hayat.',
-      tags: ['continuous-learning', 'knowledge-sharing', 'pengalaman-praktis'],
-      publishedAt: new Date('2026-11-09T08:45:00Z'),
-      content: `## Menjadi Pembelajar yang Merdeka
+      featuredImage: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Goresan reflektif: Menata kembali benang kusut pikiran melalui kebiasaan menulis jurnal.',
+      seoTitle: 'Seni Menulis Jurnal & Membaca Fokus | ZETARAZ Knowledge',
+      seoDescription: 'Panduan praktis memulai jurnal harian dan teknik membaca mendalam untuk menajamkan fokus.',
+      tags: ['kreativitas-hobi', 'tutorial', 'knowledge-sharing'],
+      publishedAt: new Date('2026-11-07T10:00:00Z'),
+      content: `## Menemukan Hening di Tengah Hiruk Pikuk
 
-Pendidikan formal kita mungkin selesai pada jenjang tertentu, namun proses belajar sejati tidak pernah memiliki batas akhir. Dunia di sekitar kita terus bertransformasi—teknologi baru muncul, paradigma ilmiah diperbarui, dan dinamika sosial kian kaya warna.
+Setiap hari kita dibombardir oleh ribuan pesan instan, notifikasi media sosial, dan berita terkini. Dampaknya, rentang perhatian kita memendek dan pikiran terasa senantiasa lelah meski tubuh tidak banyak bergerak.
 
-Menjadi pembelajar sepanjang hayat (*lifelong learner*) bukan berarti harus membebani diri dengan target akademis yang kaku, melainkan **menjaga agar rasa ingin tahu anak-anak di dalam diri kita tetap hidup**.
+Salah satu hobi tertua yang paling terapeutik adalah **menulis jurnal secara manual (*journaling*) dan membaca buku cetak**.
+
+---
+
+## Cara Sederhana Memulai Jurnal 5 Menit
+
+Anda tidak memerlukan buku catatan mewah atau pulpen berharga jutaan. Mulailah dengan metode sederhana:
+
+1. **Jurnal Pagi (Brain Dump):** Tuliskan 3 hal yang sedang membuat Anda khawatir atau 3 hal yang ingin Anda selesaikan hari ini. Mengeluarkannya ke atas kertas akan meringankan beban kerja memori otak (*working memory*).
+2. **Catatan Bacaan Reflektif:** Ketika membaca buku, catat satu kalimat yang paling berkesan dan tuliskan mengapa kalimat tersebut menyentuh Anda.
+3. **Refleksi Syukur Malam Hari:** Tuliskan hal kecil yang menyenangkan hari ini: secangkir teh hangat, sapaan ramah teman, atau tugas yang berhasil rampung.
+
+Jurnal adalah teman bicara yang paling setia: ia tidak menghakimi, tidak menginterupsi, dan selalu siap mendengarkan.`
+    },
+
+    // ==================== 10. HOBBY ====================
+    {
+      title: 'Eksplorasi Audio dan Musik: Menemukan Ruang Tenang di Tengah Kesibukan',
+      slug: 'kreativitas-audio-dan-musik-dalam-menemani-keseharian',
+      subtitle: 'Memahami bagaimana gelombang suara, ketukan ritmis, dan kebiasaan mendengar terencana mempengaruhi produktivitas serta ketenangan batin.',
+      excerpt: 'Mendengarkan musik secara sadar adalah salah satu hobi yang paling mudah diakses namun memberikan dampak restoratif yang sangat mendalam.',
+      contentType: 'KNOWLEDGE',
+      status: 'PUBLISHED',
+      isFeatured: false,
+      viewCount: 780,
+      readTimeMinutes: 5,
+      categoryId: catHobby.id,
+      authorId: admin.id,
+      featuredImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Harmoni suara: Musik dan audio sebagai medium pemulihan konsentrasi dan inspirasi.',
+      seoTitle: 'Eksplorasi Audio dan Musik Sehari-hari | ZETARAZ Knowledge',
+      seoDescription: 'Ulasan menarik seputar hobi kurasi musik, lanskap audio ambien, dan pengaruhnya pada fokus kerja.',
+      tags: ['kreativitas-hobi', 'pengalaman-praktis'],
+      publishedAt: new Date('2026-11-08T15:30:00Z'),
+      content: `## Menyimak Lebih dari Sekadar Mendengar
+
+Sebagian besar dari kita menjadikan musik sekadar latar belakang saat bekerja atau menyetir. Namun ketika kita meluangkan waktu untuk benar-benar menyimak (*active listening*)—memperhatikan lapisan bass, dinamika drum, atau tekstur vokal—kita sedang melatih kepekaan auditori otak kita.
+
+---
+
+## Kurasi Audio untuk Berbagai Suasana Hati
+
+* **Lanskap Suara Alam (*Binaural & Ambient*):** Suara rintik hujan atau gemersik dedaunan sangat efektif menutupi kebisingan kantor dan membantu konsentrasi mendalam (*deep work*).
+* **Musik Instrumental Tanpa Lirik:** Musik klasik era Barok atau lo-fi hip-hop membantu menjaga denyut jantung tetap stabil tanpa mengalihkan fokus verbal saat membaca atau menulis.
+* **Ritual Melepas Penat di Akhir Pekan:** Dengarkan satu album penuh dari awal hingga akhir tanpa menekan tombol acak (*shuffle*). Rasakan perjalanan emosional yang dirancang oleh sang musisi.`
+    },
+
+    // ==================== 11. SOSIAL ====================
+    {
+      title: 'Membaca Informasi dengan Kritis: Menangkal Misinformasi di Ruang Sosial Digital',
+      slug: 'membaca-bukti-ilmiah-dan-menilai-kredibilitas-informasi',
+      subtitle: 'Panduan warga digital untuk mengenali bias konfirmasi, memeriksa sumber primer, dan menjaga kejujuran intelektual bersama.',
+      excerpt: 'Di era derasnya arus media sosial, kemampuan menahan diri sejenak sebelum membagikan ulang sebuah tautan adalah kontribusi sosial yang sangat mulia.',
+      contentType: 'KNOWLEDGE',
+      status: 'PUBLISHED',
+      isFeatured: false,
+      viewCount: 1410,
+      readTimeMinutes: 7,
+      categoryId: catSosial.id,
+      authorId: editor.id,
+      featuredImage: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Uji kebenaran: Meneliti rujukan dan menjaga kehati-hatian sebelum menyebarkan kabar.',
+      seoTitle: 'Membaca Kritis & Menangkal Misinformasi | ZETARAZ Knowledge',
+      seoDescription: 'Langkah praktis membaca berita dengan kritis, memeriksa fakta, dan menolak polarisasi informasi palsu.',
+      tags: ['literasi-digital', 'komunitas-sosial', 'knowledge-sharing'],
+      publishedAt: new Date('2026-11-09T09:00:00Z'),
+      content: `## Tantangan Epistemik di Zaman Algoritma
+
+Algoritma media sosial dirancang untuk memaksimalkan keterlibatan (*engagement*). Sering kali konten yang paling memicu amarah, kecemasan, atau rasa bangga kelompok yang berlebihan adalah konten yang paling cepat viral, terlepas dari apakah kabar tersebut benar atau keliru.
+
+Jika kita tidak berhati-hati, ruang percakapan publik akan tercemar oleh kabar burung yang merusak kohesi sosial masyarakat.
+
+---
+
+## Tiga Pertanyaan Uji Sebelum Membagikan Informasi
+
+1. **Siapa yang Mengatakannya dan Apa Buktinya?** Apakah tautan tersebut menyertakan dokumen asli, kutipan lengkap narasumber, atau hanya mengutip rumor dari grup obrolan lain?
+2. **Apakah Judulnya Sengaja Memicu Emosi?** Jika sebuah judul berita membuat Anda langsung merasa marah atau panik, berhentilah sejenak. Itu adalah tanda klasik perangkap klik (*clickbait*).
+3. **Apa Kata Sumber Independen Lain?** Luangkan waktu 30 detik untuk mencari topik yang sama di mesin pencari. Jika peristiwa tersebut besar, media massa yang bereputasi pasti sudah memverifikasinya.
+
+Menjadi pembaca yang kritis adalah wujud cinta kita kepada masyarakat dan ruang hidup bersama.`
+    },
+
+    // ==================== 12. SOSIAL ====================
+    {
+      title: 'Etika Komunikasi dan Dinamika Komunitas: Merawat Ruang Dialog Sehat di Era Digital',
+      slug: 'etika-komunikasi-dan-kolaborasi-komunitas-digital',
+      subtitle: 'Bagaimana merawat empati, saling menghargai perbedaan pandangan, dan membangun kolaborasi positif di ranah daring.',
+      excerpt: 'Komunitas digital yang kuat tidak lahir dari keseragaman pendapat, melainkan dari kedewasaan para anggotanya dalam berdialog secara santun dan saling membangun.',
+      contentType: 'EXPERIENCE',
+      status: 'PUBLISHED',
+      isFeatured: false,
+      viewCount: 920,
+      readTimeMinutes: 6,
+      categoryId: catSosial.id,
+      authorId: admin.id,
+      featuredImage: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Kerukunan komunitas: Dialog yang hangat dan saling menghargai mempererat jejaring sosial.',
+      seoTitle: 'Etika Komunikasi & Komunitas Digital | ZETARAZ Knowledge',
+      seoDescription: 'Pelajaran berharga tentang menjaga kesantunan, mediasi konflik di komunitas daring, dan kolaborasi sosial produktif.',
+      tags: ['komunitas-sosial', 'pengalaman-praktis', 'knowledge-sharing'],
+      publishedAt: new Date('2026-11-10T11:00:00Z'),
+      content: `## Membangun Jembatan, Bukan Tembok
+
+Di balik layar kaca ponsel atau laptop, kita sering kali lupa bahwa akun yang sedang kita tanggapi adalah manusia nyata yang memiliki perasaan, keluarga, dan latar belakang kehidupan tersendiri.
+
+Anonimitas dan jarak fisik kerap kali membuat orang lebih mudah melontarkan kata-kata pedas yang tidak akan pernah mereka ucapkan jika bertatap muka langsung.
+
+---
+
+## Pilar Komunikasi Komunitas yang Sehat
+
+* **Asumsikan Niat Baik Terlebih Dahulu (*Assume Good Intentions*):** Sering kali kalimat yang terdengar ketus hanyalah akibat keterbatasan pemilihan kata tertulis, bukan niat untuk menyakiti.
+* **Kritisi Idenya, Bukan Orangnya (*Attack the Argument, Not the Person*):** Perdebatan yang produktif selalu berpusat pada logika dan data, bukan serangan pribadi (*ad hominem*).
+* **Beri Ruang untuk Berbeda:** Tidak semua diskusi harus berakhir dengan satu kesimpulan seragam. Menghargai sudut pandang orang lain adalah tanda kedewasaan intelektual.
+
+Komunitas yang sehat adalah tempat di mana setiap orang merasa aman untuk bertanya, belajar, dan saling menyemangati.`
+    },
+
+    // ==================== 13. SOSIAL ====================
+    {
+      title: 'Belajar Sepanjang Hayat: Menumbuhkan Budaya Literasi Terbuka di Tengah Masyarakat',
+      slug: 'belajar-sepanjang-hayat-continuous-learning',
+      subtitle: 'Mengapa rasa ingin tahu yang tak pernah padam adalah kunci adaptasi paling berharga menghadapi perubahan zaman.',
+      excerpt: 'Pendidikan formal mungkin berakhir saat kita menerima ijazah, namun proses belajar yang sesungguhnya baru saja dimulai dan berlangsung seumur hidup.',
+      contentType: 'KNOWLEDGE',
+      status: 'PUBLISHED',
+      isFeatured: false,
+      viewCount: 1050,
+      readTimeMinutes: 6,
+      categoryId: catSosial.id,
+      authorId: admin.id,
+      featuredImage: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&auto=format&fit=crop&q=80',
+      imageCaption: 'Pendidikan berkelanjutan: Merawat rasa ingin tahu sebagai bekal berharga mengarungi zaman.',
+      seoTitle: 'Belajar Sepanjang Hayat & Literasi Terbuka | ZETARAZ Knowledge',
+      seoDescription: 'Inspirasi continuous learning dan bagaimana membangun kebiasaan membaca dan berbagi wawasan setiap hari.',
+      tags: ['continuous-learning', 'knowledge-sharing', 'komunitas-sosial'],
+      publishedAt: new Date('2026-11-11T09:00:00Z'),
+      content: `## Pendidikan Tidak Berhenti di Gerbang Sekolah
+
+Dunia terus bergerak dengan kecepatan yang belum pernah terjadi sebelumnya. Keterampilan yang kita pelajari lima tahun lalu mungkin sudah mengalami pergeseran fungsi hari ini. Namun ada satu hal yang tidak akan pernah kedaluwarsa: **kemampuan dan kemauan untuk terus belajar**.
 
 ---
 
@@ -501,7 +580,7 @@ Menjadi pembelajar sepanjang hayat (*lifelong learner*) bukan berarti harus memb
 
 Alvin Toffler pernah menulis bahwa orang yang buta huruf di masa depan bukanlah mereka yang tidak bisa membaca, melainkan mereka yang tidak bisa belajar (*learn*), melepaskan pemikiran lama (*unlearn*), dan belajar kembali (*relearn*).
 
-* **Learn:** Mengumpulkan wawasan dan ketrampilan baru dari membaca, mengamati, dan mencoba.
+* **Learn:** Mengumpulkan wawasan dan ketrampilan baru dari membaca, mengamati, dan mencoba hal baru setiap hari.
 * **Unlearn:** Berani mengakui bahwa metode yang dulu sukses mungkin sudah tidak relevan lagi dengan kondisi saat ini.
 * **Relearn:** Mempelajari kembali prinsip-prinsip dasar dengan kacamata yang lebih segar dan kontekstual.
 
@@ -582,7 +661,7 @@ Di ZETARAZ Knowledge, kami mengajak Anda untuk terus membuka diri, membaca, dan 
     ],
   });
 
-  console.log('--- Database Seeding Complete for ZETARAZ Knowledge! ---');
+  console.log('--- Database Seeding Complete for ZETARAZ Knowledge (4 Categories, 13 Articles)! ---');
 }
 
 main()

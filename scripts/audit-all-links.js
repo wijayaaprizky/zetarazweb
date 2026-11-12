@@ -14,7 +14,7 @@ function get(path) {
 
 async function audit() {
   console.log('Auditing site links...');
-  const pages = ['/', '/about', '/search', '/category/knowledge', '/category/technology', '/category/science-research', '/category/data-analytics', '/category/business-management', '/category/learning'];
+  const pages = ['/', '/about', '/search', '/category/teknologi', '/category/tata-kelola', '/category/hobby', '/category/sosial'];
   
   const visited = new Set();
   const queue = [...pages];
