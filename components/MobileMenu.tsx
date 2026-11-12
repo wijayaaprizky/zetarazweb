@@ -23,7 +23,12 @@ export default function MobileMenu({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 xl:hidden flex">
+    <div
+      className="fixed inset-0 z-50 xl:hidden flex"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu Navigasi Mobile"
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"

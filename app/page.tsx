@@ -102,6 +102,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
+      <h1 className="sr-only">ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman</h1>
       {/* 1. Hero Section (Featured Knowledge) */}
       <HeroSection
         mainArticle={mainFeatured}
@@ -121,7 +122,7 @@ export default async function HomePage() {
             </div>
 
             {/* Right 4 cols: Trending / Popular Sidebar */}
-            <div className="lg:col-span-4 lg:pt-12">
+            <div className="lg:col-span-4">
               <div className="sticky top-28 space-y-8">
                 <PopularArticles articles={popularArticles} />
 

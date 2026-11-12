@@ -31,13 +31,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, { status: 301 });
   }
 
-  // Add security headers
-  const response = NextResponse.next();
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-  return response;
+  // Pass-through for standard requests (security headers are applied via next.config.mjs)
+  return NextResponse.next();
 }
 
 export const config = {

@@ -177,12 +177,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Privacy & Terms */}
+      {/* Privacy */}
       <section id="kebijakan-privasi" className="py-12 bg-slate-50 border-b border-slate-200 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-2 text-slate-500 text-xs font-bold uppercase tracking-wider">
             <Lock className="w-4 h-4 text-brand-teal" />
-            <span>Privasi & Etika Berbagi</span>
+            <span>Privasi Pembaca</span>
           </div>
           <h3 className="font-heading font-bold text-xl text-slate-900 mb-3">
             Komitmen Privasi Pembaca
@@ -190,8 +190,24 @@ export default function AboutPage() {
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
             ZETARAZ Knowledge menghargai privasi setiap pembaca. Pendaftaran email buletin semata-mata digunakan untuk mengirimkan kurasi artikel baru secara berkala tanpa ada data yang diperjualbelikan kepada pihak ketiga. Seluruh konten orisinal bebas dibaca dan dipelajari untuk kepentingan pendidikan dan pengembangan diri.
           </p>
+        </div>
+      </section>
+
+      {/* Terms & Open Knowledge Ethics */}
+      <section id="ketentuan" className="py-12 bg-white border-b border-slate-200 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 mb-2 text-slate-500 text-xs font-bold uppercase tracking-wider">
+            <HeartHandshake className="w-4 h-4 text-brand-teal" />
+            <span>Ketentuan & Etika Pengetahuan Terbuka</span>
+          </div>
+          <h3 className="font-heading font-bold text-xl text-slate-900 mb-3">
+            Ketentuan Penggunaan & Hak Cipta Edukatif
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+            Seluruh konten yang disajikan di ZETARAZ Knowledge ditujukan untuk tujuan edukasi, literasi, dan pengembangan pengetahuan umum. Pembaca dipersilakan mengutip naskah dengan tetap mencantumkan atribusi sumber tautan ZETARAZ Knowledge secara wajar. Kami berpegang teguh pada etika berbagi tanpa bias komersial demi ekosistem belajar yang sehat dan terbuka.
+          </p>
           <div className="text-xs text-slate-400">
-            Terakhir diperbarui: 11 November 2026 • Tim Kurasi ZETARAZ Knowledge
+            Terakhir diperbarui: 11 November 2026 • Tim Redaksi ZETARAZ Knowledge
           </div>
         </div>
       </section>

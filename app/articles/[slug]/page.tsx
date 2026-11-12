@@ -43,9 +43,7 @@ export async function generateMetadata({
       article.status === 'PUBLISHED');
 
   if (!article || !isPubliclyAvailable) {
-    return {
-      title: 'Artikel Tidak Ditemukan | ZETARAZ Knowledge',
-    };
+    notFound();
   }
 
   const url = getCanonicalUrl(`/articles/${article.slug}`);
@@ -297,7 +295,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5 text-slate-400" />
-                  {article.viewCount.toLocaleString('id-ID')} views
+                  {article.viewCount.toLocaleString('id-ID')} pembaca
                 </span>
               </div>
             </div>

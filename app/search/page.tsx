@@ -93,17 +93,22 @@ function SearchContent() {
 
   // Keyword highlighting helper
   const highlightMatch = (text: string, term: string) => {
-    if (!term.trim()) return text;
-    const parts = text.split(new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
-    return parts.map((part, i) =>
-      part.toLowerCase() === term.toLowerCase() ? (
-        <mark key={i} className="bg-amber-200 text-slate-900 px-0.5 rounded font-bold">
-          {part}
-        </mark>
-      ) : (
-        part
-      )
-    );
+    if (!text) return '';
+    if (!term || !term.trim()) return text;
+    try {
+      const parts = text.split(new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
+      return parts.map((part, i) =>
+        part.toLowerCase() === term.toLowerCase() ? (
+          <mark key={i} className="bg-amber-200 text-slate-900 px-0.5 rounded font-bold">
+            {part}
+          </mark>
+        ) : (
+          part
+        )
+      );
+    } catch {
+      return text;
+    }
   };
 
   return (
@@ -213,7 +218,7 @@ function SearchContent() {
       </div>
 
       {/* Main Results Listing */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex items-center justify-between mb-6">
           <p className="text-sm text-slate-500">
             Ditemukan <strong className="text-slate-900 font-bold">{articles.length}</strong> artikel{' '}
@@ -330,7 +335,7 @@ function SearchContent() {
             ))}
           </div>
         )}
-      </main>
+      </section>
     </div>
   );
 }

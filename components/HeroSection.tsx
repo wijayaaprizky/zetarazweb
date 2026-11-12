@@ -22,9 +22,9 @@ export default function HeroSection({
         <div className="flex items-center justify-between mb-6 pb-2 border-b-2 border-brand-navy">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 bg-brand-teal rounded-full"></span>
-            <h2 className="text-xs font-black uppercase tracking-widest text-brand-navy">
+            <span className="text-xs font-black uppercase tracking-widest text-brand-navy">
               Sorotan Pengetahuan Pilihan
-            </h2>
+            </span>
           </div>
           <span className="text-xs text-brand-teal font-semibold hidden sm:inline">
             Berbagi Pengetahuan, Berbagi Pengalaman
@@ -125,7 +125,7 @@ export default function HeroSection({
                       </span>
                       <span className="text-slate-300">•</span>
                       <span className="text-[11px] text-slate-400">
-                        {article.readTimeMinutes} min read
+                        {article.readTimeMinutes} menit baca
                       </span>
                     </div>
 

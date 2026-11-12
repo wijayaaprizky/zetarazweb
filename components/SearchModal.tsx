@@ -77,9 +77,15 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-start justify-center p-4 sm:p-6 md:p-20 transition-all">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-start justify-center p-4 sm:p-6 md:p-20 transition-all cursor-pointer"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Pencarian Pengetahuan"
+    >
       <div
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all"
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
@@ -180,12 +186,12 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { name: 'Knowledge Systems', href: '/category/knowledge' },
-                  { name: 'Research & Labs', href: '/category/research' },
-                  { name: 'Technology & AI', href: '/category/technology' },
+                  { name: 'Knowledge', href: '/category/knowledge' },
+                  { name: 'Technology', href: '/category/technology' },
+                  { name: 'Science & Research', href: '/category/science-research' },
+                  { name: 'Data & Analytics', href: '/category/data-analytics' },
                   { name: 'Business & Management', href: '/category/business-management' },
-                  { name: 'Learning & Tutorials', href: '/category/learning' },
-                  { name: 'Arsitektur Enterprise', href: '/search?q=Enterprise' },
+                  { name: 'Learning', href: '/category/learning' },
                 ].map((item) => (
                   <Link
                     key={item.name}

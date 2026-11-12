@@ -105,6 +105,7 @@ export default function ArticleContent({ content }: ArticleContentProps) {
         .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900">$1</strong>')
         .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
         .replace(/`([^`]+)`/g, '<code class="bg-slate-100 text-teal-700 font-mono text-xs px-1.5 py-0.5 rounded border border-slate-200">$1</code>')
+        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-xl my-4 max-w-full h-auto border border-slate-200" />')
         .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-blue hover:underline font-semibold" target="_blank" rel="noopener noreferrer">$1</a>');
     };
 
@@ -207,6 +208,29 @@ export default function ArticleContent({ content }: ArticleContentProps) {
       // Divider
       if (trimmed === '---') {
         elements.push(<hr key={`hr-${index}`} className="my-8 border-slate-200" />);
+        return;
+      }
+
+      // Markdown Image ![alt](url)
+      const imgMatch = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
+      if (imgMatch) {
+        const alt = imgMatch[1];
+        const src = imgMatch[2];
+        elements.push(
+          <figure key={`img-${index}`} className="my-8">
+            <img
+              src={src}
+              alt={alt || 'Ilustrasi artikel'}
+              className="w-full rounded-2xl border border-slate-200 shadow-md object-cover max-h-[500px]"
+              loading="lazy"
+            />
+            {alt && (
+              <figcaption className="text-center text-xs text-slate-500 mt-2 italic">
+                {alt}
+              </figcaption>
+            )}
+          </figure>
+        );
         return;
       }
 

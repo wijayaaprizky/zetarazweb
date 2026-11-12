@@ -73,11 +73,13 @@ export default function NewsletterSection() {
               <div className="relative flex-1">
                 <Mail className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
+                  id="newsletter-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Masukkan alamat email Anda..."
                   required
+                  aria-label="Alamat email untuk berlangganan buletin pengetahuan"
                   disabled={status === 'loading'}
                   className="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all"
                 />

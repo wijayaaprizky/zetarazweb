@@ -12,29 +12,28 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <section className="py-12 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-3 border-b border-slate-200 gap-4">
-          <div>
-            <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-              Terbitan Terkini
-            </span>
-            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-              Artikel & Catatan Pengalaman Terbaru
-            </h2>
-          </div>
-          <Link
-            href="/search"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
-          >
-            <span>Jelajahi Semua Tulisan</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+    <div>
+      {/* Section Heading */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-3 border-b border-slate-200 gap-4">
+        <div>
+          <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
+            Terbitan Terkini
+          </span>
+          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
+            Artikel & Catatan Pengalaman Terbaru
+          </h2>
         </div>
+        <Link
+          href="/search"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
+        >
+          <span>Jelajahi Semua Tulisan</span>
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </div>
 
-        {/* 3-Column Editorial Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* 2-Column Editorial Grid for 8-col Parent */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {articles.map((art) => (
             <article
               key={art.id}
@@ -116,7 +115,6 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
             </article>
           ))}
         </div>
-      </div>
-    </section>
+    </div>
   );
 }

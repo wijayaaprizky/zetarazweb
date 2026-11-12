@@ -28,7 +28,7 @@ export async function generateMetadata({
   });
 
   if (!category) {
-    return { title: 'Kategori Tidak Ditemukan | ZETARAZ Knowledge' };
+    notFound();
   }
 
   const url = getCanonicalUrl(`/category/${category.slug}`);
@@ -150,7 +150,7 @@ export default async function CategoryPage({
       </div>
 
       {/* Main Articles Listing */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         {articles.length === 0 ? (
           <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 max-w-lg mx-auto">
             <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
@@ -234,7 +234,7 @@ export default async function CategoryPage({
             ))}
           </div>
         )}
-      </main>
+      </section>
     </div>
   );
 }

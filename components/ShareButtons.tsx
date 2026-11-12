@@ -35,6 +35,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         onClick={handleCopy}
         className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors relative"
         title="Salin tautan"
+        aria-label="Salin tautan artikel ke papan klip"
       >
         {copied ? (
           <Check className="w-4 h-4 text-emerald-600" />
@@ -55,6 +56,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         rel="noopener noreferrer"
         className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
         title="Bagikan ke X"
+        aria-label="Bagikan artikel ke X (Twitter)"
       >
         <Twitter className="w-4 h-4 text-slate-800" />
       </a>
@@ -66,6 +68,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         rel="noopener noreferrer"
         className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
         title="Bagikan ke LinkedIn"
+        aria-label="Bagikan artikel ke LinkedIn"
       >
         <Linkedin className="w-4 h-4 text-blue-700" />
       </a>
@@ -77,6 +80,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         rel="noopener noreferrer"
         className="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition-colors text-xs font-bold"
         title="Bagikan ke WhatsApp"
+        aria-label="Bagikan artikel ke WhatsApp"
       >
         WA
       </a>
