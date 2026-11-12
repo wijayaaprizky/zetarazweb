@@ -95,32 +95,17 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  1. Tentang Kami (About Us)
+                  Tentang Kami
                 </Link>
               </li>
               <li>
                 <Link href="/services" className="hover:text-white transition-colors">
-                  6. Layanan & Program
+                  Layanan & Program
                 </Link>
               </li>
               <li>
                 <Link href="/articles" className="hover:text-white transition-colors">
-                  9. Blog & Direktori Tulisan
-                </Link>
-              </li>
-              <li>
-                <Link href="/archive" className="hover:text-white transition-colors">
-                  11. Arsip Pengetahuan (Archive)
-                </Link>
-              </li>
-              <li>
-                <Link href="/testimonials" className="hover:text-white transition-colors">
-                  12. Testimoni Pembaca
-                </Link>
-              </li>
-              <li>
-                <Link href="/advertise" className="hover:text-white transition-colors">
-                  13. Promosi & Kemitraan Iklan
+                  Semua Artikel
                 </Link>
               </li>
               <li>
@@ -139,37 +124,32 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs">
               <li>
                 <Link href="/faq" className="hover:text-white transition-colors">
-                  2. FAQ (Tanya Jawab)
+                  FAQ
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="hover:text-white transition-colors">
-                  3. Ketentuan Pengguna (Terms)
+                  Ketentuan Pengguna (Terms)
                 </Link>
               </li>
               <li>
                 <Link href="/privacy" className="hover:text-white transition-colors">
-                  4. Kebijakan Privasi (Privacy)
+                  Kebijakan Privasi (Privacy)
                 </Link>
               </li>
               <li>
                 <Link href="/disclaimer" className="hover:text-white transition-colors">
-                  5. Disclaimer (Penafian)
+                  Disclaimer (Penafian)
                 </Link>
               </li>
               <li>
                 <Link href="/support" className="hover:text-white transition-colors">
-                  7. Pusat Bantuan (Support)
+                  Pusat Bantuan (Support)
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-white transition-colors">
-                  8. Hubungi Kami (Contact Us)
-                </Link>
-              </li>
-              <li>
-                <Link href="/404-preview" className="hover:text-white transition-colors text-slate-500">
-                  10. Halaman 404 Kustom
+                  Hubungi Kami
                 </Link>
               </li>
             </ul>

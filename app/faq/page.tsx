@@ -120,7 +120,7 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-950 text-teal-400 border border-teal-800 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Pusat Tanya Jawab</span>
+            <span>FAQ</span>
           </div>
           <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
             Frequently Asked Questions (FAQ)

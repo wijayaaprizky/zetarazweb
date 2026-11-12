@@ -66,13 +66,10 @@ export default function MobileMenu({
   ];
 
   const complementaryPages = [
-    { name: 'Arsip Pengetahuan', href: '/archive' },
     { name: 'Layanan & Program', href: '/services' },
-    { name: 'Testimoni Pembaca', href: '/testimonials' },
-    { name: 'Pusat Tanya Jawab (FAQ)', href: '/faq' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Bantuan (Support)', href: '/support' },
     { name: 'Hubungi Kami', href: '/contact' },
-    { name: 'Promosi & Kemitraan', href: '/advertise' },
   ];
 
   return (
@@ -226,18 +223,6 @@ export default function MobileMenu({
             </div>
             <ChevronRight className="w-4 h-4 text-slate-400" />
           </Link>
-
-          {/* Contributor Action in Mobile */}
-          <div className="pt-2">
-            <Link
-              href="/contact?topic=submission"
-              onClick={onClose}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-brand-navy text-white text-xs font-bold rounded-xl shadow-sm hover:bg-brand-blue transition-colors"
-            >
-              <Send className="w-3.5 h-3.5 text-teal-400" />
-              <span>Kirim Naskah / Pengalaman</span>
-            </Link>
-          </div>
 
           {/* Complementary links */}
           <div className="pt-4 mt-2 border-t border-slate-100">

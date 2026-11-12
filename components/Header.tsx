@@ -75,7 +75,7 @@ export default function Header() {
   ];
 
   const isArticlesActive =
-    pathname?.startsWith('/category') || pathname?.startsWith('/articles') || pathname === '/archive';
+    pathname?.startsWith('/category') || pathname?.startsWith('/articles');
 
   return (
     <>
@@ -210,13 +210,7 @@ export default function Header() {
                     </div>
 
                     {/* Dropdown Footer: Link to all articles */}
-                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between px-2">
-                      <Link
-                        href="/archive"
-                        className="text-xs text-slate-500 hover:text-brand-navy transition-colors font-medium"
-                      >
-                        Lihat Arsip Kronologis
-                      </Link>
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-end px-2">
                       <Link
                         href="/articles"
                         className="text-xs font-bold text-brand-blue hover:text-brand-navy flex items-center gap-1 transition-colors"
@@ -242,7 +236,7 @@ export default function Header() {
               </Link>
             </nav>
 
-            {/* Right actions: Search + Contributor CTA */}
+            {/* Right actions: Search */}
             <div className="flex items-center space-x-2.5">
               {/* Search button */}
               <button
@@ -256,15 +250,6 @@ export default function Header() {
                   Ctrl+K
                 </span>
               </button>
-
-              {/* Contributor Action Button */}
-              <Link
-                href="/contact?topic=submission"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 bg-brand-navy hover:bg-brand-blue text-white text-xs font-bold rounded-xl transition-all shadow-sm"
-              >
-                <Send className="w-3.5 h-3.5 text-teal-400" />
-                <span>Kirim Naskah</span>
-              </Link>
 
               {/* Mobile menu trigger */}
               <button
