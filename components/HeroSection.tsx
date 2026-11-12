@@ -1,6 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   Clock,
   Calendar,
@@ -9,9 +12,9 @@ import {
   BookOpen,
   ShieldCheck,
   Share2,
-  Lock,
   Layers,
   Send,
+  Search,
 } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
@@ -24,6 +27,25 @@ export default function HeroSection({
   mainArticle,
   secondaryArticles,
 }: HeroSectionProps) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const popularTopics = [
+    { label: 'Kecerdasan Buatan', query: 'Kecerdasan Buatan' },
+    { label: 'Arsitektur Enterprise', query: 'Enterprise Architecture' },
+    { label: 'Sains Data', query: 'Data Science' },
+    { label: 'BPMN 2.0', query: 'BPM' },
+    { label: 'Keamanan Siber', query: 'Keamanan Siber' },
+    { label: 'Metodologi Riset', query: 'Metodologi Riset' },
+  ];
+
   if (!mainArticle) {
     return (
       <section className="py-16 lg:py-24 bg-gradient-to-br from-brand-navy via-brand-dark to-slate-900 text-white border-b border-slate-800 relative overflow-hidden">
@@ -34,19 +56,55 @@ export default function HeroSection({
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-950/90 border border-teal-700/60 text-teal-400 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>ZETARAZ Knowledge Platform</span>
+              <span>ZETARAZ Knowledge Management System</span>
             </div>
 
             <h1 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15] mb-5">
-              Berbagi Pengetahuan, <br className="hidden sm:inline" />
+              Pusat Eksplorasi Pengetahuan & <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal-400 to-cyan-300">
-                Berbagi Pengalaman.
+                Catatan Pengalaman Terbuka.
               </span>
             </h1>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
               Platform independen yang menghubungkan telaah konseptual, metodologi ilmiah, dan catatan pengalaman nyata di lapangan untuk memperkaya pemahaman bersama tanpa sekat komersial.
             </p>
+
+            {/* Direct In-Hero Search Discovery Bar */}
+            <form onSubmit={handleSearchSubmit} className="max-w-xl mx-auto mb-6 relative">
+              <div className="relative flex items-center">
+                <Search className="w-5 h-5 text-slate-400 absolute left-4 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Cari konsep, metodologi, topik, atau panduan praktis..."
+                  className="w-full pl-12 pr-28 py-3.5 rounded-2xl bg-slate-900/90 text-white placeholder-slate-400 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-brand-teal transition-all text-xs sm:text-sm shadow-xl"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-2 px-4 py-2 bg-brand-teal hover:bg-teal-500 text-white text-xs font-bold rounded-xl transition-all shadow-md"
+                >
+                  Cari Wawasan
+                </button>
+              </div>
+            </form>
+
+            {/* Popular Topics Quick Filter */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs text-slate-400">
+              <span className="text-slate-500 font-semibold text-[11px] uppercase tracking-wider mr-1">
+                Topik Populer:
+              </span>
+              {popularTopics.map((topic, idx) => (
+                <Link
+                  key={idx}
+                  href={`/search?q=${encodeURIComponent(topic.query)}`}
+                  className="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-colors text-[11px]"
+                >
+                  #{topic.label}
+                </Link>
+              ))}
+            </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">
               <Link
@@ -67,7 +125,7 @@ export default function HeroSection({
                 className="px-6 py-3.5 bg-slate-900/60 hover:bg-slate-800/80 text-teal-300 border border-teal-800/60 font-bold text-xs rounded-xl transition-all flex items-center gap-1.5"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>Kirimkan Naskah</span>
+                <span>Kirimkan Draf Naskah</span>
               </Link>
             </div>
           </div>

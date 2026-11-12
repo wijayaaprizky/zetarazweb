@@ -3,7 +3,9 @@ import { prisma } from '@/lib/prisma';
 import HeroSection from '@/components/HeroSection';
 import LatestArticles from '@/components/LatestArticles';
 import ExploreCategories from '@/components/ExploreCategories';
+import LearningTracks from '@/components/LearningTracks';
 import KnowledgeEcosystem from '@/components/KnowledgeEcosystem';
+import KnowledgeToolkits from '@/components/KnowledgeToolkits';
 import ResearchInsights from '@/components/ResearchInsights';
 import PopularArticles from '@/components/PopularArticles';
 import RecommendedLearning from '@/components/RecommendedLearning';
@@ -114,10 +116,16 @@ export default async function HomePage() {
       {/* 2. Explore Categories (6 Disciplines) */}
       <ExploreCategories categories={categories} />
 
-      {/* 3. Knowledge Ecosystem & Workflow */}
+      {/* 3. Structured Curated Learning Tracks */}
+      <LearningTracks />
+
+      {/* 4. Knowledge Ecosystem & Workflow */}
       <KnowledgeEcosystem />
 
-      {/* 4. Main Editorial Feed + Trending Topics Sidebar */}
+      {/* 5. Open Knowledge Toolkits & Frameworks */}
+      <KnowledgeToolkits />
+
+      {/* 6. Main Editorial Feed + Trending Topics Sidebar */}
       <section className="py-12 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
