@@ -14,6 +14,7 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
+    { name: 'Articles', href: '/articles' },
     { name: 'Knowledge', href: '/category/knowledge' },
     { name: 'Technology', href: '/category/technology' },
     { name: 'Science & Research', href: '/category/science-research' },

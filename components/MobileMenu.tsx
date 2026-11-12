@@ -95,6 +95,31 @@ export default function MobileMenu({
               </Link>
             );
           })}
+
+          <div className="pt-4 mt-2 border-t border-slate-100">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
+              Layanan & Bantuan
+            </div>
+            {[
+              { name: 'Layanan & Program', href: '/services' },
+              { name: 'Arsip Pengetahuan', href: '/archive' },
+              { name: 'Testimoni Pembaca', href: '/testimonials' },
+              { name: 'FAQ (Tanya Jawab)', href: '/faq' },
+              { name: 'Pusat Bantuan', href: '/support' },
+              { name: 'Hubungi Kami', href: '/contact' },
+              { name: 'Promosi & Kemitraan', href: '/advertise' },
+            ].map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={onClose}
+                className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-navy transition-colors"
+              >
+                <span>{item.name}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+              </Link>
+            ))}
+          </div>
         </nav>
 
         {/* Drawer Footer */}

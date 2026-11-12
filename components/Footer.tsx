@@ -39,19 +39,21 @@ export default function Footer() {
               </span>
             </div>
 
-            <div className="pt-3 flex items-center gap-4 text-xs text-slate-400">
+            <div className="pt-3 flex flex-col sm:flex-row sm:items-center gap-4 text-xs text-slate-400">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-teal-400" />
+                <MapPin className="w-4 h-4 text-teal-400 shrink-0" />
                 <span>Indonesia</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Mail className="w-4 h-4 text-teal-400" />
-                <span>kontak@zetaraz.org</span>
+                <Mail className="w-4 h-4 text-teal-400 shrink-0" />
+                <a href="mailto:kontak@zetaraz.org" className="hover:text-white transition-colors">
+                  kontak@zetaraz.org
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Pillars / Categories */}
+          {/* Pillars / Categories (Col 3) */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
               Kategori Pengetahuan
@@ -90,20 +92,40 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Navigation & Resources */}
+          {/* Platform & Directory (Col 4) */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Jelajahi Platform
+              Jelajahi & Direktori
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Beranda
+                <Link href="/about" className="hover:text-white transition-colors">
+                  1. Tentang Kami (About Us)
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  Tentang ZETARAZ Knowledge
+                <Link href="/services" className="hover:text-white transition-colors">
+                  6. Layanan & Program
+                </Link>
+              </li>
+              <li>
+                <Link href="/articles" className="hover:text-white transition-colors">
+                  9. Blog & Direktori Tulisan
+                </Link>
+              </li>
+              <li>
+                <Link href="/archive" className="hover:text-white transition-colors">
+                  11. Arsip Pengetahuan (Archive)
+                </Link>
+              </li>
+              <li>
+                <Link href="/testimonials" className="hover:text-white transition-colors">
+                  12. Testimoni Pembaca
+                </Link>
+              </li>
+              <li>
+                <Link href="/advertise" className="hover:text-white transition-colors">
+                  13. Promosi & Kemitraan Iklan
                 </Link>
               </li>
               <li>
@@ -111,38 +133,48 @@ export default function Footer() {
                   Pencarian Topik
                 </Link>
               </li>
-              <li>
-                <Link href="/sitemap.xml" className="hover:text-white transition-colors">
-                  Peta Situs (Sitemap)
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Editorial & Information */}
+          {/* Support & Legal (Col 5) */}
           <div>
             <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Nilai & Informasi
+              Bantuan & Regulasi Legal
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/about#visi-misi" className="hover:text-white transition-colors">
-                  Semangat Berbagi Wawasan
+                <Link href="/faq" className="hover:text-white transition-colors">
+                  2. FAQ (Tanya Jawab)
                 </Link>
               </li>
               <li>
-                <Link href="/about#kredibilitas" className="hover:text-white transition-colors">
-                  Kejujuran & Kredibilitas
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  3. Ketentuan Pengguna (Terms)
                 </Link>
               </li>
               <li>
-                <Link href="/about#kebijakan-privasi" className="hover:text-white transition-colors">
-                  Privasi Pembaca
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  4. Kebijakan Privasi (Privacy)
                 </Link>
               </li>
               <li>
-                <Link href="/about#ketentuan" className="hover:text-white transition-colors">
-                  Etika Pengetahuan Terbuka
+                <Link href="/disclaimer" className="hover:text-white transition-colors">
+                  5. Disclaimer (Penafian)
+                </Link>
+              </li>
+              <li>
+                <Link href="/support" className="hover:text-white transition-colors">
+                  7. Pusat Bantuan (Support)
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  8. Hubungi Kami (Contact Us)
+                </Link>
+              </li>
+              <li>
+                <Link href="/404-preview" className="hover:text-white transition-colors text-slate-500">
+                  10. Halaman 404 Kustom
                 </Link>
               </li>
             </ul>
@@ -152,19 +184,34 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="bg-slate-950/80 border-t border-slate-800/80 py-6 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-500 text-center md:text-left">
             © {new Date().getFullYear()} ZETARAZ Knowledge. Berbagi Pengetahuan, Berbagi Pengalaman. Terbuka untuk semua pembelajar.
           </p>
-          <div className="flex items-center space-x-6 text-slate-500 text-xs">
-            <Link href="/about#kebijakan-privasi" className="hover:text-slate-400 transition-colors">
-              Privasi
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-slate-400 text-xs">
+            <Link href="/about" className="hover:text-white transition-colors">
+              Tentang Kami
             </Link>
-            <Link href="/about#ketentuan" className="hover:text-slate-400 transition-colors">
+            <span className="text-slate-700">•</span>
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Kebijakan Privasi
+            </Link>
+            <span className="text-slate-700">•</span>
+            <Link href="/terms" className="hover:text-white transition-colors">
               Ketentuan
             </Link>
-            <span className="text-slate-700">|</span>
-            <span className="text-teal-400 font-medium">Inisiatif Pengetahuan Terbuka</span>
+            <span className="text-slate-700">•</span>
+            <Link href="/disclaimer" className="hover:text-white transition-colors">
+              Disclaimer
+            </Link>
+            <span className="text-slate-700">•</span>
+            <Link href="/faq" className="hover:text-white transition-colors">
+              FAQ
+            </Link>
+            <span className="text-slate-700">•</span>
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Kontak
+            </Link>
           </div>
         </div>
       </div>
