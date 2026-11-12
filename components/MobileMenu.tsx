@@ -24,7 +24,7 @@ export default function MobileMenu({
 
   return (
     <div
-      className="fixed inset-0 z-50 xl:hidden flex"
+      className="fixed inset-0 z-50 lg:hidden flex"
       role="dialog"
       aria-modal="true"
       aria-label="Menu Navigasi Mobile"
@@ -75,7 +75,7 @@ export default function MobileMenu({
         {/* Navigation list */}
         <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
-            Pilar Pengetahuan & Navigasi
+            Menu Utama
           </div>
           {links.map((link) => {
             const isActive = pathname === link.href;
@@ -95,6 +95,30 @@ export default function MobileMenu({
               </Link>
             );
           })}
+
+          <div className="pt-4 mt-2 border-t border-slate-100">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">
+              6 Pilar Pengetahuan
+            </div>
+            {[
+              { name: 'Knowledge', href: '/category/knowledge' },
+              { name: 'Technology', href: '/category/technology' },
+              { name: 'Science & Research', href: '/category/science-research' },
+              { name: 'Data & Analytics', href: '/category/data-analytics' },
+              { name: 'Business & Management', href: '/category/business-management' },
+              { name: 'Learning', href: '/category/learning' },
+            ].map((cat) => (
+              <Link
+                key={cat.name}
+                href={cat.href}
+                onClick={onClose}
+                className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-navy transition-colors"
+              >
+                <span>{cat.name}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+              </Link>
+            ))}
+          </div>
 
           <div className="pt-4 mt-2 border-t border-slate-100">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2">

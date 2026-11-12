@@ -3,9 +3,11 @@ import { prisma } from '@/lib/prisma';
 import HeroSection from '@/components/HeroSection';
 import LatestArticles from '@/components/LatestArticles';
 import ExploreCategories from '@/components/ExploreCategories';
+import KnowledgeEcosystem from '@/components/KnowledgeEcosystem';
 import ResearchInsights from '@/components/ResearchInsights';
 import PopularArticles from '@/components/PopularArticles';
 import RecommendedLearning from '@/components/RecommendedLearning';
+import HomeTestimonials from '@/components/HomeTestimonials';
 import AboutSection from '@/components/AboutSection';
 import NewsletterSection from '@/components/NewsletterSection';
 
@@ -112,7 +114,10 @@ export default async function HomePage() {
       {/* 2. Explore Categories (6 Disciplines) */}
       <ExploreCategories categories={categories} />
 
-      {/* 3. Main Editorial Feed + Trending Topics Sidebar */}
+      {/* 3. Knowledge Ecosystem & Workflow */}
+      <KnowledgeEcosystem />
+
+      {/* 4. Main Editorial Feed + Trending Topics Sidebar */}
       <section className="py-12 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -153,10 +158,13 @@ export default async function HomePage() {
       {/* 4. Practical Tutorials & Learning */}
       <RecommendedLearning articles={learningArticles} />
 
-      {/* 5. Science & Research Insights */}
+      {/* 6. Science & Research Insights */}
       <ResearchInsights articles={scienceResearchArticles} />
 
-      {/* 6. About ZETARAZ Knowledge (Dedicated welcoming section) */}
+      {/* 7. Community Testimonials & Credibility */}
+      <HomeTestimonials />
+
+      {/* 8. About ZETARAZ Knowledge (Dedicated welcoming section) */}
       <AboutSection />
 
       {/* 7. Newsletter Subscription */}

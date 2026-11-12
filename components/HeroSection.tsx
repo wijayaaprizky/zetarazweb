@@ -1,7 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowRight, Sparkles } from 'lucide-react';
+import {
+  Clock,
+  Calendar,
+  ArrowRight,
+  Sparkles,
+  BookOpen,
+  ShieldCheck,
+  Share2,
+  Lock,
+  Layers,
+  Send,
+} from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface HeroSectionProps {
@@ -15,33 +26,109 @@ export default function HeroSection({
 }: HeroSectionProps) {
   if (!mainArticle) {
     return (
-      <section className="py-14 lg:py-20 bg-gradient-to-br from-brand-navy via-brand-dark to-slate-900 text-white border-b border-slate-800 relative overflow-hidden">
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-brand-navy via-brand-dark to-slate-900 text-white border-b border-slate-800 relative overflow-hidden">
+        {/* Subtle background tech grid */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/60 text-teal-400 text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>ZETARAZ Knowledge Platform</span>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-950/90 border border-teal-700/60 text-teal-400 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ZETARAZ Knowledge Platform</span>
+            </div>
+
+            <h1 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15] mb-5">
+              Berbagi Pengetahuan, <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal-400 to-cyan-300">
+                Berbagi Pengalaman.
+              </span>
+            </h1>
+
+            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
+              Platform independen yang menghubungkan telaah konseptual, metodologi ilmiah, dan catatan pengalaman nyata di lapangan untuk memperkaya pemahaman bersama tanpa sekat komersial.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">
+              <Link
+                href="/#pilar"
+                className="px-6 py-3.5 bg-brand-teal hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2 group"
+              >
+                <span>Jelajahi 6 Pilar Pengetahuan</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/about"
+                className="px-6 py-3.5 bg-slate-800/90 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs rounded-xl transition-all"
+              >
+                Mengenal Inisiatif Kami
+              </Link>
+              <Link
+                href="/contact?topic=submission"
+                className="px-6 py-3.5 bg-slate-900/60 hover:bg-slate-800/80 text-teal-300 border border-teal-800/60 font-bold text-xs rounded-xl transition-all flex items-center gap-1.5"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Kirimkan Naskah</span>
+              </Link>
+            </div>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
-            Berbagi Pengetahuan, Berbagi Pengalaman.
-          </h1>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
-            Platform independen untuk menemukan pengetahuan, memperluas wawasan, dan bertukar pengalaman nyata lintas disiplin ilmu.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/about"
-              className="px-6 py-3 bg-brand-teal hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
-            >
-              <span>Mengenal Inisiatif Kami</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/category/knowledge"
-              className="px-6 py-3 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs rounded-xl transition-all"
-            >
-              Jelajahi Pilar Pengetahuan
-            </Link>
+
+          {/* 4 Core Pillars of Credibility */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80">
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-teal-950 text-teal-400 flex items-center justify-center shrink-0 border border-teal-800/60">
+                <Layers className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">
+                  6 Domain Disiplin
+                </h4>
+                <p className="text-[11px] text-slate-400 leading-snug mt-1">
+                  Sains, teknologi, analitika data, hingga manajemen proses kerja.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-blue-950 text-blue-400 flex items-center justify-center shrink-0 border border-blue-800/60">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">
+                  Standar Redaksi Kritis
+                </h4>
+                <p className="text-[11px] text-slate-400 leading-snug mt-1">
+                  Pemisahan tegas fakta empiris, rujukan primer, dan refleksi opini.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-800/60">
+                <Share2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">
+                  Kolaboratif & Terbuka
+                </h4>
+                <p className="text-[11px] text-slate-400 leading-snug mt-1">
+                  Integrasi alur draf Google Docs menuju kurasi terverifikasi.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-xl flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-emerald-950 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-800/60">
+                <BookOpen className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="font-heading font-bold text-xs text-white uppercase tracking-wider">
+                  Akses Bebas 100%
+                </h4>
+                <p className="text-[11px] text-slate-400 leading-snug mt-1">
+                  Terbuka untuk pendidikan dan literasi tanpa paywall berbayar.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

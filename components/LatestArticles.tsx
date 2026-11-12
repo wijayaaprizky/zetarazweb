@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowRight, User, BookOpen } from 'lucide-react';
+import { Clock, Calendar, ArrowRight, User, BookOpen, Send, ShieldCheck, Sparkles } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface LatestArticlesProps {
@@ -12,31 +12,54 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
   if (!articles || articles.length === 0) {
     return (
       <div>
-        <div className="mb-6 pb-3 border-b border-slate-200">
-          <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-            Terbitan Terkini
-          </span>
-          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-            Artikel & Catatan Pengalaman Terbaru
-          </h2>
-        </div>
-        <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-8 sm:p-12 text-center my-4">
-          <div className="w-12 h-12 rounded-2xl bg-teal-50 text-brand-teal flex items-center justify-center mx-auto mb-4 border border-teal-100 shadow-sm">
-            <BookOpen className="w-6 h-6" />
+        <div className="mb-6 pb-3 border-b border-slate-200 flex items-center justify-between">
+          <div>
+            <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
+              Kurasi Editorial
+            </span>
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
+              Ruang Terbitan & Naskah Pengetahuan
+            </h2>
           </div>
-          <h3 className="font-heading font-bold text-lg text-slate-900 mb-2">
-            Belum Ada Artikel yang Diterbitkan
+          <span className="text-xs text-slate-400 hidden sm:inline">
+            Standar Penulisan Terbuka
+          </span>
+        </div>
+
+        <div className="bg-gradient-to-br from-slate-50 to-teal-50/40 border border-slate-200/90 rounded-2xl p-8 sm:p-12 text-center my-4 relative overflow-hidden">
+          <div className="w-14 h-14 rounded-2xl bg-teal-50 text-brand-teal flex items-center justify-center mx-auto mb-5 border border-teal-200 shadow-sm">
+            <BookOpen className="w-7 h-7" />
+          </div>
+
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-teal-200 text-teal-800 text-[11px] font-bold uppercase tracking-wider mb-3">
+            <Sparkles className="w-3 h-3 text-brand-teal" />
+            <span>Kurasi Naskah Sedang Berjalan</span>
+          </span>
+
+          <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-slate-900 mb-3">
+            Koleksi Naskah Terbaru Sedang Dipersiapkan
           </h3>
-          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed mb-6">
-            Repositori pengetahuan ZETARAZ saat ini siap untuk naskah orisinal pertama Anda.
+
+          <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed mb-8 font-normal">
+            ZETARAZ Knowledge menjunjung tinggi kurasi mendalam untuk memastikan setiap tulisan menyajikan rujukan primer yang sahih dan pengalaman lapangan yang aplikatif. Kami menyambut kontribusi naskah dari para praktisi, peneliti, dan akademisi.
           </p>
-          <Link
-            href="/admin/articles/new"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-navy hover:bg-brand-blue text-white text-xs font-bold rounded-xl transition-all shadow-sm"
-          >
-            <span>Tulis Artikel Pertama</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/contact?topic=submission"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-navy hover:bg-brand-blue text-white text-xs font-bold rounded-xl transition-all shadow-md"
+            >
+              <Send className="w-3.5 h-3.5 text-teal-400" />
+              <span>Ajukan Naskah / Pengalaman</span>
+            </Link>
+            <Link
+              href="/about#kredibilitas"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl transition-all border border-slate-200 shadow-sm"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-teal" />
+              <span>Standar Kredibilitas Redaksi</span>
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -44,8 +67,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
 
   return (
     <div>
-      {/* Section Heading */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-3 border-b border-slate-200 gap-4">
+      <div className="mb-6 pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
             Terbitan Terkini
@@ -55,24 +77,24 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
           </h2>
         </div>
         <Link
-          href="/search"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-brand-navy uppercase tracking-wider group"
+          href="/articles"
+          className="text-xs font-bold text-brand-teal hover:text-brand-navy flex items-center gap-1 uppercase tracking-wider"
         >
-          <span>Jelajahi Semua Tulisan</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <span>Semua Terbitan</span>
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
 
-      {/* 2-Column Editorial Grid for 8-col Parent */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {articles.map((art) => (
-            <article
-              key={art.id}
-              className="flex flex-col bg-slate-50/50 rounded-2xl overflow-hidden border border-slate-200/80 hover:border-slate-300 hover:shadow-lg transition-all group"
-            >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        {articles.map((art) => (
+          <article
+            key={art.id}
+            className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all group flex flex-col justify-between"
+          >
+            <div>
               <Link
                 href={`/articles/${art.slug}`}
-                className="relative aspect-[16/10] overflow-hidden bg-slate-100"
+                className="relative aspect-[16/10] block overflow-hidden bg-slate-100"
               >
                 <Image
                   src={art.featuredImage}
@@ -82,70 +104,56 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider bg-white/95 text-brand-navy rounded-full shadow-sm backdrop-blur-sm border border-slate-200/60">
-                    {art.category?.name}
+                  <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/95 text-brand-navy rounded-full shadow-sm backdrop-blur-sm border border-slate-200">
+                    {art.contentType}
                   </span>
                 </div>
               </Link>
 
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 text-xs text-slate-400 mb-2.5">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {formatDateIndonesian(art.publishedAt)}
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {art.readTimeMinutes} menit
-                    </span>
-                  </div>
-
-                  <h3 className="font-heading font-bold text-lg text-slate-900 group-hover:text-brand-blue transition-colors leading-snug line-clamp-2 mb-2.5">
-                    <Link href={`/articles/${art.slug}`}>
-                      {art.title}
-                    </Link>
-                  </h3>
-
-                  <p className="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4">
-                    {art.excerpt}
-                  </p>
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
+                  <span className="font-bold text-brand-teal uppercase tracking-wider text-[11px]">
+                    {art.category?.name}
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5" />
+                    {formatDateIndonesian(art.publishedAt)}
+                  </span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    {art.readTimeMinutes} menit baca
+                  </span>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/70 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {art.author?.avatar ? (
-                      <div className="relative w-6 h-6 rounded-full overflow-hidden">
-                        <Image
-                          src={art.author.avatar}
-                          alt={art.author.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600">
-                        <User className="w-3 h-3" />
-                      </div>
-                    )}
-                    <span className="text-xs font-medium text-slate-700 truncate max-w-[150px]">
-                      {art.author?.name}
-                    </span>
-                  </div>
-
-                  <Link
-                    href={`/articles/${art.slug}`}
-                    className="text-xs font-bold text-brand-teal group-hover:text-brand-navy flex items-center gap-1"
-                  >
-                    <span>Baca</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                <h3 className="font-heading font-bold text-lg text-slate-900 group-hover:text-brand-blue transition-colors leading-snug line-clamp-2 mb-2.5">
+                  <Link href={`/articles/${art.slug}`}>
+                    {art.title}
                   </Link>
-                </div>
+                </h3>
+
+                <p className="text-slate-600 text-sm leading-relaxed line-clamp-3">
+                  {art.excerpt}
+                </p>
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+
+            <div className="p-6 pt-0 border-t border-slate-100 flex items-center justify-between mt-4">
+              <span className="text-xs text-slate-600 font-medium">
+                {art.author?.name}
+              </span>
+              <Link
+                href={`/articles/${art.slug}`}
+                className="text-xs font-bold text-brand-teal group-hover:text-brand-navy flex items-center gap-1"
+              >
+                <span>Baca Lengkap</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
