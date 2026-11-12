@@ -1,4 +1,12 @@
 {
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
   "apphosting": {
     "backendId": "zetaraz-knowledge",
     "rootDir": "/",

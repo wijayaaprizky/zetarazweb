@@ -13,7 +13,40 @@ export default function HeroSection({
   mainArticle,
   secondaryArticles,
 }: HeroSectionProps) {
-  if (!mainArticle) return null;
+  if (!mainArticle) {
+    return (
+      <section className="py-14 lg:py-20 bg-gradient-to-br from-brand-navy via-brand-dark to-slate-900 text-white border-b border-slate-800 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/60 text-teal-400 text-xs font-bold uppercase tracking-wider mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>ZETARAZ Knowledge Platform</span>
+          </div>
+          <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
+            Berbagi Pengetahuan, Berbagi Pengalaman.
+          </h1>
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
+            Platform independen untuk menemukan pengetahuan, memperluas wawasan, dan bertukar pengalaman nyata lintas disiplin ilmu.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/about"
+              className="px-6 py-3 bg-brand-teal hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+            >
+              <span>Mengenal Inisiatif Kami</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/category/knowledge"
+              className="px-6 py-3 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs rounded-xl transition-all"
+            >
+              Jelajahi Pilar Pengetahuan
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-8 lg:py-12 border-b border-slate-200">

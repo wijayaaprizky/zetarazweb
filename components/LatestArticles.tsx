@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowRight, User } from 'lucide-react';
+import { Clock, Calendar, ArrowRight, User, BookOpen } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 
 interface LatestArticlesProps {
@@ -9,7 +9,38 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
-  if (!articles || articles.length === 0) return null;
+  if (!articles || articles.length === 0) {
+    return (
+      <div>
+        <div className="mb-6 pb-3 border-b border-slate-200">
+          <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
+            Terbitan Terkini
+          </span>
+          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
+            Artikel & Catatan Pengalaman Terbaru
+          </h2>
+        </div>
+        <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-8 sm:p-12 text-center my-4">
+          <div className="w-12 h-12 rounded-2xl bg-teal-50 text-brand-teal flex items-center justify-center mx-auto mb-4 border border-teal-100 shadow-sm">
+            <BookOpen className="w-6 h-6" />
+          </div>
+          <h3 className="font-heading font-bold text-lg text-slate-900 mb-2">
+            Belum Ada Artikel yang Diterbitkan
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed mb-6">
+            Repositori pengetahuan ZETARAZ saat ini siap untuk naskah orisinal pertama Anda.
+          </p>
+          <Link
+            href="/admin/articles/new"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-navy hover:bg-brand-blue text-white text-xs font-bold rounded-xl transition-all shadow-sm"
+          >
+            <span>Tulis Artikel Pertama</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

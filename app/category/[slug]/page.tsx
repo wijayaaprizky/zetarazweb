@@ -155,17 +155,30 @@ export default async function CategoryPage({
           <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 max-w-lg mx-auto">
             <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
             <h3 className="font-heading font-bold text-lg text-slate-800">
-              Belum Ada Artikel dalam Format Ini
+              {selectedType && selectedType !== 'ALL'
+                ? 'Belum Ada Artikel dalam Format Ini'
+                : 'Belum Ada Artikel di Kategori Ini'}
             </h3>
             <p className="text-xs text-slate-500 mt-1 mb-6">
-              Silakan pilih filter lain atau lihat seluruh publikasi pada kategori ini.
+              {selectedType && selectedType !== 'ALL'
+                ? 'Silakan pilih filter lain atau lihat seluruh publikasi pada kategori ini.'
+                : 'Naskah dan kajian untuk pilar ini sedang dalam persiapan kurasi. Anda juga dapat mulai berkontribusi melalui ruang redaksi.'}
             </p>
-            <Link
-              href={`/category/${category.slug}`}
-              className="px-4 py-2 bg-brand-navy text-white text-xs font-bold rounded-lg hover:bg-brand-blue transition-colors"
-            >
-              Tampilkan Semua Format
-            </Link>
+            {selectedType && selectedType !== 'ALL' ? (
+              <Link
+                href={`/category/${category.slug}`}
+                className="px-4 py-2 bg-brand-navy text-white text-xs font-bold rounded-lg hover:bg-brand-blue transition-colors inline-block"
+              >
+                Tampilkan Semua Format
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="px-4 py-2 bg-brand-navy text-white text-xs font-bold rounded-lg hover:bg-brand-blue transition-colors inline-block"
+              >
+                Kembali ke Beranda
+              </Link>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
