@@ -2,17 +2,14 @@ import React from 'react';
 import { prisma } from '@/lib/prisma';
 import HeroSection from '@/components/HeroSection';
 import LatestArticles from '@/components/LatestArticles';
-import ExploreCategories from '@/components/ExploreCategories';
-import ResearchInsights from '@/components/ResearchInsights';
 import PopularArticles from '@/components/PopularArticles';
-import RecommendedLearning from '@/components/RecommendedLearning';
 import AboutSection from '@/components/AboutSection';
 import NewsletterSection from '@/components/NewsletterSection';
 
 export const revalidate = 60; // ISR cache revalidation
 
 export default async function HomePage() {
-  // Fetch featured articles
+  // 1. Featured articles for the Hero section (Headlines)
   const featuredArticles = await prisma.article.findMany({
     where: {
       publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
@@ -29,49 +26,21 @@ export default async function HomePage() {
   const mainFeatured = featuredArticles[0] || null;
   const secondaryFeatured = featuredArticles.slice(1, 4);
 
-  // Latest articles (excluding the main hero if present)
+  // 2. All latest articles for the news-style article list (excluding main headline)
   const latestArticles = await prisma.article.findMany({
     where: {
       publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
       ...(mainFeatured ? { id: { not: mainFeatured.id } } : {}),
     },
     orderBy: { publishedAt: 'desc' },
-    take: 6,
+    take: 12,
     include: {
       category: true,
       author: true,
     },
   });
 
-  // All 6 categories with counts
-  const categories = await prisma.category.findMany({
-    orderBy: { order: 'asc' },
-    include: {
-      _count: {
-        select: {
-          articles: {
-            where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
-          },
-        },
-      },
-    },
-  });
-
-  // Deep Dive & Analysis (Tata Kelola / Teknologi)
-  const scienceResearchArticles = await prisma.article.findMany({
-    where: {
-      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
-      category: { slug: { in: ['tata-kelola', 'teknologi'] } },
-    },
-    orderBy: { publishedAt: 'desc' },
-    take: 2,
-    include: {
-      category: true,
-      author: true,
-    },
-  });
-
-  // Trending / Popular articles (strictly ordered by viewCount)
+  // 3. Trending / Popular articles (strictly ordered by viewCount)
   const popularArticles = await prisma.article.findMany({
     where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
     orderBy: { viewCount: 'desc' },
@@ -82,41 +51,21 @@ export default async function HomePage() {
     },
   });
 
-  // Learning / Tutorials & Practical Guides (Hobby, Sosial, Tutorial, Experience)
-  const learningArticles = await prisma.article.findMany({
-    where: {
-      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
-      OR: [
-        { category: { slug: { in: ['hobby', 'sosial'] } } },
-        { contentType: 'TUTORIAL' },
-        { contentType: 'EXPERIENCE' },
-      ],
-    },
-    orderBy: { publishedAt: 'desc' },
-    take: 4,
-    include: {
-      category: true,
-      author: true,
-    },
-  });
-
   return (
     <div className="flex flex-col">
       <h1 className="sr-only">ZETARAZ Knowledge — Berbagi Pengetahuan, Berbagi Pengalaman</h1>
-      {/* 1. Hero Section (Featured Knowledge) */}
+      
+      {/* 1. Hero Section (Sorotan Berita Utama) */}
       <HeroSection
         mainArticle={mainFeatured}
         secondaryArticles={secondaryFeatured}
       />
 
-      {/* 2. Explore Categories (6 Disciplines) */}
-      <ExploreCategories categories={categories} />
-
-      {/* 3. Main Editorial Feed + Trending Topics Sidebar */}
+      {/* 2. News-Style Articles Feed + Trending Sidebar */}
       <section className="py-12 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left 8 cols: Latest Knowledge Grid */}
+            {/* Left 8 cols: News-style Article List with category filter tabs */}
             <div className="lg:col-span-8">
               <LatestArticles articles={latestArticles} />
             </div>
@@ -126,7 +75,7 @@ export default async function HomePage() {
               <div className="sticky top-28 space-y-8">
                 <PopularArticles articles={popularArticles} />
 
-                {/* Friendly Invitation Callout Box */}
+                {/* Semangat ZETARAZ Callout Box */}
                 <div className="bg-gradient-to-br from-brand-navy to-slate-900 rounded-2xl p-6 text-white shadow-md border border-slate-800">
                   <div className="text-[10px] font-black tracking-widest text-teal-400 uppercase mb-2">
                     Semangat ZETARAZ
@@ -150,16 +99,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Practical Tutorials & Learning */}
-      <RecommendedLearning articles={learningArticles} />
-
-      {/* 5. Science & Research Insights */}
-      <ResearchInsights articles={scienceResearchArticles} />
-
-      {/* 6. About ZETARAZ Knowledge (Dedicated welcoming section) */}
+      {/* 3. About ZETARAZ Knowledge */}
       <AboutSection />
 
-      {/* 7. Newsletter Subscription */}
+      {/* 4. Newsletter Subscription */}
       <NewsletterSection />
     </div>
   );
