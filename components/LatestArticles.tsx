@@ -15,10 +15,9 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
 
   const categories = [
     { slug: 'all', name: 'Semua Berita & Artikel' },
-    { slug: 'teknologi', name: 'Teknologi' },
-    { slug: 'tata-kelola', name: 'Tata Kelola' },
-    { slug: 'hobby', name: 'Hobby' },
-    { slug: 'sosial', name: 'Sosial' },
+    { slug: 'pengetahuan', name: 'Pengetahuan' },
+    { slug: 'pengalaman', name: 'Pengalaman' },
+    { slug: 'opini', name: 'Opini' },
   ];
 
   const filteredArticles = useMemo(() => {
@@ -30,14 +29,12 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
 
   const getCategoryBadge = (slug: string) => {
     switch (slug) {
-      case 'teknologi':
+      case 'pengetahuan':
         return 'bg-blue-50 text-blue-700 border-blue-200/80 hover:bg-blue-100';
-      case 'tata-kelola':
-        return 'bg-indigo-50 text-indigo-700 border-indigo-200/80 hover:bg-indigo-100';
-      case 'hobby':
-        return 'bg-amber-50 text-amber-700 border-amber-200/80 hover:bg-amber-100';
-      case 'sosial':
+      case 'pengalaman':
         return 'bg-teal-50 text-teal-700 border-teal-200/80 hover:bg-teal-100';
+      case 'opini':
+        return 'bg-amber-50 text-amber-700 border-amber-200/80 hover:bg-amber-100';
       default:
         return 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200';
     }

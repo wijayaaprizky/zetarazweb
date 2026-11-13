@@ -60,23 +60,18 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/category/teknologi" className="hover:text-white transition-colors">
-                  Teknologi
+                <Link href="/category/pengetahuan" className="hover:text-white transition-colors">
+                  Pengetahuan
                 </Link>
               </li>
               <li>
-                <Link href="/category/tata-kelola" className="hover:text-white transition-colors">
-                  Tata Kelola
+                <Link href="/category/pengalaman" className="hover:text-white transition-colors">
+                  Pengalaman
                 </Link>
               </li>
               <li>
-                <Link href="/category/hobby" className="hover:text-white transition-colors">
-                  Hobby
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/sosial" className="hover:text-white transition-colors">
-                  Sosial
+                <Link href="/category/opini" className="hover:text-white transition-colors">
+                  Opini
                 </Link>
               </li>
               <li className="pt-2 border-t border-slate-800">

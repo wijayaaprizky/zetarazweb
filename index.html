@@ -113,18 +113,24 @@
               Beranda
             </a>
 
-            <!-- Placeholder Navigation Links -->
+            <!-- Classification Navigation Links (Pengetahuan, Pengalaman, Opini) -->
             <a
-              href="#kategori-1"
+              href="#pengetahuan"
               class="px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-200"
             >
-              Kategori 1
+              Pengetahuan
             </a>
             <a
-              href="#kategori-2"
+              href="#pengalaman"
               class="px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-200"
             >
-              Kategori 2
+              Pengalaman
+            </a>
+            <a
+              href="#opini"
+              class="px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-slate-100/70 transition-all duration-200"
+            >
+              Opini
             </a>
             <a
               href="#tentang"
@@ -556,18 +562,25 @@
           Beranda
         </a>
         <a
-          href="#kategori-1"
+          href="#pengetahuan"
           onclick="toggleMobileMenu(false)"
           class="block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-slate-50 text-sm"
         >
-          Kategori 1
+          Pengetahuan
         </a>
         <a
-          href="#kategori-2"
+          href="#pengalaman"
           onclick="toggleMobileMenu(false)"
           class="block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-slate-50 text-sm"
         >
-          Kategori 2
+          Pengalaman
+        </a>
+        <a
+          href="#opini"
+          onclick="toggleMobileMenu(false)"
+          class="block px-4 py-2.5 rounded-xl text-slate-700 hover:bg-slate-50 text-sm"
+        >
+          Opini
         </a>
         <a
           href="#tentang"
@@ -600,8 +613,8 @@
         id: "art-01",
         title: "Catatan Praktis Manajemen Proses Bisnis (BPM): Dari Alur Kerja ke Efisiensi Nyata",
         slug: "catatan-praktis-manajemen-proses-bisnis-bpm",
-        category: "Kategori 1",
-        categoryTheme: "indigo",
+        category: "Pengalaman",
+        categoryTheme: "teal",
         date: "18 Oktober 2026",
         isoDate: "2026-10-18",
         readTime: "7 menit",
@@ -617,7 +630,7 @@
         id: "art-02",
         title: "Mengenal Dasar Arsitektur Enterprise: Menjembatani Visi dan Implementasi Sistem",
         slug: "mengenal-dasar-arsitektur-enterprise",
-        category: "Kategori 1",
+        category: "Pengetahuan",
         categoryTheme: "indigo",
         date: "22 Oktober 2026",
         isoDate: "2026-10-22",
@@ -634,8 +647,8 @@
         id: "art-03",
         title: "Bagaimana Kecerdasan Buatan Membantu Pengolahan Pengetahuan: Dari Data Menjadi Pemahaman",
         slug: "bagaimana-kecerdasan-buatan-membantu-pengolahan-pengetahuan",
-        category: "Kategori 2",
-        categoryTheme: "sky",
+        category: "Pengetahuan",
+        categoryTheme: "indigo",
         date: "25 Oktober 2026",
         isoDate: "2026-10-25",
         readTime: "7 menit",
@@ -651,8 +664,8 @@
         id: "art-04",
         title: "Dasar Sains Data: Mengubah Catatan Lapangan Menjadi Wawasan Terukur yang Bermakna",
         slug: "dasar-sains-data-mengubah-catatan-menjadi-wawasan",
-        category: "Kategori 2",
-        categoryTheme: "sky",
+        category: "Pengetahuan",
+        categoryTheme: "indigo",
         date: "28 Oktober 2026",
         isoDate: "2026-10-28",
         readTime: "9 menit",
@@ -666,15 +679,15 @@
       },
       {
         id: "art-05",
-        title: "Prinsip Dasar Keamanan Siber: Melindungi Repositori dan Aset Informasi Digital",
-        slug: "prinsip-dasar-keamanan-siber",
-        category: "Kategori 2",
-        categoryTheme: "sky",
+        title: "Menemukan Keseimbangan Hidup Melalui Hobi Kreatif: Eksplorasi Minat di Luar Rutinitas",
+        slug: "menemukan-keseimbangan-hidup-melalui-hobi-kreatif",
+        category: "Opini",
+        categoryTheme: "amber",
         date: "01 November 2026",
         isoDate: "2026-11-01",
         readTime: "6 menit",
-        excerpt: "Keamanan digital bukan monopoli pakar teknis. Panduan perlindungan berlapis terhadap aset digital pribadi dan organisasi dari ancaman manipulasi sosial modern.",
-        imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&auto=format&fit=crop&q=80",
+        excerpt: "Di tengah tuntutan produktivitas yang tiada henti, memiliki hobi yang ditekuni tanpa beban target komersial adalah bentuk kepedulian terbaik pada diri sendiri.",
+        imageUrl: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&auto=format&fit=crop&q=80",
         author: {
           name: "Rizky Aditya Pratama Wijaya",
           role: "Editor & Kurator ZETARAZ",
@@ -685,8 +698,8 @@
         id: "art-06",
         title: "Pengalaman Mengelola Perubahan: Merawat Adopsi Cara Kerja Baru di Tengah Tim",
         slug: "pengalaman-mengelola-perubahan-cara-kerja-baru",
-        category: "Kategori 1",
-        categoryTheme: "indigo",
+        category: "Pengalaman",
+        categoryTheme: "teal",
         date: "03 November 2026",
         isoDate: "2026-11-03",
         readTime: "7 menit",
@@ -718,6 +731,7 @@
         sky: 'bg-sky-50 text-sky-700 border-sky-200/80',
         indigo: 'bg-indigo-50 text-indigo-700 border-indigo-200/80',
         teal: 'bg-teal-50 text-teal-700 border-teal-200/80',
+        amber: 'bg-amber-50 text-amber-700 border-amber-200/80',
       };
       const badgeStyle = themeColors[item.categoryTheme] || 'bg-slate-100 text-slate-700 border-slate-200';
 

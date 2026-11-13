@@ -7,10 +7,9 @@ import {
   Search,
   Menu,
   ChevronDown,
-  Cpu,
-  Briefcase,
-  Palette,
-  Users,
+  BookOpen,
+  Compass,
+  PenTool,
   FileText,
   Send,
   ArrowRight,
@@ -45,32 +44,25 @@ export default function Header() {
 
   const categoryItems = [
     {
-      name: 'Teknologi',
-      slug: 'teknologi',
-      desc: 'Kecerdasan buatan, rekayasa perangkat lunak, keamanan siber, & teknologi informasi',
-      icon: Cpu,
+      name: 'Pengetahuan',
+      slug: 'pengetahuan',
+      desc: 'Panduan konsep, teori, tutorial teknis, dan wawasan edukatif terstruktur',
+      icon: BookOpen,
       color: 'text-blue-600 bg-blue-50 group-hover:bg-blue-100 border border-blue-100',
     },
     {
-      name: 'Tata Kelola',
-      slug: 'tata-kelola',
-      desc: 'Manajemen proses (BPM), arsitektur enterprise, & tata kelola operasional terstruktur',
-      icon: Briefcase,
-      color: 'text-indigo-600 bg-indigo-50 group-hover:bg-indigo-100 border border-indigo-100',
-    },
-    {
-      name: 'Hobby',
-      slug: 'hobby',
-      desc: 'Fotografi, penulisan jurnal, eksplorasi kreasi santai, & merawat minat positif',
-      icon: Palette,
-      color: 'text-amber-600 bg-amber-50 group-hover:bg-amber-100 border border-amber-100',
-    },
-    {
-      name: 'Sosial',
-      slug: 'sosial',
-      desc: 'Dinamika komunitas, literasi publik, etika interaksi sosial, & dialog terbuka',
-      icon: Users,
+      name: 'Pengalaman',
+      slug: 'pengalaman',
+      desc: 'Catatan lapangan nyata, studi kasus empiris, perjalanan implementasi, & lessons learned',
+      icon: Compass,
       color: 'text-teal-600 bg-teal-50 group-hover:bg-teal-100 border border-teal-100',
+    },
+    {
+      name: 'Opini',
+      slug: 'opini',
+      desc: 'Sudut pandang pribadi, esai kritis, refleksi pemikiran, & analisis perspektif',
+      icon: PenTool,
+      color: 'text-amber-600 bg-amber-50 group-hover:bg-amber-100 border border-amber-100',
     },
   ];
 
@@ -140,7 +132,7 @@ export default function Header() {
                 Beranda
               </Link>
 
-              {/* 2. Daftar Artikel (Dropdown: Teknologi, Tata Kelola, Hobby, Sosial) */}
+              {/* 2. Daftar Artikel (Dropdown: Pengetahuan, Pengalaman, Opini) */}
               <div
                 className="relative"
                 onMouseEnter={handleMouseEnter}
@@ -166,7 +158,7 @@ export default function Header() {
 
                 {/* Dropdown Panel */}
                 {isArticlesDropdownOpen && (
-                  <div className="absolute top-full left-0 w-[520px] bg-white rounded-2xl shadow-xl border border-slate-200 p-4 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150">
+                  <div className="absolute top-full left-0 w-[580px] bg-white rounded-2xl shadow-xl border border-slate-200 p-4 mt-1 z-50 animate-in fade-in-50 slide-in-from-top-2 duration-150">
                     <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-3 pb-2 border-b border-slate-100 flex items-center justify-between">
                       <span>Klasifikasi Artikel</span>
                       <Link
@@ -174,12 +166,12 @@ export default function Header() {
                         className="text-brand-teal hover:underline normal-case text-xs font-semibold flex items-center gap-1"
                       >
                         <FileText className="w-3.5 h-3.5" />
-                        <span>Semua Artikel ({'12+'})</span>
+                        <span>Semua Artikel ({'13+'})</span>
                       </Link>
                     </div>
 
-                    {/* 4 Classification Cards */}
-                    <div className="grid grid-cols-2 gap-2.5 pt-3">
+                    {/* 3 Classification Cards */}
+                    <div className="grid grid-cols-3 gap-2.5 pt-3">
                       {categoryItems.map((cat) => {
                         const Icon = cat.icon;
                         const isCatActive = pathname === `/category/${cat.slug}`;
@@ -187,20 +179,20 @@ export default function Header() {
                           <Link
                             key={cat.slug}
                             href={`/category/${cat.slug}`}
-                            className={`p-3 rounded-xl transition-all flex items-start gap-3 group ${
+                            className={`p-3 rounded-xl transition-all flex flex-col items-start gap-2 group ${
                               isCatActive
                                 ? 'bg-teal-50/70 border border-teal-200'
-                                : 'hover:bg-slate-50 border border-transparent'
+                                : 'hover:bg-slate-50 border border-slate-100 hover:border-slate-200'
                             }`}
                           >
-                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${cat.color}`}>
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${cat.color}`}>
                               <Icon className="w-4 h-4" />
                             </div>
                             <div className="min-w-0">
                               <div className="font-heading font-bold text-sm text-slate-900 group-hover:text-brand-blue transition-colors">
                                 {cat.name}
                               </div>
-                              <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed mt-0.5">
+                              <p className="text-[11px] text-slate-500 line-clamp-3 leading-relaxed mt-1">
                                 {cat.desc}
                               </p>
                             </div>

@@ -71,12 +71,11 @@ async function runTests() {
     if (!contains(res.body, 'Kredibilitas & Tanggung Jawab Isi')) throw new Error('Credibility section missing');
   });
 
-  // 3. Category pages (All 4 Primary Categories)
+  // 3. Category pages (All 3 Primary Categories: Pengetahuan, Pengalaman, Opini)
   const categories = [
-    { slug: 'teknologi', name: 'Teknologi' },
-    { slug: 'tata-kelola', name: 'Tata Kelola' },
-    { slug: 'hobby', name: 'Hobby' },
-    { slug: 'sosial', name: 'Sosial' },
+    { slug: 'pengetahuan', name: 'Pengetahuan' },
+    { slug: 'pengalaman', name: 'Pengalaman' },
+    { slug: 'opini', name: 'Opini' },
   ];
 
   for (const cat of categories) {

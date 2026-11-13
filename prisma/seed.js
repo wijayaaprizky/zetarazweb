@@ -40,44 +40,34 @@ async function main() {
     },
   });
 
-  console.log('--- Creating 4 Core Categories (Teknologi, Tata Kelola, Hobby, Sosial) ---');
-  const catTeknologi = await prisma.category.create({
+  console.log('--- Creating 3 Core Categories (Pengetahuan, Pengalaman, Opini) ---');
+  const catPengetahuan = await prisma.category.create({
     data: {
-      name: 'Teknologi',
-      slug: 'teknologi',
-      description: 'Kecerdasan buatan, rekayasa perangkat lunak, keamanan siber, dan eksplorasi perkakas digital modern.',
-      icon: 'Cpu',
+      name: 'Pengetahuan',
+      slug: 'pengetahuan',
+      description: 'Panduan konsep, teori terstruktur, tutorial teknis, dan wawasan edukatif lintas disiplin ilmu.',
+      icon: 'BookOpen',
       order: 1,
     },
   });
 
-  const catTataKelola = await prisma.category.create({
+  const catPengalaman = await prisma.category.create({
     data: {
-      name: 'Tata Kelola',
-      slug: 'tata-kelola',
-      description: 'Manajemen proses bisnis (BPM), arsitektur enterprise, perencanaan sistem, dan tata kelola operasional terstruktur.',
-      icon: 'Briefcase',
+      name: 'Pengalaman',
+      slug: 'pengalaman',
+      description: 'Catatan lapangan nyata, studi kasus empiris, perjalanan implementasi, dan pembelajaran praktis.',
+      icon: 'Compass',
       order: 2,
     },
   });
 
-  const catHobby = await prisma.category.create({
+  const catOpini = await prisma.category.create({
     data: {
-      name: 'Hobby',
-      slug: 'hobby',
-      description: 'Eksplorasi minat kreatif, fotografi cerita, penulisan jurnal mandiri, dan kegiatan positif perawat ketajaman pikiran.',
-      icon: 'Palette',
+      name: 'Opini',
+      slug: 'opini',
+      description: 'Sudut pandang pemikiran, esai kritis, refleksi pribadi, dan analisis perspektif masa depan.',
+      icon: 'PenTool',
       order: 3,
-    },
-  });
-
-  const catSosial = await prisma.category.create({
-    data: {
-      name: 'Sosial',
-      slug: 'sosial',
-      description: 'Dinamika komunitas, literasi informasi publik, etika interaksi digital, dan semangat kolaborasi masyarakat terbuka.',
-      icon: 'Users',
-      order: 4,
     },
   });
 
@@ -116,7 +106,7 @@ async function main() {
       isFeatured: true,
       viewCount: 1650,
       readTimeMinutes: 6,
-      categoryId: catSosial.id,
+      categoryId: catOpini.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Jaringan pemikiran: Setiap pengalaman yang dibagikan membuka perspektif baru bagi orang lain.',
@@ -154,7 +144,7 @@ Tantangan terbesar adalah banyak pengalaman berharga tidak pernah dituliskan. Sa
 Berbagi pengetahuan bukan tentang pamer kepandaian, melainkan tentang membuka pintu agar orang lain dapat melangkah lebih jauh.`
     },
 
-    // ==================== 2. TATA KELOLA ====================
+    // ==================== 2. PENGALAMAN ====================
     {
       title: 'Catatan Praktis Manajemen Proses Bisnis (BPM): Dari Alur Kerja ke Kolaborasi Sehari-hari',
       slug: 'catatan-praktis-manajemen-proses-bisnis-bpm',
@@ -165,7 +155,7 @@ Berbagi pengetahuan bukan tentang pamer kepandaian, melainkan tentang membuka pi
       isFeatured: true,
       viewCount: 1320,
       readTimeMinutes: 7,
-      categoryId: catTataKelola.id,
+      categoryId: catPengalaman.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Pemetaan proses: Mengurai kerumitan operasional menjadi alur kerja yang mudah dipahami seluruh tim.',
@@ -193,7 +183,7 @@ Proses kerja yang sehat tidak dirancang sekali lalu dibiarkan selamanya. Ia dira
 Dengan melihat alur secara visual, tim dapat berkolaborasi mencari solusi tanpa saling menyalahkan.`
     },
 
-    // ==================== 3. TATA KELOLA ====================
+    // ==================== 3. PENGETAHUAN ====================
     {
       title: 'Mengenal Dasar Arsitektur Enterprise: Menjembatani Kebutuhan Nyata dengan Solusi Teknologi',
       slug: 'mengenal-dasar-arsitektur-enterprise',
@@ -204,7 +194,7 @@ Dengan melihat alur secara visual, tim dapat berkolaborasi mencari solusi tanpa 
       isFeatured: true,
       viewCount: 1140,
       readTimeMinutes: 8,
-      categoryId: catTataKelola.id,
+      categoryId: catPengetahuan.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Struktur arsitektur: Menjaga keteraturan sistem agar tetap adaptif terhadap kebutuhan masa depan.',
@@ -232,7 +222,7 @@ Secara umum, EA membagi sistem ke dalam empat lapisan mendasar:
 Kunci keberhasilan EA bukan pada tebalnya dokumen dokumentasi, melainkan pada kejelasan komunikasi antar pengambil keputusan dan tim pengembang.`
     },
 
-    // ==================== 4. TEKNOLOGI ====================
+    // ==================== 4. PENGETAHUAN ====================
     {
       title: 'Bagaimana Kecerdasan Buatan Membantu Pengolahan Pengetahuan: Dari Data Menjadi Pemahaman',
       slug: 'bagaimana-kecerdasan-buatan-membantu-pengolahan-pengetahuan',
@@ -243,7 +233,7 @@ Kunci keberhasilan EA bukan pada tebalnya dokumen dokumentasi, melainkan pada ke
       isFeatured: false,
       viewCount: 1480,
       readTimeMinutes: 7,
-      categoryId: catTeknologi.id,
+      categoryId: catPengetahuan.id,
       authorId: editor.id,
       featuredImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Sinergi kognitif: Menjadikan teknologi sebagai mitra untuk mengeksplorasi wawasan lebih mendalam.',
@@ -270,7 +260,7 @@ Cara terbaik memanfaatkan AI dalam manajemen pengetahuan adalah menjadikannya se
 Tetap ingat: **Kebenaran fakta dan kedalaman empati tetap menjadi domain mutlak manusia.** Selalu lakukan verifikasi mandiri atas setiap rujukan yang dihasilkan oleh mesin.`
     },
 
-    // ==================== 5. TEKNOLOGI ====================
+    // ==================== 5. PENGETAHUAN ====================
     {
       title: 'Dasar Sains Data: Mengubah Catatan Menjadi Wawasan Terukur yang Bermakna',
       slug: 'dasar-sains-data-mengubah-catatan-menjadi-wawasan',
@@ -281,7 +271,7 @@ Tetap ingat: **Kebenaran fakta dan kedalaman empati tetap menjadi domain mutlak 
       isFeatured: false,
       viewCount: 990,
       readTimeMinutes: 9,
-      categoryId: catTeknologi.id,
+      categoryId: catPengetahuan.id,
       authorId: editor.id,
       featuredImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Eksplorasi analitika: Membaca pola tersembunyi lewat representasi visual yang jernih.',
@@ -306,7 +296,7 @@ Untuk memulai proyek analisis sederhana, ada lima tahapan pokok yang biasa dilal
 5. **Tafsirkan & Ceritakan:** Jelaskan apa arti temuan tersebut bagi pembaca awam dengan bahasa yang jelas.`
     },
 
-    // ==================== 6. TEKNOLOGI ====================
+    // ==================== 6. PENGETAHUAN ====================
     {
       title: 'Prinsip Dasar Keamanan Siber untuk Pengguna Sehari-hari: Melindungi Aset Digital Pribadi',
       slug: 'prinsip-dasar-keamanan-siber',
@@ -317,7 +307,7 @@ Untuk memulai proyek analisis sederhana, ada lima tahapan pokok yang biasa dilal
       isFeatured: false,
       viewCount: 1210,
       readTimeMinutes: 6,
-      categoryId: catTeknologi.id,
+      categoryId: catPengetahuan.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Keamanan digital: Membangun pertahanan berlapis untuk melindungi data berharga.',
@@ -339,7 +329,7 @@ Hampir seluruh aspek hidup kita kini memiliki jejak digital: rekening bank, komu
 * **Perbarui Perangkat Secara Berkala:** Pembaruan sistem operasi biasanya berisi tambalan keamanan penting untuk menutup celah yang baru ditemukan.`
     },
 
-    // ==================== 7. TATA KELOLA ====================
+    // ==================== 7. PENGALAMAN ====================
     {
       title: 'Pengalaman Mengelola Perubahan: Merawat Adopsi Cara Kerja Baru di Tengah Tim',
       slug: 'pengalaman-mengelola-perubahan-cara-kerja-baru',
@@ -350,7 +340,7 @@ Hampir seluruh aspek hidup kita kini memiliki jejak digital: rekening bank, komu
       isFeatured: false,
       viewCount: 870,
       readTimeMinutes: 7,
-      categoryId: catTataKelola.id,
+      categoryId: catPengalaman.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Kolaborasi tim: Mendengarkan kekhawatiran sebelum menerapkan prosedur kerja baru.',
@@ -373,7 +363,7 @@ Setelah duduk bersama dan mendengarkan, jawabannya jarang berhubungan dengan fit
 3. **Dokumentasikan Panduan Sederhana:** Buat lembar contekan (*cheat sheet*) 1 halaman daripada buku manual tebal 100 halaman.`
     },
 
-    // ==================== 8. HOBBY ====================
+    // ==================== 8. OPINI ====================
     {
       title: 'Menemukan Keseimbangan Hidup Melalui Hobi Kreatif: Eksplorasi Minat di Luar Rutinitas',
       slug: 'menemukan-keseimbangan-hidup-melalui-hobi-kreatif',
@@ -384,7 +374,7 @@ Setelah duduk bersama dan mendengarkan, jawabannya jarang berhubungan dengan fit
       isFeatured: false,
       viewCount: 1120,
       readTimeMinutes: 5,
-      categoryId: catHobby.id,
+      categoryId: catOpini.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Ruang kreasi: Menemukan kedamaian dan ketenangan lewat kegiatan yang disukai sepenuh hati.',
@@ -409,7 +399,7 @@ Hobi kreatif—mulai dari fotografi jalanan, melukis, berkebun di teras rumah, h
 Luangkan setidaknya 30 menit setiap pekan untuk melakukan apa yang benar-benar Anda sukai, demi merawat kebahagiaan batin.`
     },
 
-    // ==================== 9. HOBBY ====================
+    // ==================== 9. PENGALAMAN ====================
     {
       title: 'Seni Merawat Fokus dengan Membaca dan Menulis Jurnal Mandiri',
       slug: 'seni-merawat-fokus-dengan-membaca-dan-menulis-jurnal',
@@ -420,7 +410,7 @@ Luangkan setidaknya 30 menit setiap pekan untuk melakukan apa yang benar-benar A
       isFeatured: false,
       viewCount: 940,
       readTimeMinutes: 6,
-      categoryId: catHobby.id,
+      categoryId: catPengalaman.id,
       authorId: editor.id,
       featuredImage: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Goresan reflektif: Menata kembali benang kusut pikiran melalui kebiasaan menulis jurnal.',
@@ -447,7 +437,7 @@ Anda tidak memerlukan buku catatan mewah atau pulpen berharga jutaan. Mulailah d
 Jurnal adalah teman bicara yang paling setia: ia tidak menghakimi, tidak menginterupsi, dan selalu siap mendengarkan.`
     },
 
-    // ==================== 10. HOBBY ====================
+    // ==================== 10. PENGALAMAN ====================
     {
       title: 'Eksplorasi Audio dan Musik: Menemukan Ruang Tenang di Tengah Kesibukan',
       slug: 'kreativitas-audio-dan-musik-dalam-menemani-keseharian',
@@ -458,7 +448,7 @@ Jurnal adalah teman bicara yang paling setia: ia tidak menghakimi, tidak mengint
       isFeatured: false,
       viewCount: 780,
       readTimeMinutes: 5,
-      categoryId: catHobby.id,
+      categoryId: catPengalaman.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Harmoni suara: Musik dan audio sebagai medium pemulihan konsentrasi dan inspirasi.',
@@ -479,7 +469,7 @@ Sebagian besar dari kita menjadikan musik sekadar latar belakang saat bekerja at
 * **Ritual Melepas Penat di Akhir Pekan:** Dengarkan satu album penuh dari awal hingga akhir tanpa menekan tombol acak (*shuffle*). Rasakan perjalanan emosional yang dirancang oleh sang musisi.`
     },
 
-    // ==================== 11. SOSIAL ====================
+    // ==================== 11. PENGETAHUAN ====================
     {
       title: 'Membaca Informasi dengan Kritis: Menangkal Misinformasi di Ruang Sosial Digital',
       slug: 'membaca-bukti-ilmiah-dan-menilai-kredibilitas-informasi',
@@ -490,7 +480,7 @@ Sebagian besar dari kita menjadikan musik sekadar latar belakang saat bekerja at
       isFeatured: false,
       viewCount: 1410,
       readTimeMinutes: 7,
-      categoryId: catSosial.id,
+      categoryId: catPengetahuan.id,
       authorId: editor.id,
       featuredImage: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Uji kebenaran: Meneliti rujukan dan menjaga kehati-hatian sebelum menyebarkan kabar.',
@@ -515,18 +505,18 @@ Jika kita tidak berhati-hati, ruang percakapan publik akan tercemar oleh kabar b
 Menjadi pembaca yang kritis adalah wujud cinta kita kepada masyarakat dan ruang hidup bersama.`
     },
 
-    // ==================== 12. SOSIAL ====================
+    // ==================== 12. OPINI ====================
     {
       title: 'Etika Komunikasi dan Dinamika Komunitas: Merawat Ruang Dialog Sehat di Era Digital',
       slug: 'etika-komunikasi-dan-kolaborasi-komunitas-digital',
-      subtitle: 'Bagaimana merawat empati, saling menghargai perbedaan pandangan, dan membangun kolaborasi positif di ranah daring.',
+      subtitle: 'Bagaimana merawat empamti, saling menghargai perbedaan pandangan, dan membangun kolaborasi positif di ranah daring.',
       excerpt: 'Komunitas digital yang kuat tidak lahir dari keseragaman pendapat, melainkan dari kedewasaan para anggotanya dalam berdialog secara santun dan saling membangun.',
       contentType: 'EXPERIENCE',
       status: 'PUBLISHED',
       isFeatured: false,
       viewCount: 920,
       readTimeMinutes: 6,
-      categoryId: catSosial.id,
+      categoryId: catOpini.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Kerukunan komunitas: Dialog yang hangat dan saling menghargai mempererat jejaring sosial.',
@@ -551,7 +541,7 @@ Anonimitas dan jarak fisik kerap kali membuat orang lebih mudah melontarkan kata
 Komunitas yang sehat adalah tempat di mana setiap orang merasa aman untuk bertanya, belajar, dan saling menyemangati.`
     },
 
-    // ==================== 13. SOSIAL ====================
+    // ==================== 13. OPINI ====================
     {
       title: 'Belajar Sepanjang Hayat: Menumbuhkan Budaya Literasi Terbuka di Tengah Masyarakat',
       slug: 'belajar-sepanjang-hayat-continuous-learning',
@@ -562,7 +552,7 @@ Komunitas yang sehat adalah tempat di mana setiap orang merasa aman untuk bertan
       isFeatured: false,
       viewCount: 1050,
       readTimeMinutes: 6,
-      categoryId: catSosial.id,
+      categoryId: catOpini.id,
       authorId: admin.id,
       featuredImage: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&auto=format&fit=crop&q=80',
       imageCaption: 'Pendidikan berkelanjutan: Merawat rasa ingin tahu sebagai bekal berharga mengarungi zaman.',
@@ -661,7 +651,7 @@ Di ZETARAZ Knowledge, kami mengajak Anda untuk terus membuka diri, membaca, dan 
     ],
   });
 
-  console.log('--- Database Seeding Complete for ZETARAZ Knowledge (4 Categories, 13 Articles)! ---');
+  console.log('--- Database Seeding Complete for ZETARAZ Knowledge (3 Categories: Pengetahuan, Pengalaman, Opini; 13 Articles)! ---');
 }
 
 main()
