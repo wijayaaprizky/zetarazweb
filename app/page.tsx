@@ -90,7 +90,7 @@ export default async function HomePage() {
                     href="/about"
                     className="text-xs font-bold text-teal-400 hover:text-teal-300 inline-flex items-center gap-1"
                   >
-                    Mengenal Inisiatif Kami →
+                    Tentang Kami →
                   </a>
                 </div>
               </div>
