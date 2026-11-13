@@ -44,10 +44,19 @@ export async function getCurrentUser() {
         bio: true,
       },
     });
-    return user;
+    if (user) return user;
   } catch {
-    return null;
+    // If DB is unavailable in serverless, return session payload
   }
+
+  return {
+    id: payload.userId,
+    email: payload.email,
+    name: payload.name,
+    role: payload.role,
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    bio: 'Penulis dan kurator di ZETARAZ Knowledge.',
+  };
 }
 
 export function getAuthCookieName(): string {
