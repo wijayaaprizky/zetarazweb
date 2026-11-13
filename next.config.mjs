@@ -4,7 +4,7 @@ const nextConfig = {
   optimizeFonts: false,
   experimental: {
     outputFileTracingIncludes: {
-      '/**': ['./prisma/dev.db', './prisma/schema.prisma'],
+      '/**': ['./prisma/dev.db', './prisma/schema.prisma', './data/**/*'],
     },
   },
   images: {

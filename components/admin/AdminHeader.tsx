@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, Bell, Plus, User } from 'lucide-react';
+import { Shield, Bell, Plus, User, Sliders } from 'lucide-react';
 
 interface AdminHeaderProps {
   user: any;
@@ -20,7 +20,16 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
         </span>
       </div>
 
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2.5">
+        <Link
+          href="/admin/settings"
+          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"
+          title="Pengaturan Website & Footer"
+        >
+          <Sliders className="w-3.5 h-3.5 text-slate-500" />
+          <span className="hidden md:inline">Pengaturan</span>
+        </Link>
+
         <Link
           href="/admin/articles/new"
           className="px-3.5 py-1.5 bg-brand-teal hover:bg-teal-600 text-white text-xs font-bold rounded-lg shadow-sm transition-colors flex items-center gap-1.5"

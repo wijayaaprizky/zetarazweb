@@ -14,6 +14,7 @@ import {
   Plus,
   ArrowRight,
   TrendingUp,
+  Sliders,
 } from 'lucide-react';
 
 export default async function AdminDashboardPage() {
@@ -73,7 +74,15 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            href="/admin/settings"
+            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors flex items-center gap-2"
+          >
+            <Sliders className="w-4 h-4 text-slate-500" />
+            <span>Pengaturan Website & Footer</span>
+          </Link>
+
           <Link
             href="/admin/articles/new"
             className="px-4 py-2 bg-brand-teal hover:bg-teal-600 text-white font-bold text-xs rounded-xl shadow-md transition-colors flex items-center gap-2"

@@ -12,6 +12,7 @@ import {
   ExternalLink,
   LogOut,
   Shield,
+  Sliders,
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -38,6 +39,7 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
     { name: 'Tulis Artikel Baru', href: '/admin/articles/new', icon: PlusCircle },
     { name: 'Kelola Kategori', href: '/admin/categories', icon: FolderTree },
     { name: 'Pelanggan Buletin', href: '/admin/subscribers', icon: Mail },
+    { name: 'Pengaturan & Footer', href: '/admin/settings', icon: Sliders },
   ];
 
   return (

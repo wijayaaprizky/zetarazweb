@@ -1,0 +1,54 @@
+{
+  "brandName": "ZETARAZ",
+  "brandSubtitle": "Knowledge",
+  "tagline": "Berbagi Pengetahuan, Berbagi Pengalaman",
+  "description": "ZETARAZ Knowledge adalah wadah independen untuk membaca, memahami, dan berbagi wawasan bermakna. Kami menghadirkan telaah terstruktur, catatan pengalaman lapangan, serta panduan praktis lintas disiplin ilmu yang mudah dipelajari oleh siapa saja.",
+  "motto": "“Temukan Pengetahuan. Perluas Wawasan.”",
+  "location": "Indonesia",
+  "contactEmail": "kontak@zetaraz.org",
+  "copyrightText": "Berbagi Pengetahuan, Berbagi Pengalaman. Terbuka untuk semua pembelajar.",
+  "directoryLinks": [
+    {
+      "name": "Tentang Kami",
+      "href": "/about"
+    },
+    {
+      "name": "Layanan & Program",
+      "href": "/services"
+    },
+    {
+      "name": "Semua Artikel",
+      "href": "/articles"
+    },
+    {
+      "name": "Pencarian Topik",
+      "href": "/search"
+    }
+  ],
+  "legalLinks": [
+    {
+      "name": "FAQ",
+      "href": "/faq"
+    },
+    {
+      "name": "Ketentuan Pengguna (Terms)",
+      "href": "/terms"
+    },
+    {
+      "name": "Kebijakan Privasi (Privacy)",
+      "href": "/privacy"
+    },
+    {
+      "name": "Disclaimer (Penafian)",
+      "href": "/disclaimer"
+    },
+    {
+      "name": "Pusat Bantuan (Support)",
+      "href": "/support"
+    },
+    {
+      "name": "Hubungi Kami",
+      "href": "/contact"
+    }
+  ]
+}
