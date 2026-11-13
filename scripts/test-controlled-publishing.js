@@ -58,7 +58,7 @@ async function runTests() {
     const res = await request('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: { email: 'admin@zetaraz.com', password: 'ZetarazAdmin2026!' },
+      body: { email: 'admin@zetaraz.com', password: 'IndoTechFreedom-97!' },
     });
     if (res.statusCode !== 200 || !res.json?.success) {
       throw new Error('Admin login failed');

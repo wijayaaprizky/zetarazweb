@@ -103,7 +103,7 @@ Seluruh fungsionalitas manajemen konten bersifat privat dan terlindungi, hanya d
 
 * **URL Login:** `http://localhost:3000/admin/login`
 * **Email:** `admin@zetaraz.com`
-* **Password:** `ZetarazAdmin2026!`
+* **Password:** *(Terkonfigurasi privat via environment)*
 * **Profil Pengelola:** **Rizky Aditya Pratama Wijaya** (Penulis & Administrator)
 
 ### Fitur Dasbor Admin:
@@ -122,7 +122,7 @@ Seluruh fungsionalitas manajemen konten bersifat privat dan terlindungi, hanya d
 DATABASE_URL="file:./dev.db"
 JWT_SECRET="zetaraz-production-secure-jwt-key-2026-kms-platform"
 ADMIN_EMAIL="admin@zetaraz.com"
-ADMIN_PASSWORD="ZetarazAdmin2026!"
+ADMIN_PASSWORD="<rahasia-kata-sandi-admin>"
 NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
 

@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Lock, Mail, Loader2, AlertCircle, ArrowLeft, KeyRound } from 'lucide-react';
+import { Shield, Lock, Mail, Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@zetaraz.com');
-  const [password, setPassword] = useState('ZetarazAdmin2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
-                    placeholder="admin@zetaraz.com"
+                    placeholder="nama@email.com"
                   />
                 </div>
               </div>
@@ -100,15 +100,6 @@ export default function AdminLoginPage() {
                     className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
                     placeholder="••••••••••••"
                   />
-                </div>
-              </div>
-
-              {/* Demo Helper Info */}
-              <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-700/60 text-[11px] text-slate-400 flex items-start gap-2">
-                <KeyRound className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-semibold text-slate-300 block">Kredensial Demo Terkonfigurasi:</span>
-                  <span>Email: <code className="text-teal-400">admin@zetaraz.com</code> | Pass: <code className="text-teal-400">ZetarazAdmin2026!</code></span>
                 </div>
               </div>
 

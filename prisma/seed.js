@@ -16,7 +16,7 @@ async function main() {
   await prisma.newsletterSubscriber.deleteMany();
 
   console.log('--- Creating Users ---');
-  const passwordHash = await bcrypt.hash('ZetarazAdmin2026!', 10);
+  const passwordHash = await bcrypt.hash('IndoTechFreedom-97!', 10);
   
   const admin = await prisma.user.create({
     data: {

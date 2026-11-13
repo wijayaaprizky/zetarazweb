@@ -144,7 +144,7 @@ async function runTests() {
     const res = await request('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: { email: 'admin@zetaraz.com', password: 'ZetarazAdmin2026!' },
+      body: { email: 'admin@zetaraz.com', password: 'IndoTechFreedom-97!' },
     });
     if (res.statusCode !== 200) throw new Error(`Expected 200, got ${res.statusCode}`);
     const data = JSON.parse(res.body);
