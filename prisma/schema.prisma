@@ -140,3 +140,14 @@ model NewsletterSubscriber {
   subscribedAt DateTime @default(now())
   status       String   @default("ACTIVE") // ACTIVE, UNSUBSCRIBED
 }
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  filename     String   @unique
+  originalName String?
+  mimeType     String
+  dataBase64   String
+  size         Int
+  createdAt    DateTime @default(now())
+}
+

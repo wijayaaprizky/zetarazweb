@@ -25,6 +25,7 @@ import {
   ArrowRight,
   Eye,
 } from 'lucide-react';
+import ImageUploader from '@/components/admin/ImageUploader';
 import type {
   AllPagesContent,
   AboutPageContent,
@@ -519,14 +520,12 @@ function AboutEditor({
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-              URL Gambar Banner Samping
-            </label>
-            <input
-              type="text"
+            <ImageUploader
               value={data.identityImageUrl || ''}
-              onChange={(e) => onChange({ identityImageUrl: e.target.value })}
-              className="w-full text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              onChange={(url) => onChange({ identityImageUrl: url })}
+              label="Gambar Banner Samping (Tentang Kami)"
+              aspectRatio="aspect-square sm:aspect-video"
+              helperText="Pilih upload file gambar dari komputer atau tempelkan tautan URL gambar."
             />
           </div>
         </div>

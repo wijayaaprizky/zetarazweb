@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import ImageUploader from '@/components/admin/ImageUploader';
 import {
   Save,
   Send,
@@ -838,26 +839,13 @@ export default function ArticleEditorForm({
                 Gambar Editorial
               </h3>
 
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                <Image
-                  src={featuredImage}
-                  alt="Preview Thumbnail"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">
-                  URL Gambar Resolusi Tinggi
-                </label>
-                <input
-                  type="text"
-                  value={featuredImage}
-                  onChange={(e) => setFeaturedImage(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 font-mono"
-                />
-              </div>
+              <ImageUploader
+                value={featuredImage}
+                onChange={(url) => setFeaturedImage(url)}
+                label="Gambar Utama & Sampul Editorial"
+                aspectRatio="aspect-video"
+                helperText="Unggah gambar dari komputer Anda atau masukkan tautan URL web."
+              />
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">

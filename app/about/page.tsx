@@ -86,6 +86,7 @@ export default function AboutPage() {
                 fill
                 sizes="(max-width: 1024px) 100vw, 500px"
                 className="object-cover"
+                unoptimized
               />
             </div>
           </div>

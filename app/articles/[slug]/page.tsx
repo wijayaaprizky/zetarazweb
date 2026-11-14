@@ -317,6 +317,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               priority
               sizes="(max-width: 1200px) 100vw, 1024px"
               className="object-cover"
+              unoptimized
             />
           </div>
           {article.imageCaption && (
