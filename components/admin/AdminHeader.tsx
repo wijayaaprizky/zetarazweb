@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, Bell, Plus, User, Sliders } from 'lucide-react';
+import { Shield, Bell, Plus, User, Sliders, Layers } from 'lucide-react';
 
 interface AdminHeaderProps {
   user: any;
@@ -21,6 +21,15 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
       </div>
 
       <div className="flex items-center space-x-2.5">
+        <Link
+          href="/admin/pages"
+          className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"
+          title="Kelola Konten Halaman Statis"
+        >
+          <Layers className="w-3.5 h-3.5 text-slate-500" />
+          <span className="hidden md:inline">Konten Halaman</span>
+        </Link>
+
         <Link
           href="/admin/settings"
           className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5"

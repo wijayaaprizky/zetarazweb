@@ -2,13 +2,13 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl } from '@/lib/siteConfig';
+import { getPageContent } from '@/lib/pagesContent';
 import ContactForm from '@/components/ContactForm';
 import {
   Mail,
   MapPin,
   Clock,
   MessageSquare,
-  Sparkles,
   ChevronRight,
   ShieldCheck,
   Send,
@@ -24,6 +24,8 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const content = getPageContent('contact');
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* Breadcrumb */}
@@ -44,13 +46,13 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-950 text-teal-400 border border-teal-800 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>Kanal Komunikasi</span>
+            <span>{content.heroBadge}</span>
           </div>
           <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
-            Hubungi Redaksi ZETARAZ
+            {content.heroTitle}
           </h1>
           <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
-            Kami menyambut setiap pertanyaan, masukan kritis, usulan topik, dan tawaran kolaborasi pengetahuan dari Anda.
+            {content.heroDescription}
           </p>
         </div>
       </section>
@@ -83,10 +85,10 @@ export default function ContactPage() {
                       Pertanyaan & Umum
                     </div>
                     <a
-                      href="mailto:kontak@zetaraz.org"
+                      href={`mailto:${content.publicEmail}`}
                       className="text-xs sm:text-sm font-semibold text-slate-900 hover:text-brand-blue"
                     >
-                      kontak@zetaraz.org
+                      {content.publicEmail}
                     </a>
                   </div>
                 </div>
@@ -100,10 +102,10 @@ export default function ContactPage() {
                       Redaksi & Pengiriman Naskah
                     </div>
                     <a
-                      href="mailto:redaksi@zetaraz.org"
+                      href={`mailto:${content.editorialEmail}`}
                       className="text-xs sm:text-sm font-semibold text-slate-900 hover:text-brand-blue"
                     >
-                      redaksi@zetaraz.org
+                      {content.editorialEmail}
                     </a>
                   </div>
                 </div>
@@ -117,7 +119,7 @@ export default function ContactPage() {
                       Basis Inisiatif
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-slate-900">
-                      Indonesia (Inisiatif Pengetahuan Digital)
+                      {content.officeLocation}
                     </div>
                   </div>
                 </div>
@@ -131,7 +133,7 @@ export default function ContactPage() {
                       Waktu Pelayanan Redaksi
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-slate-900">
-                      Senin – Jumat, 09.00 – 17.00 WIB
+                      {content.operatingHours}
                     </div>
                   </div>
                 </div>
@@ -145,28 +147,14 @@ export default function ContactPage() {
                 <span>Etika Pengiriman Pesan</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed font-normal">
-                Kami sangat menghargai pesan yang disampaikan secara santun, menyertakan konteks rujukan yang jelas, dan bebas dari muatan penipuan atau promosi ilegal.
+                {content.guidelinesText}
               </p>
             </div>
           </div>
 
-          {/* Right Column: Contact Form (7 cols) */}
+          {/* Right Column: Interactive Contact Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-              <div className="mb-6 pb-4 border-b border-slate-100">
-                <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-                  Formulir Komunikasi
-                </span>
-                <h3 className="font-heading font-extrabold text-xl text-brand-navy mt-1">
-                  Kirim Pesan Langsung
-                </h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Isi formulir di bawah ini dan kami akan membalas ke alamat email Anda.
-                </p>
-              </div>
-
-              <ContactForm />
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>

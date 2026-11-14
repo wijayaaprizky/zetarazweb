@@ -2,13 +2,13 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCanonicalUrl } from '@/lib/siteConfig';
+import { getPageContent } from '@/lib/pagesContent';
 import {
   LifeBuoy,
-  HelpCircle,
-  Mail,
-  FileQuestion,
-  Bug,
   BookOpen,
+  Mail,
+  Bug,
+  FileQuestion,
   ChevronRight,
   Clock,
   CheckCircle,
@@ -23,37 +23,10 @@ export const metadata: Metadata = {
   },
 };
 
+const topicIcons = [BookOpen, Mail, Bug, FileQuestion];
+
 export default function SupportPage() {
-  const supportTopics = [
-    {
-      icon: BookOpen,
-      title: 'Panduan Membaca & Menemukan Topik',
-      desc: 'Pelajari cara menggunakan bilah pencarian, menyaring artikel berdasarkan kategori disiplin ilmu, dan menjelajahi arsip pengetahuan.',
-      linkText: 'Lihat Panduan FAQ',
-      linkHref: '/faq',
-    },
-    {
-      icon: Mail,
-      title: 'Bantuan Buletin & Email',
-      desc: 'Mengalami kendala tidak menerima email buletin mingguan atau ingin mengubah alamat email langganan Anda?',
-      linkText: 'Kelola Buletin',
-      linkHref: '/faq#buletin',
-    },
-    {
-      icon: Bug,
-      title: 'Laporkan Masalah Teknis / Tautan Rusak',
-      desc: 'Menemukan halaman yang lambat, kesalahan tata letak di perangkat tertentu, atau tautan yang tidak berfungsi?',
-      linkText: 'Kirim Laporan Bug',
-      linkHref: '/contact?topic=bug',
-    },
-    {
-      icon: FileQuestion,
-      title: 'Koreksi Naskah & Permohonan Hak Cipta',
-      desc: 'Ingin menyampaikan rujukan pembanding untuk artikel tertentu atau klarifikasi hak cipta atribusi materi?',
-      linkText: 'Hubungi Redaksi',
-      linkHref: '/contact?topic=editorial',
-    },
-  ];
+  const content = getPageContent('support');
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -75,31 +48,22 @@ export default function SupportPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-950 text-teal-400 border border-teal-800 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
             <LifeBuoy className="w-3.5 h-3.5" />
-            <span>Help Center & Support</span>
+            <span>{content.heroBadge}</span>
           </div>
           <h1 className="font-heading font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
-            Pusat Bantuan & Dukungan Pengguna
+            {content.heroTitle}
           </h1>
           <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
-            Kami siap membantu Anda mendapatkan pengalaman membaca, belajar, dan berpartisipasi yang terbaik di ZETARAZ Knowledge.
+            {content.heroDescription}
           </p>
         </div>
       </section>
 
       {/* Support Topics Grid */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-            Kategori Kendala
-          </span>
-          <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-brand-navy mt-1">
-            Apa yang Bisa Kami Bantu?
-          </h2>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {supportTopics.map((topic, idx) => {
-            const Icon = topic.icon;
+          {(content.topics || []).map((topic, idx) => {
+            const Icon = topicIcons[idx % topicIcons.length];
             return (
               <div
                 key={idx}
@@ -118,7 +82,7 @@ export default function SupportPage() {
                 </div>
                 <div className="pt-4 border-t border-slate-100">
                   <Link
-                    href={topic.linkHref}
+                    href={topic.linkHref || '/contact'}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-teal hover:text-brand-navy transition-colors uppercase tracking-wider"
                   >
                     <span>{topic.linkText}</span>
@@ -130,7 +94,7 @@ export default function SupportPage() {
           })}
         </div>
 
-        {/* Response Commitment Box */}
+        {/* Commitment Box */}
         <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div className="p-4">
@@ -141,7 +105,7 @@ export default function SupportPage() {
                 Waktu Respons Cepat
               </h4>
               <p className="text-xs text-slate-500">
-                Laporan dan pertanyaan melalui email umumnya ditanggapi dalam kurun waktu 1 × 24 jam kerja.
+                {content.responseTimeText}
               </p>
             </div>
 
@@ -166,8 +130,8 @@ export default function SupportPage() {
               </h4>
               <p className="text-xs text-slate-500">
                 Hubungi langsung:{' '}
-                <a href="mailto:support@zetaraz.org" className="text-brand-blue font-bold hover:underline">
-                  support@zetaraz.org
+                <a href={`mailto:${content.supportEmail}`} className="text-brand-blue font-bold hover:underline">
+                  {content.supportEmail}
                 </a>
               </p>
             </div>
