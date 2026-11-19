@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions (FAQ) — ZETARAZ Knowledge',
+  title: 'Frequently Asked Questions (FAQ)',
   description:
     'Pertanyaan yang sering diajukan mengenai ZETARAZ Knowledge, tujuan platform, kurasi naskah, panduan kontribusi, dan lisensi konten.',
   alternates: {

@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { fetchGoogleDoc, extractDocId } from './googleDocs';
 import crypto from 'crypto';
+import { calculateReadTime } from './utils';
 
 export interface SyncResult {
   success: boolean;
@@ -270,6 +271,7 @@ export async function publishArticle(
       data: {
         publishedContent: article.draftContent,
         content: article.draftContent, // Backward compatibility mirror
+        readTimeMinutes: calculateReadTime(article.draftContent),
         publishedVersion: targetVersion,
         draftVersion: targetVersion,
         publicationStatus: 'PUBLISHED',

@@ -16,6 +16,7 @@ import {
   X,
 } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
+import { contentTypeLabel, sortContentTypes } from '@/lib/contentTypes';
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -35,6 +36,7 @@ function SearchContent() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [categoriesList, setCategoriesList] = useState<any[]>([]);
+  const [typeOptions, setTypeOptions] = useState<string[]>([]);
 
   // Fetch categories for dropdown filter
   useEffect(() => {
@@ -47,13 +49,19 @@ function SearchContent() {
   }, []);
 
   // Fetch search results
-  const performSearch = async () => {
+  // Parameter opsional dipakai saat nilai baru belum sempat masuk ke state
+  // (mis. saat tombol saran topik diklik).
+  const performSearch = async (
+    q: string = query,
+    cat: string = category,
+    type: string = contentType
+  ) => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      if (query.trim()) params.set('q', query.trim());
-      if (category !== 'all') params.set('category', category);
-      if (contentType !== 'all') params.set('type', contentType);
+      if (q.trim()) params.set('q', q.trim());
+      if (cat !== 'all') params.set('category', cat);
+      if (type !== 'all') params.set('type', type);
       if (sort !== 'relevance') params.set('sort', sort);
 
       const res = await fetch(`/api/search?${params.toString()}`);
@@ -61,6 +69,7 @@ function SearchContent() {
       if (data.success) {
         setArticles(data.articles || []);
         setSuggestions(data.suggestions || []);
+        if (Array.isArray(data.contentTypes)) setTypeOptions(data.contentTypes);
       }
     } catch (err) {
       console.error('Search error:', err);
@@ -193,10 +202,13 @@ function SearchContent() {
                 className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-blue"
               >
                 <option value="all">Semua Tipe Konten</option>
-                <option value="EDITORIAL">Editorial</option>
-                <option value="RESEARCH">Research</option>
-                <option value="TUTORIAL">Tutorial</option>
-                <option value="ANALYSIS">Analysis</option>
+                {sortContentTypes(
+                  Array.from(new Set([...typeOptions, ...(contentType !== 'all' ? [contentType] : [])]))
+                ).map((t) => (
+                  <option key={t} value={t}>
+                    {contentTypeLabel(t)}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -255,9 +267,12 @@ function SearchContent() {
                     <button
                       key={s}
                       onClick={() => {
+                        // Sebelumnya hanya mengisi kotak pencarian tanpa menjalankan pencarian.
                         setQuery(s);
                         setCategory('all');
                         setContentType('all');
+                        performSearch(s, 'all', 'all');
+                        router.replace(`/search?q=${encodeURIComponent(s)}`, { scroll: false });
                       }}
                       className="px-3 py-1.5 bg-teal-50 text-brand-teal hover:bg-teal-100 rounded-lg text-xs font-semibold transition-colors border border-teal-200/60"
                     >

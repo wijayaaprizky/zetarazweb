@@ -1,3 +1,4 @@
+import { contentTypeLabel, sortContentTypes } from '@/lib/contentTypes';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -34,7 +35,7 @@ export async function generateMetadata({
   const url = getCanonicalUrl(`/category/${category.slug}`);
 
   return {
-    title: `${category.name} — ZETARAZ Knowledge`,
+    title: category.name,
     description:
       category.description ||
       `Kumpulan artikel, kajian, dan panduan komprehensif dalam topik ${category.name} di ZETARAZ Knowledge.`,
@@ -81,7 +82,17 @@ export default async function CategoryPage({
     },
   });
 
-  const contentTypes = ['ALL', 'EDITORIAL', 'RESEARCH', 'TUTORIAL', 'ANALYSIS'];
+  // Hanya tampilkan format yang benar-benar dipakai artikel di kategori ini,
+  // supaya tidak ada tombol filter yang selalu berujung "Belum Ada Artikel".
+  const typeRows = await prisma.article.findMany({
+    where: {
+      categoryId: category.id,
+      publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] },
+    },
+    distinct: ['contentType'],
+    select: { contentType: true },
+  });
+  const contentTypes = ['ALL', ...sortContentTypes(typeRows.map((r) => r.contentType))];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">
@@ -90,7 +101,7 @@ export default async function CategoryPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center space-x-2 text-xs text-slate-500">
             <Link href="/" className="hover:text-brand-blue">
-              Home
+              Beranda
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
             <span className="font-semibold text-slate-800">{category.name}</span>
@@ -141,7 +152,7 @@ export default async function CategoryPage({
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
-                  {type === 'ALL' ? 'Semua Format' : type}
+                  {type === 'ALL' ? 'Semua Format' : contentTypeLabel(type)}
                 </Link>
               );
             })}
@@ -201,7 +212,7 @@ export default async function CategoryPage({
                     />
                     <div className="absolute top-3 left-3">
                       <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/95 text-brand-navy rounded-full shadow-sm backdrop-blur-sm border border-slate-200">
-                        {art.contentType}
+                        {contentTypeLabel(art.contentType)}
                       </span>
                     </div>
                   </Link>

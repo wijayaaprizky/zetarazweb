@@ -14,18 +14,30 @@
  * 6. Automated 301 redirect capability from Firebase domain to custom domain when migration is completed.
  */
 
+function isLocalUrl(url: string): boolean {
+  return /localhost|127\.0\.0\.1/.test(url);
+}
+
 export function getSiteUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL;
-  if (envUrl) {
-    return envUrl.trim().replace(/\/+$/, '');
+  const envUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || '')
+    .trim()
+    .replace(/\/+$/, '');
+
+  // Alamat localhost hanya valid saat pengembangan. Di produksi nilai itu hampir
+  // pasti sisa konfigurasi (mis. dari file .env) sehingga canonical, sitemap, dan
+  // tautan bagikan menunjuk ke alamat yang tidak bisa dibuka pembaca.
+  const isProd = process.env.NODE_ENV === 'production';
+  if (envUrl && !(isProd && isLocalUrl(envUrl))) {
+    return envUrl;
   }
 
-  // Cloud Run / Vercel container fallback if set
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+  // Vercel: domain produksi proyek, lalu domain deployment saat ini.
+  const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+  if (vercelHost) {
+    return `https://${vercelHost}`;
   }
 
-  return 'http://localhost:3000';
+  return envUrl || 'http://localhost:3000';
 }
 
 /**

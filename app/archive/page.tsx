@@ -1,3 +1,4 @@
+import { contentTypeLabel } from '@/lib/contentTypes';
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -16,7 +17,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Arsip Pengetahuan (Knowledge Archive) — ZETARAZ Knowledge',
+  title: 'Arsip Pengetahuan (Knowledge Archive)',
   description:
     'Indeks kronologis seluruh terbitan artikel, ulasan riset, dan panduan belajar di ZETARAZ Knowledge berdasarkan tahun, bulan, dan domain ilmu.',
   alternates: {
@@ -155,7 +156,7 @@ export default async function ArchivePage() {
                             <article key={art.id} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 group">
                               <div className="min-w-0 flex-1">
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-2">
-                                  [{art.contentType}]
+                                  [{contentTypeLabel(art.contentType)}]
                                 </span>
                                 <Link
                                   href={`/articles/${art.slug}`}

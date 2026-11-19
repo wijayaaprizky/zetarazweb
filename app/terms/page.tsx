@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Ketentuan Pengguna (Terms of Service) — ZETARAZ Knowledge',
+  title: 'Ketentuan Pengguna (Terms of Service)',
   description:
     'Syarat dan ketentuan resmi penggunaan platform ZETARAZ Knowledge, hak cipta konten edukatif, etika pengutipan, dan tanggung jawab pengguna.',
   alternates: {

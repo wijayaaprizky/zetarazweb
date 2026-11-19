@@ -10,7 +10,8 @@ export async function GET(request: Request) {
     const categorySlug = searchParams.get('category');
     const contentType = searchParams.get('type');
     const sort = searchParams.get('sort') || 'relevance';
-    const limit = parseInt(searchParams.get('limit') || '20', 10);
+    const parsedLimit = parseInt(searchParams.get('limit') || '20', 10);
+    const limit = Number.isFinite(parsedLimit) ? Math.min(Math.max(parsedLimit, 1), 50) : 20;
 
     // Only search published articles (including those with pending updates)
     const where: any = {
@@ -74,10 +75,18 @@ export async function GET(request: Request) {
       ];
     }
 
+    // Format konten yang benar-benar ada, untuk mengisi dropdown filter.
+    const typeRows = await prisma.article.findMany({
+      where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
+      distinct: ['contentType'],
+      select: { contentType: true },
+    });
+
     return NextResponse.json({
       success: true,
       query,
       count: articles.length,
+      contentTypes: typeRows.map((r) => r.contentType),
       articles,
       suggestions,
     });

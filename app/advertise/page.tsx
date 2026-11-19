@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Kebijakan Promosi, Iklan & Kemitraan — ZETARAZ Knowledge',
+  title: 'Kebijakan Promosi, Iklan & Kemitraan',
   description:
     'Panduan resmi kemitraan edukatif, sponsor buletin, dan etika penayangan informasi beriklan di ZETARAZ Knowledge.',
   alternates: {

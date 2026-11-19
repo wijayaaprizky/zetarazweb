@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Pusat Bantuan (Support & Help Center) — ZETARAZ Knowledge',
+  title: 'Pusat Bantuan (Support & Help Center)',
   description:
     'Pusat bantuan pembaca dan kontributor ZETARAZ Knowledge: panduan navigasi, solusi kendala teknis, dan kontak tim dukungan redaksi.',
   alternates: {

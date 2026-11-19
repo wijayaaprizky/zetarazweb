@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Kebijakan Privasi (Privacy Policy) — ZETARAZ Knowledge',
+  title: 'Kebijakan Privasi (Privacy Policy)',
   description:
     'Kebijakan perlindungan data pribadi dan privasi pembaca di ZETARAZ Knowledge: pengelolaan surel newsletter, log server, dan hak privasi Anda.',
   alternates: {

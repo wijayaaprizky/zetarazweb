@@ -1,3 +1,4 @@
+import { contentTypeLabel, sortContentTypes } from '@/lib/contentTypes';
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -16,7 +17,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Blog & Direktori Artikel — ZETARAZ Knowledge',
+  title: 'Blog & Direktori Artikel',
   description:
     'Jelajahi seluruh kumpulan artikel, kajian ilmiah, panduan praktis, dan catatan pengalaman nyata di ZETARAZ Knowledge.',
   alternates: {
@@ -58,7 +59,12 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
     }),
   ]);
 
-  const contentTypes = ['ALL', 'KNOWLEDGE', 'EXPERIENCE', 'TUTORIAL', 'RESEARCH', 'PERSPECTIVE'];
+  const typeRows = await prisma.article.findMany({
+    where: { publicationStatus: { in: ['PUBLISHED', 'UPDATE_AVAILABLE'] } },
+    distinct: ['contentType'],
+    select: { contentType: true },
+  });
+  const contentTypes = ['ALL', ...sortContentTypes(typeRows.map((r) => r.contentType))];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -103,7 +109,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
               <Filter className="w-3.5 h-3.5" /> Kategori:
             </span>
             <Link
-              href="/articles"
+              href={selectedType ? `/articles?type=${selectedType}` : '/articles'}
               className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 ${
                 !selectedCategory || selectedCategory === 'ALL'
                   ? 'bg-brand-navy text-white shadow-sm'
@@ -126,6 +132,35 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
               </Link>
             ))}
           </div>
+
+          {/* Format Filters */}
+          {contentTypes.length > 2 && (
+            <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2 flex items-center gap-1 shrink-0">
+                <Filter className="w-3.5 h-3.5" /> Format:
+              </span>
+              {contentTypes.map((type) => {
+                const isActive = (selectedType || 'ALL') === type;
+                const params = new URLSearchParams();
+                if (selectedCategory && selectedCategory !== 'ALL') params.set('category', selectedCategory);
+                if (type !== 'ALL') params.set('type', type);
+                const qs = params.toString();
+                return (
+                  <Link
+                    key={type}
+                    href={`/articles${qs ? `?${qs}` : ''}`}
+                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 ${
+                      isActive
+                        ? 'bg-brand-navy text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {type === 'ALL' ? 'Semua Format' : contentTypeLabel(type)}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -171,7 +206,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
                     />
                     <div className="absolute top-3 left-3">
                       <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/95 text-brand-navy rounded-full shadow-sm backdrop-blur-sm border border-slate-200">
-                        {art.contentType}
+                        {contentTypeLabel(art.contentType)}
                       </span>
                     </div>
                   </Link>

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer (Penafian Tanggung Jawab) — ZETARAZ Knowledge',
+  title: 'Disclaimer (Penafian Tanggung Jawab)',
   description:
     'Penafian hukum dan editorial ZETARAZ Knowledge: batasan tanggung jawab konten, penggunaan materi edukatif, dan tutorial teknologi.',
   alternates: {

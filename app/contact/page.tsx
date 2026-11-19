@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Hubungi Kami (Contact Us) — ZETARAZ Knowledge',
+  title: 'Hubungi Kami (Contact Us)',
   description:
     'Hubungi tim redaksi ZETARAZ Knowledge untuk pertanyaan umum, pengajuan naskah artikel, masukan editorial, dan kolaborasi inisiatif terbuka.',
   alternates: {

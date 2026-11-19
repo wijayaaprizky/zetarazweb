@@ -1,10 +1,11 @@
+import { contentTypeLabel } from '@/lib/contentTypes';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
-import { formatDateIndonesian } from '@/lib/utils';
+import { formatDateIndonesian, calculateReadTime } from '@/lib/utils';
 import { getSiteUrl, getCanonicalUrl } from '@/lib/siteConfig';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import TableOfContents from '@/components/TableOfContents';
@@ -48,14 +49,20 @@ export async function generateMetadata({
 
   const url = getCanonicalUrl(`/articles/${article.slug}`);
 
+  // Layout sudah menambahkan " | ZETARAZ Knowledge" lewat title template; buang akhiran
+  // yang sudah tertulis di seoTitle supaya nama situs tidak tampil dua kali.
+  const pageTitle = (article.seoTitle || article.title)
+    .replace(/\s*[|\u2014\u2013-]\s*ZETARAZ Knowledge\s*$/i, '')
+    .trim();
+
   return {
-    title: article.seoTitle || article.title,
+    title: pageTitle,
     description: article.seoDescription || article.excerpt,
     alternates: {
       canonical: article.canonicalUrl || url,
     },
     openGraph: {
-      title: article.seoTitle || article.title,
+      title: pageTitle,
       description: article.seoDescription || article.excerpt,
       url,
       type: 'article',
@@ -74,7 +81,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: article.seoTitle || article.title,
+      title: pageTitle,
       description: article.seoDescription || article.excerpt,
       images: [article.featuredImage],
     },
@@ -103,6 +110,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   // Controlled Publishing: Public visitors only see the approved published version
   const publicContent = article.publishedContent || article.content;
+
+  // Hitung dari isi sebenarnya, bukan nilai tersimpan yang bisa kedaluwarsa.
+  const readTimeMinutes = calculateReadTime(publicContent);
 
   // Related articles in the same category
   const relatedArticles = await prisma.article.findMany({
@@ -172,7 +182,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'Home',
+        name: 'Beranda',
         item: siteUrl,
       },
       {
@@ -211,7 +221,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex items-center space-x-2 text-xs text-slate-500 overflow-x-auto whitespace-nowrap">
               <Link href="/" className="hover:text-brand-blue">
-                Home
+                Beranda
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
               <Link
@@ -238,7 +248,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {article.category.name}
               </Link>
               <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full uppercase tracking-wider">
-                {article.contentType}
+                {contentTypeLabel(article.contentType)}
               </span>
             </div>
 
@@ -290,7 +300,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  {article.readTimeMinutes} menit baca
+                  {readTimeMinutes} menit baca
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
@@ -464,7 +474,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       </Link>
                       <div className="p-5">
                         <span className="text-[10px] font-bold text-brand-teal uppercase tracking-wider block mb-1.5">
-                          {rel.contentType}
+                          {contentTypeLabel(rel.contentType)}
                         </span>
                         <h4 className="font-heading font-bold text-base text-slate-900 group-hover:text-brand-blue transition-colors line-clamp-2 leading-snug mb-2">
                           <Link href={`/articles/${rel.slug}`}>

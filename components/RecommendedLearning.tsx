@@ -1,3 +1,4 @@
+import { contentTypeLabel } from '@/lib/contentTypes';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -54,7 +55,7 @@ export default function RecommendedLearning({ articles }: RecommendedLearningPro
                   />
                   <div className="absolute top-2.5 left-2.5">
                     <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-navy text-white rounded-md shadow-sm">
-                      {art.contentType}
+                      {contentTypeLabel(art.contentType)}
                     </span>
                   </div>
                 </div>

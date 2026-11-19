@@ -1,3 +1,4 @@
+import { contentTypeLabel } from '@/lib/contentTypes';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -46,7 +47,7 @@ export default function ResearchInsights({ articles }: ResearchInsightsProps) {
               <div>
                 <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
                   <span className="px-2.5 py-0.5 rounded-full bg-teal-950 text-teal-400 border border-teal-800 font-semibold uppercase tracking-wider text-[11px]">
-                    {art.contentType}
+                    {contentTypeLabel(art.contentType)}
                   </span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3 text-slate-500" />

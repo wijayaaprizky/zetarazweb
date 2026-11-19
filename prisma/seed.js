@@ -3,6 +3,12 @@ const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
+// Sama dengan calculateReadTime di lib/utils.ts (200 kata per menit).
+function calcReadTime(text) {
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
 async function main() {
   console.log('--- Cleaning previous data ---');
   await prisma.syncHistory.deleteMany();
@@ -583,6 +589,7 @@ Di ZETARAZ Knowledge, kami mengajak Anda untuk terus membuka diri, membaca, dan 
     const createdArticle = await prisma.article.create({
       data: {
         ...artData,
+        readTimeMinutes: calcReadTime(artData.content),
         publishedContent: artData.content,
         draftContent: artData.content,
         publishedVersion: 1,

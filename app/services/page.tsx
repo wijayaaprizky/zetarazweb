@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Layanan & Program Inisiatif — ZETARAZ Knowledge',
+  title: 'Layanan & Program Inisiatif',
   description:
     'Eksplorasi layanan kurasi editorial, repositori pengetahuan terbuka, program berbagi pengalaman, dan kemitraan literasi di ZETARAZ Knowledge.',
   alternates: {

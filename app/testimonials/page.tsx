@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Testimoni Pembaca & Kontributor — ZETARAZ Knowledge',
+  title: 'Testimoni Pembaca & Kontributor',
   description:
     'Kumpulan cerita, ulasan, dan refleksi dari para pembaca, akademisi, dan praktisi yang telah memetik wawasan dari ZETARAZ Knowledge.',
   alternates: {
