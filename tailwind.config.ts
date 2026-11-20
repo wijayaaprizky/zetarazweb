@@ -1,38 +1,36 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Sistem warna ZETARAZ Knowledge
+ * Sistem warna ZETARAZ Knowledge: "Soft Intellectual".
  *
- * Gagasan: "peta pengetahuan". Tiga kategori punya warna sendiri supaya pembaca
- * langsung mengenali jenis tulisan tanpa membaca labelnya:
- *   - kn  (ultramarine)  → Pengetahuan
- *   - ex  (hijau-teal)   → Pengalaman
- *   - op  (koral-rose)   → Opini
- * Warna netral (slate) sengaja diberi semburat biru-malam agar seluruh halaman
- * terasa satu keluarga, bukan abu-abu generik.
+ * Dasarnya gading hangat dan putih; aksennya teal lembut, hijau sage, dan emas.
+ * Tidak ada biru tua/navy. Tiga kategori diberi warna lembut yang berbeda:
+ *   - kn  (teal)  -> Pengetahuan
+ *   - ex  (sage)  -> Pengalaman
+ *   - op  (emas)  -> Opini
+ * `slate` adalah netral bernuansa sage (bukan abu-abu biru): 50 = gading latar,
+ * 700 = Deep Sage untuk teks utama.
  *
- * Skala `teal`, `blue`, `sky`, dan `indigo` bawaan Tailwind dialihkan ke palet
- * ini, sehingga komponen lama yang masih memakai nama-nama itu ikut selaras.
- *
- * Semua pasangan teks/latar utama sudah diuji kontrasnya (WCAG AA).
+ * Skala `teal`, `blue`, `sky`, dan `indigo` bawaan Tailwind dialihkan ke teal
+ * kita, sehingga komponen lama (termasuk admin) ikut selaras.
  */
 const kn = {
-  50: "#EEF0FF", 100: "#E0E4FF", 200: "#C4CBFF", 300: "#9AA6FF", 400: "#6E7CFF",
-  500: "#4B5BF7", 600: "#3A47E6", 700: "#2F39C4", 800: "#29329D", 900: "#272F7B", 950: "#181C52",
+  50: "#EEF8F5", 100: "#D8F0EA", 200: "#B3E2D8", 300: "#87D0C2", 400: "#62BFAE",
+  500: "#4BAE9D", 600: "#2A8374", 700: "#226A5E", 800: "#1D554C", 900: "#1A453F", 950: "#0F2B27",
 };
 const ex = {
-  50: "#E8FBF6", 100: "#C8F5EA", 200: "#96EAD6", 300: "#5ADABF", 400: "#2BC4A5",
-  500: "#12A88C", 600: "#087A66", 700: "#0B6F5F", 800: "#0D594D", 900: "#0D493F", 950: "#052B25",
+  50: "#F2F7F3", 100: "#E4EEE8", 200: "#CCE0D4", 300: "#A7C9B5", 400: "#86B09A",
+  500: "#689981", 600: "#4F7D67", 700: "#3F6452", 800: "#335044", 900: "#2B4239", 950: "#17261F",
 };
 const op = {
-  50: "#FFF0F3", 100: "#FFE0E7", 200: "#FFC2D0", 300: "#FF94AB", 400: "#FF5F84",
-  500: "#F23A67", 600: "#D8214F", 700: "#B5163F", 800: "#94153A", 900: "#7A1535", 950: "#430A1D",
+  50: "#FDF7EB", 100: "#FAEBCF", 200: "#F4DBA9", 300: "#EDC789", 400: "#E8B66C",
+  500: "#D99C43", 600: "#B87D26", 700: "#8F5F1C", 800: "#6F4A1A", 900: "#5A3D19", 950: "#32200B",
 };
 const slate = {
-  50: "#F6F7FC", 100: "#EDEFF8", 200: "#DDE0F0", 300: "#C3C8E0", 400: "#7D84AB",
-  500: "#5F6690", 600: "#4A5079", 700: "#363B63", 800: "#262A4D", 900: "#171A3A", 950: "#0E1128",
+  50: "#F7F8F5", 100: "#EEF1EC", 200: "#DFE5DF", 300: "#C5CEC8", 400: "#8D9996",
+  500: "#66706E", 600: "#4F5F5D", 700: "#344C4A", 800: "#2A3F3D", 900: "#1F302E", 950: "#152220",
 };
-const sun = { 300: "#FFD84D", 400: "#FFC53D", 500: "#FFB000" };
+const sun = { 300: "#F0CB93", 400: "#E8B66C", 500: "#D99C43" };
 
 const config: Config = {
   content: [
@@ -50,7 +48,7 @@ const config: Config = {
         op,
         sun,
         slate,
-        teal: ex,
+        teal: kn,
         blue: kn,
         sky: kn,
         indigo: kn,
@@ -58,7 +56,7 @@ const config: Config = {
           navy: slate[900],
           dark: slate[950],
           blue: kn[600],
-          teal: ex[600],
+          teal: kn[700],
           cyan: kn[500],
           bg: slate[50],
           card: "#FFFFFF",
@@ -76,7 +74,7 @@ const config: Config = {
         read: ["var(--font-read)", "Georgia", "serif"],
       },
       boxShadow: {
-        lift: "0 1px 2px rgba(23,26,58,0.06), 0 12px 32px -12px rgba(23,26,58,0.18)",
+        lift: "0 1px 2px rgba(31,48,46,0.05), 0 14px 32px -16px rgba(31,48,46,0.20)",
       },
     },
   },

@@ -11,15 +11,15 @@ export default function PopularArticles({ articles }: PopularArticlesProps) {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <div className="rounded-3xl bg-white p-6 ring-1 ring-slate-200">
+    <div className="rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200">
       <div className="mb-5 flex items-center gap-2.5">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sun-300/40 text-slate-900">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sun-300/50 text-slate-900">
           <TrendingUp className="h-4 w-4" />
         </span>
         <h3 className="font-heading text-lg font-bold text-slate-900">Paling banyak dibaca</h3>
       </div>
 
-      <ol className="divide-y divide-slate-100">
+      <ol className="divide-y divide-slate-200">
         {articles.map((art, index) => {
           const theme = getCategoryTheme(art.category?.slug);
           return (

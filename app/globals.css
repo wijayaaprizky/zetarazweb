@@ -16,7 +16,7 @@
 
   body {
     background-color: theme('colors.slate.50');
-    color: theme('colors.slate.800');
+    color: theme('colors.slate.700');
     font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -70,7 +70,7 @@
 
 /* Header kaca */
 .header-glass {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(247, 248, 245, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -82,23 +82,23 @@
 /* ------------------------------------------------------------------ */
 .reading-panel {
   --rp-bg: #ffffff;
-  --rp-fg: #262a4d;
-  --rp-strong: #0e1128;
-  --rp-muted: #5f6690;
-  --rp-rule: #dde0f0;
-  --rp-link: #2f39c4;
-  --rp-quote-bg: #eef0ff;
-  --rp-quote-bar: #4b5bf7;
-  --rp-code-bg: #edeff8;
-  --rp-pre-bg: #0e1128;
-  --rp-pre-fg: #e4e6f7;
-  --rp-th-bg: #f6f7fc;
+  --rp-fg: #344c4a;
+  --rp-strong: #1f302e;
+  --rp-muted: #66706e;
+  --rp-rule: #dfe5df;
+  --rp-link: #226a5e;
+  --rp-quote-bg: #eef8f5;
+  --rp-quote-bar: #4bae9d;
+  --rp-code-bg: #eef1ec;
+  --rp-pre-bg: #1f302e;
+  --rp-pre-fg: #e6eeeb;
+  --rp-th-bg: #f7f8f5;
 
   background: var(--rp-bg);
   color: var(--rp-fg);
   border-radius: 1.5rem;
   padding: 1.75rem 1.25rem;
-  box-shadow: 0 0 0 1px var(--rp-rule), 0 1px 2px rgba(23, 26, 58, 0.06), 0 28px 56px -28px rgba(23, 26, 58, 0.35);
+  box-shadow: 0 0 0 1px var(--rp-rule), 0 1px 2px rgba(31, 48, 46, 0.05), 0 24px 48px -28px rgba(31, 48, 46, 0.28);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -124,18 +124,18 @@ html[data-read-theme='sepia'] .reading-panel {
 }
 
 html[data-read-theme='dark'] .reading-panel {
-  --rp-bg: #14173a;
-  --rp-fg: #d5d9f2;
+  --rp-bg: #1b2a28;
+  --rp-fg: #d3deda;
   --rp-strong: #ffffff;
-  --rp-muted: #9aa1cc;
-  --rp-rule: #2b3070;
-  --rp-link: #9aa6ff;
-  --rp-quote-bg: #1c2050;
-  --rp-quote-bar: #6e7cff;
-  --rp-code-bg: #1f2459;
-  --rp-pre-bg: #0a0c20;
-  --rp-pre-fg: #e4e6f7;
-  --rp-th-bg: #1c2050;
+  --rp-muted: #9db0ab;
+  --rp-rule: #2f4541;
+  --rp-link: #87d0c2;
+  --rp-quote-bg: #223533;
+  --rp-quote-bar: #4bae9d;
+  --rp-code-bg: #2a403c;
+  --rp-pre-bg: #111b1a;
+  --rp-pre-fg: #e6eeeb;
+  --rp-th-bg: #223533;
 }
 
 /* Tipografi isi artikel */
@@ -317,4 +317,15 @@ html[data-read-size='lg'] .article-prose {
   font-family: var(--font-ui);
   font-size: 0.78em;
   color: var(--rp-muted);
+}
+
+/* Cahaya pada ilustrasi hero berdenyut pelan (hanya satu gerakan di halaman) */
+@keyframes zi-pulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.zi-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: zi-pulse 5s ease-in-out infinite;
 }

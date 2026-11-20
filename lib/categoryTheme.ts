@@ -38,9 +38,9 @@ const THEMES: Record<string, CategoryTheme> = {
     hoverTitle: 'group-hover:text-kn-700',
     link: 'text-kn-700 hover:text-kn-900',
     numeral: 'text-kn-300 group-hover:text-kn-600',
-    tabActive: 'bg-kn-600 text-white ring-kn-600',
+    tabActive: 'bg-kn-100 text-kn-800 ring-kn-300',
     borderTop: 'border-t-kn-500',
-    glow: 'rgba(75,91,247,0.40)',
+    glow: 'rgba(75,174,157,0.34)',
   },
   pengalaman: {
     chip: 'bg-ex-50 text-ex-700 ring-1 ring-inset ring-ex-200',
@@ -50,9 +50,9 @@ const THEMES: Record<string, CategoryTheme> = {
     hoverTitle: 'group-hover:text-ex-700',
     link: 'text-ex-700 hover:text-ex-900',
     numeral: 'text-ex-300 group-hover:text-ex-600',
-    tabActive: 'bg-ex-600 text-white ring-ex-600',
+    tabActive: 'bg-ex-100 text-ex-800 ring-ex-300',
     borderTop: 'border-t-ex-500',
-    glow: 'rgba(18,168,140,0.34)',
+    glow: 'rgba(167,201,181,0.30)',
   },
   opini: {
     chip: 'bg-op-50 text-op-700 ring-1 ring-inset ring-op-200',
@@ -62,9 +62,9 @@ const THEMES: Record<string, CategoryTheme> = {
     hoverTitle: 'group-hover:text-op-700',
     link: 'text-op-700 hover:text-op-900',
     numeral: 'text-op-300 group-hover:text-op-600',
-    tabActive: 'bg-op-600 text-white ring-op-600',
+    tabActive: 'bg-op-100 text-op-800 ring-op-300',
     borderTop: 'border-t-op-500',
-    glow: 'rgba(242,58,103,0.30)',
+    glow: 'rgba(232,182,108,0.28)',
   },
 };
 
@@ -78,7 +78,7 @@ const FALLBACK: CategoryTheme = {
   numeral: 'text-slate-300 group-hover:text-slate-600',
   tabActive: 'bg-slate-900 text-white ring-slate-900',
   borderTop: 'border-t-slate-400',
-  glow: 'rgba(125,132,171,0.28)',
+  glow: 'rgba(141,153,150,0.26)',
 };
 
 export function getCategoryTheme(slug?: string | null): CategoryTheme {

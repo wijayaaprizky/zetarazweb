@@ -39,34 +39,31 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-kn-700 via-kn-900 to-slate-950 text-white relative overflow-hidden">
-      {/* Subtle decorative grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-tight mb-4">
-          Dapatkan Kurasi Pengetahuan & Pengalaman Berkala
+    <section className="relative overflow-hidden bg-ex-100 py-20 text-slate-700">
+      <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+        <h2 className="mb-4 font-heading text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          Kurasi pengetahuan dan pengalaman, langsung ke email Anda
         </h2>
 
-        <p className="text-kn-100 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-          Dapatkan rangkuman artikel pilihan seputar teknologi, metodologi riset, sains data terapan, dan catatan pengalaman praktis langsung di email Anda.
+        <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+          Rangkuman artikel pilihan seputar teknologi, metodologi riset, sains data terapan, dan catatan pengalaman praktis.
         </p>
 
         {status === 'success' ? (
-          <div className="bg-teal-900/40 border border-teal-500/50 rounded-2xl p-6 max-w-lg mx-auto flex items-center gap-3 text-left">
-            <CheckCircle className="w-6 h-6 text-teal-400 shrink-0" />
+          <div className="bg-white ring-1 ring-kn-200 rounded-2xl p-6 max-w-lg mx-auto flex items-center gap-3 text-left">
+            <CheckCircle className="w-6 h-6 text-kn-600 shrink-0" />
             <div>
-              <h4 className="font-heading font-bold text-teal-300 text-sm">
+              <h4 className="font-heading font-bold text-kn-800 text-sm">
                 Pendaftaran Berhasil
               </h4>
-              <p className="text-xs text-slate-300 mt-0.5">{message}</p>
+              <p className="text-xs text-slate-600 mt-0.5">{message}</p>
             </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
             <div className="flex flex-col sm:flex-row gap-2.5">
               <div className="relative flex-1">
-                <Mail className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Mail className="w-5 h-5 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   id="newsletter-email"
                   type="email"
@@ -76,13 +73,13 @@ export default function NewsletterSection() {
                   required
                   aria-label="Alamat email untuk berlangganan buletin pengetahuan"
                   disabled={status === 'loading'}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-kn-500 focus:border-transparent transition-all"
                 />
               </div>
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="px-6 py-3 bg-sun-400 hover:bg-sun-300 disabled:opacity-50 text-slate-950 font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                className="px-6 py-3 bg-kn-700 hover:bg-kn-800 disabled:opacity-50 text-white font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shrink-0 cursor-pointer"
               >
                 {status === 'loading' ? (
                   <>
@@ -96,13 +93,13 @@ export default function NewsletterSection() {
             </div>
 
             {status === 'error' && (
-              <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-rose-400 font-medium">
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-red-700 font-medium">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{message}</span>
               </div>
             )}
 
-            <p className="text-xs text-kn-200 mt-4">
+            <p className="text-xs text-slate-600 mt-4">
               Privasi Anda aman. Kami hanya mengirimkan konten pengetahuan bermanfaat dan Anda bebas berhenti berlangganan kapan saja.
             </p>
           </form>

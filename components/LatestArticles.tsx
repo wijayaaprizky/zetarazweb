@@ -68,8 +68,8 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
                 isActive
                   ? theme
                     ? theme.tabActive
-                    : 'bg-slate-900 text-white ring-slate-900'
-                  : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-100 hover:text-slate-900'
+                    : 'bg-slate-200 text-slate-900 ring-slate-300'
+                  : 'bg-transparent text-slate-600 ring-slate-300 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               {theme && !isActive && <span className={`h-2 w-2 rounded-full ${theme.dot}`} />}
@@ -80,21 +80,21 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       </div>
 
       {filteredArticles.length === 0 ? (
-        <p className="rounded-2xl bg-white p-8 text-center text-sm text-slate-500 ring-1 ring-slate-200">
+        <p className="rounded-2xl bg-slate-50 p-8 text-center text-sm text-slate-600">
           Belum ada artikel di kategori ini. Coba pilih kategori lain.
         </p>
       ) : (
-        <div className="space-y-5">
+        <div className="divide-y divide-slate-200 border-t border-slate-200">
           {filteredArticles.map((art) => {
             const theme = getCategoryTheme(art.category?.slug);
             return (
               <article
                 key={art.id}
-                className="group flex flex-col gap-5 rounded-3xl bg-white p-4 ring-1 ring-slate-200 transition-shadow hover:shadow-lift sm:flex-row sm:p-5"
+                className="group flex flex-col gap-5 py-7 sm:flex-row"
               >
                 <Link
                   href={`/articles/${art.slug}`}
-                  className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-900 sm:w-60"
+                  className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-200 sm:w-60"
                 >
                   <Image
                     src={art.featuredImage}

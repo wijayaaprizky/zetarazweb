@@ -122,7 +122,7 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="bg-slate-950/80 border-t border-slate-800/80 py-6 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500 text-center md:text-left">
+          <p className="text-slate-400 text-center md:text-left">
             © {new Date().getFullYear()} {settings.brandName} {settings.brandSubtitle}. {settings.copyrightText}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-slate-400 text-xs">

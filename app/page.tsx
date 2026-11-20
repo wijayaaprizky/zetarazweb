@@ -62,7 +62,7 @@ export default async function HomePage() {
       />
 
       {/* 2. News-Style Articles Feed + Trending Sidebar */}
-      <section className="py-14 bg-slate-50">
+      <section className="border-t border-slate-200 bg-white py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left 8 cols: News-style Article List with category filter tabs */}
@@ -76,16 +76,16 @@ export default async function HomePage() {
                 <PopularArticles articles={popularArticles} />
 
                 {/* Ajakan mengenal ZETARAZ */}
-                <div className="rounded-3xl bg-gradient-to-br from-kn-700 via-kn-800 to-slate-950 p-6 text-white">
-                  <h4 className="font-heading text-xl font-bold text-white mb-2">
+                <div className="rounded-3xl bg-ex-100 p-6">
+                  <h4 className="font-heading text-xl font-bold text-slate-900 mb-2">
                     Pengetahuan tumbuh saat dibagikan
                   </h4>
-                  <p className="text-sm text-kn-100 leading-relaxed mb-4">
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
                     Setiap pemahaman dan pengalaman yang dibagikan secara jujur dan terbuka akan menjadi lentera belajar bagi sesama.
                   </p>
                   <a
                     href="/about"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-sun-300 hover:text-sun-400"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-kn-700 underline underline-offset-4 hover:text-kn-900"
                   >
                     Kenali ZETARAZ lebih dekat
                   </a>

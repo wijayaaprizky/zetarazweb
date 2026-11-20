@@ -3,88 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, ArrowUpRight, ArrowRight, BookOpen, Compass, MessageSquareQuote } from 'lucide-react';
+import { Clock, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 import { getCategoryTheme } from '@/lib/categoryTheme';
+import HeroIllustration from './HeroIllustration';
 
 interface HeroSectionProps {
   mainArticle: any;
   secondaryArticles: any[];
-}
-
-/**
- * Tiga kartu kategori yang bertumpuk seperti kertas catatan. Tiap kartu satu ide:
- * buku untuk Pengetahuan, kompas untuk Pengalaman, balon ucapan untuk Opini.
- * Kartunya bisa diklik, jadi visual ini sekaligus pintu masuk ke tiap kategori.
- * Di layar lebar (xl) kartu bertumpuk menurun; di layar lebih kecil berjajar
- * sebagai daftar biasa agar teks tidak pernah terpotong.
- */
-const CARDS = [
-  {
-    slug: 'pengetahuan',
-    name: 'Pengetahuan',
-    desc: 'Konsep, teori, dan panduan teknis yang disusun runtut.',
-    icon: BookOpen,
-    surface: 'bg-kn-50 ring-kn-200',
-    tile: 'bg-kn-600 text-white',
-    mark: 'text-kn-700',
-    arrow: 'bg-kn-100 text-kn-700 group-hover:bg-kn-600 group-hover:text-white',
-    pos: 'xl:left-0 xl:top-0 xl:z-10 xl:-rotate-2',
-  },
-  {
-    slug: 'pengalaman',
-    name: 'Pengalaman',
-    desc: 'Catatan lapangan, studi kasus, dan pelajaran dari praktik.',
-    icon: Compass,
-    surface: 'bg-ex-50 ring-ex-200',
-    tile: 'bg-ex-600 text-white',
-    mark: 'text-ex-700',
-    arrow: 'bg-ex-100 text-ex-700 group-hover:bg-ex-600 group-hover:text-white',
-    pos: 'xl:left-14 xl:top-[118px] xl:z-20',
-  },
-  {
-    slug: 'opini',
-    name: 'Opini',
-    desc: 'Esai dan sudut pandang kritis untuk diajak berpikir.',
-    icon: MessageSquareQuote,
-    surface: 'bg-op-50 ring-op-200',
-    tile: 'bg-op-600 text-white',
-    mark: 'text-op-700',
-    arrow: 'bg-op-100 text-op-700 group-hover:bg-op-600 group-hover:text-white',
-    pos: 'xl:left-28 xl:top-[236px] xl:z-30 xl:rotate-2',
-  },
-];
-
-function CategoryCards() {
-  return (
-    <div className="flex flex-col gap-3 xl:relative xl:block xl:h-[400px]">
-      {CARDS.map((c) => {
-        const Icon = c.icon;
-        return (
-          <Link
-            key={c.slug}
-            href={`/category/${c.slug}`}
-            className={`group relative flex items-center gap-4 overflow-hidden rounded-3xl p-5 shadow-xl shadow-black/25 ring-1 transition-transform duration-300 hover:-translate-y-1.5 xl:absolute xl:h-[150px] xl:w-[calc(100%-7rem)] xl:p-6 ${c.surface} ${c.pos}`}
-          >
-            <Icon
-              aria-hidden="true"
-              className={`pointer-events-none absolute -bottom-6 right-6 h-32 w-32 opacity-[0.07] ${c.mark}`}
-            />
-            <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${c.tile}`}>
-              <Icon className="h-7 w-7" />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block font-heading text-xl font-bold text-slate-900">{c.name}</span>
-              <span className="mt-1 block text-sm leading-snug text-slate-600">{c.desc}</span>
-            </span>
-            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors ${c.arrow}`}>
-              <ArrowUpRight className="h-4 w-4" />
-            </span>
-          </Link>
-        );
-      })}
-    </div>
-  );
 }
 
 export default function HeroSection({ mainArticle, secondaryArticles }: HeroSectionProps) {
@@ -92,44 +18,44 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
 
   return (
     <section
-      className="relative overflow-hidden bg-slate-950 text-white"
+      className="relative overflow-hidden bg-slate-50 text-slate-700"
       style={{
         backgroundImage:
-          'radial-gradient(60rem 30rem at 85% -10%, rgba(75,91,247,0.35), transparent 60%), radial-gradient(40rem 24rem at 0% 110%, rgba(18,168,140,0.22), transparent 60%)',
+          'radial-gradient(44rem 26rem at 88% -8%, rgba(167,201,181,0.34), transparent 62%), radial-gradient(30rem 20rem at -4% 100%, rgba(232,182,108,0.16), transparent 62%)',
       }}
     >
       <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 lg:px-8 lg:pb-20 lg:pt-16">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-6">
           {/* Pernyataan utama */}
-          <div className="lg:col-span-7">
-            <h2 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
+          <div className="lg:col-span-6 xl:col-span-6">
+            <h2 className="font-heading text-4xl font-extrabold leading-[1.06] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem]">
               Berbagi pengetahuan, berbagi pengalaman.
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg">
               Catatan terbuka tentang teknologi, transformasi digital, dan praktik di lapangan.
               Gratis dibaca, ditulis agar mudah dipahami.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
                 href="/articles"
-                className="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-base font-bold text-slate-950 transition-colors hover:bg-sun-300"
+                className="inline-flex items-center gap-2 rounded-xl bg-kn-700 px-6 py-3 text-base font-bold text-white shadow-lift transition-colors hover:bg-kn-800"
               >
                 Mulai membaca
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold text-white ring-1 ring-white/25 transition-colors hover:bg-white/10"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold text-slate-700 ring-1 ring-slate-300 transition-colors hover:bg-white hover:text-slate-900"
               >
                 Kenali ZETARAZ
               </Link>
             </div>
           </div>
 
-          {/* Kartu kategori */}
-          <div className="lg:col-span-5">
-            <CategoryCards />
+          {/* Ilustrasi utama */}
+          <div className="lg:col-span-6">
+            <HeroIllustration className="mx-auto h-auto w-full max-w-[520px] lg:max-w-none" />
           </div>
         </div>
 
@@ -137,7 +63,7 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
         {mainArticle && (
           <div className="mt-12 grid grid-cols-1 gap-6 lg:mt-16 lg:grid-cols-12">
             <article className="group lg:col-span-7">
-              <div className="flex h-full flex-col overflow-hidden rounded-3xl bg-white text-slate-900 shadow-2xl shadow-black/30 ring-1 ring-white/10 md:flex-row">
+              <div className="flex h-full flex-col overflow-hidden rounded-3xl bg-white text-slate-900 shadow-lift ring-1 ring-slate-200 md:flex-row">
                 <Link
                   href={`/articles/${mainArticle.slug}`}
                   className="relative block aspect-[16/10] shrink-0 overflow-hidden bg-slate-900 md:aspect-auto md:w-[44%]"
@@ -192,7 +118,7 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
 
                     <Link
                       href={`/articles/${mainArticle.slug}`}
-                      className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-kn-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-kn-700"
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-kn-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-kn-800"
                     >
                       Baca artikel
                       <ArrowUpRight className="h-4 w-4" />
@@ -208,7 +134,7 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
                 return (
                   <article
                     key={article.id}
-                    className="group flex flex-1 gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-colors hover:bg-white/10"
+                    className="group flex flex-1 gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition-shadow hover:shadow-lift"
                   >
                     <Link
                       href={`/articles/${article.slug}`}
@@ -223,12 +149,12 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
                       />
                     </Link>
                     <div className="min-w-0 self-center">
-                      <div className="mb-1.5 flex items-center gap-2 text-xs text-slate-300">
+                      <div className="mb-1.5 flex items-center gap-2 text-xs text-slate-600">
                         <span className={`h-2 w-2 rounded-full ${theme.dot}`} />
                         <span>{article.category?.name}</span>
-                        <span className="text-slate-400">{article.readTimeMinutes} menit</span>
+                        <span className="text-slate-500">{article.readTimeMinutes} menit</span>
                       </div>
-                      <h3 className="line-clamp-3 font-heading text-[15px] font-bold leading-snug text-white">
+                      <h3 className="line-clamp-3 font-heading text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-kn-700">
                         <Link href={`/articles/${article.slug}`}>{article.title}</Link>
                       </h3>
                     </div>
