@@ -31,3 +31,6 @@ Thumbs.db
 
 # Firebase CLI cache
 .firebase/
+
+# Cache hasil pemeriksaan tipe (dibuat otomatis oleh tsc)
+*.tsbuildinfo
