@@ -89,20 +89,27 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,700;1,7..72,400&display=swap"
           rel="stylesheet"
+        />
+        {/* Terapkan pilihan tema & ukuran baca sebelum halaman tampil agar tidak berkedip. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var d=document.documentElement,t=localStorage.getItem('zr-read-theme'),s=localStorage.getItem('zr-read-size');if(t==='sepia'||t==='dark')d.setAttribute('data-read-theme',t);if(s==='sm'||s==='lg')d.setAttribute('data-read-size',s)}catch(e){}",
+          }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
         />
       </head>
-      <body className="flex flex-col min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900 font-sans">
+      <body className="flex flex-col min-h-screen bg-slate-50 text-slate-800 antialiased font-sans">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

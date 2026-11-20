@@ -3,190 +3,146 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowRight, User, Newspaper, Flame } from 'lucide-react';
+import { Clock, ArrowRight, Newspaper } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
+import { getCategoryTheme } from '@/lib/categoryTheme';
 
 interface LatestArticlesProps {
   articles: any[];
 }
 
+const TABS = [
+  { slug: 'all', name: 'Semua' },
+  { slug: 'pengetahuan', name: 'Pengetahuan' },
+  { slug: 'pengalaman', name: 'Pengalaman' },
+  { slug: 'opini', name: 'Opini' },
+];
+
 export default function LatestArticles({ articles }: LatestArticlesProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  const categories = [
-    { slug: 'all', name: 'Semua Berita & Artikel' },
-    { slug: 'pengetahuan', name: 'Pengetahuan' },
-    { slug: 'pengalaman', name: 'Pengalaman' },
-    { slug: 'opini', name: 'Opini' },
-  ];
-
   const filteredArticles = useMemo(() => {
     if (selectedCategory === 'all') return articles;
-    return articles.filter(
-      (art) => art.category?.slug === selectedCategory
-    );
+    return articles.filter((art) => art.category?.slug === selectedCategory);
   }, [articles, selectedCategory]);
-
-  const getCategoryBadge = (slug: string) => {
-    switch (slug) {
-      case 'pengetahuan':
-        return 'bg-blue-50 text-blue-700 border-blue-200/80 hover:bg-blue-100';
-      case 'pengalaman':
-        return 'bg-teal-50 text-teal-700 border-teal-200/80 hover:bg-teal-100';
-      case 'opini':
-        return 'bg-amber-50 text-amber-700 border-amber-200/80 hover:bg-amber-100';
-      default:
-        return 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200';
-    }
-  };
 
   if (!articles || articles.length === 0) {
     return (
-      <div className="py-12 text-center text-slate-400">
-        <Newspaper className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-        <p className="text-sm font-medium">Belum ada daftar artikel yang dipublikasikan.</p>
+      <div className="py-12 text-center text-slate-500">
+        <Newspaper className="mx-auto mb-2 h-10 w-10 text-slate-300" />
+        <p className="text-sm font-medium">Belum ada artikel yang dipublikasikan.</p>
       </div>
     );
   }
 
   return (
     <div>
-      {/* News Section Header */}
-      <div className="pb-4 border-b border-slate-200 mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
-            <h2 className="font-heading font-black text-2xl sm:text-3xl text-slate-900 tracking-tight">
-              Daftar Artikel Terkini
-            </h2>
-          </div>
-          <Link
-            href="/articles"
-            className="text-xs font-bold text-teal-600 hover:text-slate-900 flex items-center gap-1 transition-colors uppercase tracking-wider"
-          >
-            <span>Indeks Lengkap</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 className="font-heading text-3xl font-extrabold tracking-tight text-slate-900">
+            Artikel terbaru
+          </h2>
+          <p className="mt-1 text-sm text-slate-500">Pilih topik, lalu baca sampai selesai.</p>
         </div>
-
-        {/* Category Filter Tabs (News Portal Style) */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat.slug;
-            return (
-              <button
-                key={cat.slug}
-                type="button"
-                onClick={() => setSelectedCategory(cat.slug)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide transition-all whitespace-nowrap focus:outline-none ${
-                  isActive
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
-                }`}
-              >
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
+        <Link
+          href="/articles"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-kn-700 transition-colors hover:text-kn-900"
+        >
+          Lihat semua artikel
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
 
-      {/* News-Style Article List (Horizontal Rows) */}
-      <div className="divide-y divide-slate-200/80">
-        {filteredArticles.map((art) => {
-          const badgeClass = getCategoryBadge(art.category?.slug || '');
-
+      <div className="mb-8 flex items-center gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Saring artikel menurut kategori">
+        {TABS.map((tab) => {
+          const isActive = selectedCategory === tab.slug;
+          const theme = tab.slug === 'all' ? null : getCategoryTheme(tab.slug);
           return (
-            <article
-              key={art.id}
-              className="py-6 first:pt-0 last:pb-0 group flex flex-col sm:flex-row gap-5 sm:gap-6 items-start transition-all"
+            <button
+              key={tab.slug}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => setSelectedCategory(tab.slug)}
+              className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset transition-colors ${
+                isActive
+                  ? theme
+                    ? theme.tabActive
+                    : 'bg-slate-900 text-white ring-slate-900'
+                  : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-100 hover:text-slate-900'
+              }`}
             >
-              {/* News Thumbnail (Fixed Ratio) */}
-              <Link
-                href={`/articles/${art.slug}`}
-                className="relative w-full sm:w-56 md:w-60 aspect-[16/10] rounded-2xl overflow-hidden shrink-0 bg-slate-900 shadow-sm block"
-              >
-                <Image
-                  src={art.featuredImage}
-                  alt={art.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 240px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Category Pill Tag on Mobile Thumbnail */}
-                <div className="sm:hidden absolute top-2.5 left-2.5">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white backdrop-blur-sm">
-                    {art.category?.name || 'Wawasan'}
-                  </span>
-                </div>
-              </Link>
+              {theme && !isActive && <span className={`h-2 w-2 rounded-full ${theme.dot}`} />}
+              {tab.name}
+            </button>
+          );
+        })}
+      </div>
 
-              {/* News Content */}
-              <div className="min-w-0 flex-1 flex flex-col justify-between self-stretch">
-                <div>
-                  {/* Meta: Category Pill + Date + Read Time */}
-                  <div className="hidden sm:flex items-center gap-2.5 text-xs mb-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border transition-colors ${badgeClass}`}>
+      {filteredArticles.length === 0 ? (
+        <p className="rounded-2xl bg-white p-8 text-center text-sm text-slate-500 ring-1 ring-slate-200">
+          Belum ada artikel di kategori ini. Coba pilih kategori lain.
+        </p>
+      ) : (
+        <div className="space-y-5">
+          {filteredArticles.map((art) => {
+            const theme = getCategoryTheme(art.category?.slug);
+            return (
+              <article
+                key={art.id}
+                className="group flex flex-col gap-5 rounded-3xl bg-white p-4 ring-1 ring-slate-200 transition-shadow hover:shadow-lift sm:flex-row sm:p-5"
+              >
+                <Link
+                  href={`/articles/${art.slug}`}
+                  className="relative block aspect-[16/10] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-900 sm:w-60"
+                >
+                  <Image
+                    src={art.featuredImage}
+                    alt={art.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 240px"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
+                </Link>
+
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500">
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${theme.chip}`}>
                       {art.category?.name || 'Wawasan'}
                     </span>
-                    <span className="text-slate-300">•</span>
-                    <time className="text-slate-400 font-medium text-[11px]">
-                      {formatDateIndonesian(art.publishedAt)}
-                    </time>
-                    <span className="text-slate-300">•</span>
-                    <span className="inline-flex items-center gap-1 text-slate-400 text-[11px] font-medium">
-                      <Clock className="w-3 h-3 text-slate-400" />
+                    <time>{formatDateIndonesian(art.publishedAt)}</time>
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5" />
                       {art.readTimeMinutes} menit baca
                     </span>
                   </div>
 
-                  {/* News Headline */}
-                  <h3 className="font-heading font-extrabold text-base sm:text-lg md:text-xl text-slate-900 group-hover:text-sky-600 transition-colors duration-200 leading-snug tracking-tight mb-2">
-                    <Link href={`/articles/${art.slug}`}>
-                      {art.title}
-                    </Link>
+                  <h3 className={`font-heading text-xl font-bold leading-snug text-slate-900 transition-colors ${theme.hoverTitle}`}>
+                    <Link href={`/articles/${art.slug}`}>{art.title}</Link>
                   </h3>
 
-                  {/* News Excerpt */}
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-normal mb-3">
+                  <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-slate-600">
                     {art.excerpt}
                   </p>
-                </div>
 
-                {/* News Footer: Author & Timestamp (on Mobile) */}
-                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100/80">
-                  <div className="flex items-center gap-2">
-                    {art.author?.avatar ? (
-                      <img
-                        src={art.author.avatar}
-                        alt={art.author.name}
-                        className="w-5 h-5 rounded-full object-cover ring-1 ring-slate-200"
-                      />
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-[9px]">
-                        {art.author?.name?.charAt(0) || 'Z'}
-                      </div>
-                    )}
-                    <span className="text-slate-700 font-medium text-xs">
+                  <div className="mt-4 flex items-center justify-between pt-1">
+                    <span className="text-sm font-medium text-slate-700">
                       {art.author?.name || 'Redaksi ZETARAZ'}
                     </span>
+                    <Link
+                      href={`/articles/${art.slug}`}
+                      className={`inline-flex items-center gap-1 text-sm font-semibold ${theme.link}`}
+                    >
+                      Baca artikel
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
                   </div>
-
-                  <Link
-                    href={`/articles/${art.slug}`}
-                    className="font-bold text-teal-600 hover:text-slate-900 inline-flex items-center gap-1 text-xs transition-colors"
-                  >
-                    <span>Baca Selengkapnya</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
                 </div>
-              </div>
-            </article>
-          );
-        })}
-      </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

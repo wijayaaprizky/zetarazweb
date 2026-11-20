@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Eye, TrendingUp } from 'lucide-react';
+import { getCategoryTheme } from '@/lib/categoryTheme';
 
 interface PopularArticlesProps {
   articles: any[];
@@ -10,45 +11,45 @@ export default function PopularArticles({ articles }: PopularArticlesProps) {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <div className="bg-slate-50/70 rounded-2xl p-6 border border-slate-200/80 shadow-xs">
-      <div className="flex items-center gap-2 mb-6 pb-3 border-b border-slate-200/70">
-        <TrendingUp className="w-4 h-4 text-sky-600" />
-        <h3 className="font-heading font-bold text-xs uppercase tracking-wider text-slate-900">
-          Paling Banyak Dibaca
-        </h3>
+    <div className="rounded-3xl bg-white p-6 ring-1 ring-slate-200">
+      <div className="mb-5 flex items-center gap-2.5">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sun-300/40 text-slate-900">
+          <TrendingUp className="h-4 w-4" />
+        </span>
+        <h3 className="font-heading text-lg font-bold text-slate-900">Paling banyak dibaca</h3>
       </div>
 
-      <div className="space-y-4 divide-y divide-slate-200/60">
-        {articles.map((art, index) => (
-          <article
-            key={art.id}
-            className={`flex items-start gap-3.5 group ${index !== 0 ? 'pt-4' : ''}`}
-          >
-            <div className="text-2xl font-black font-heading text-slate-300 group-hover:text-sky-600 transition-colors shrink-0 w-8">
-              0{index + 1}
-            </div>
+      <ol className="divide-y divide-slate-100">
+        {articles.map((art, index) => {
+          const theme = getCategoryTheme(art.category?.slug);
+          return (
+            <li key={art.id} className="group flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+              <span
+                aria-hidden="true"
+                className={`w-9 shrink-0 font-heading text-3xl font-extrabold leading-none transition-colors ${theme.numeral}`}
+              >
+                {index + 1}
+              </span>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">
-                  {art.category?.name}
-                </span>
-                <span className="text-slate-300">•</span>
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
-                  <Eye className="w-3 h-3 text-slate-400" />
-                  {art.viewCount.toLocaleString('id-ID')} dibaca
-                </span>
+              <div className="min-w-0 flex-1">
+                <h4 className={`line-clamp-2 font-heading text-[15px] font-semibold leading-snug text-slate-900 transition-colors ${theme.hoverTitle}`}>
+                  <Link href={`/articles/${art.slug}`}>{art.title}</Link>
+                </h4>
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className={`h-2 w-2 rounded-full ${theme.dot}`} />
+                    {art.category?.name}
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Eye className="h-3.5 w-3.5" />
+                    {art.viewCount.toLocaleString('id-ID')} dibaca
+                  </span>
+                </div>
               </div>
-
-              <h4 className="font-heading font-semibold text-xs sm:text-sm text-slate-900 group-hover:text-sky-600 transition-colors line-clamp-2 leading-snug">
-                <Link href={`/articles/${art.slug}`}>
-                  {art.title}
-                </Link>
-              </h4>
-            </div>
-          </article>
-        ))}
-      </div>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }

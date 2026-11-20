@@ -62,7 +62,7 @@ export default async function HomePage() {
       />
 
       {/* 2. News-Style Articles Feed + Trending Sidebar */}
-      <section className="py-12 bg-white border-b border-slate-200">
+      <section className="py-14 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left 8 cols: News-style Article List with category filter tabs */}
@@ -75,22 +75,19 @@ export default async function HomePage() {
               <div className="sticky top-28 space-y-8">
                 <PopularArticles articles={popularArticles} />
 
-                {/* Semangat ZETARAZ Callout Box */}
-                <div className="bg-gradient-to-br from-brand-navy to-slate-900 rounded-2xl p-6 text-white shadow-md border border-slate-800">
-                  <div className="text-[10px] font-black tracking-widest text-teal-400 uppercase mb-2">
-                    Semangat ZETARAZ
-                  </div>
-                  <h4 className="font-heading font-extrabold text-lg text-white mb-2">
-                    Berbagi Pengetahuan, Berbagi Pengalaman
+                {/* Ajakan mengenal ZETARAZ */}
+                <div className="rounded-3xl bg-gradient-to-br from-kn-700 via-kn-800 to-slate-950 p-6 text-white">
+                  <h4 className="font-heading text-xl font-bold text-white mb-2">
+                    Pengetahuan tumbuh saat dibagikan
                   </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed mb-4 font-normal">
+                  <p className="text-sm text-kn-100 leading-relaxed mb-4">
                     Setiap pemahaman dan pengalaman yang dibagikan secara jujur dan terbuka akan menjadi lentera belajar bagi sesama.
                   </p>
                   <a
                     href="/about"
-                    className="text-xs font-bold text-teal-400 hover:text-teal-300 inline-flex items-center gap-1"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-sun-300 hover:text-sun-400"
                   >
-                    Tentang Kami →
+                    Kenali ZETARAZ lebih dekat
                   </a>
                 </div>
               </div>

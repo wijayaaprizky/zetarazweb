@@ -7,14 +7,14 @@ export default function Footer() {
   const settings = getSiteSettings();
 
   return (
-    <footer className="bg-brand-navy text-slate-400 text-sm border-t border-slate-800">
+    <footer className="bg-slate-950 text-slate-300 text-sm">
       {/* Top Footer Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand Info (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue to-teal-500 flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-kn-600 via-kn-500 to-ex-500 flex items-center justify-center text-white font-heading font-black text-2xl tracking-tighter shadow-md">
                 Z
               </div>
               <div>
@@ -26,7 +26,7 @@ export default function Footer() {
                     {settings.brandSubtitle}
                   </span>
                 </div>
-                <span className="block text-[10px] text-teal-400 font-bold uppercase tracking-widest">
+                <span className="block text-xs text-ex-300 font-medium">
                   {settings.tagline}
                 </span>
               </div>
@@ -58,7 +58,7 @@ export default function Footer() {
 
           {/* Pillars / Categories (Col 3) */}
           <div>
-            <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
+            <h4 className="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">
               Klasifikasi Artikel
             </h4>
             <ul className="space-y-2.5 text-xs">
@@ -87,7 +87,7 @@ export default function Footer() {
 
           {/* Platform & Directory (Col 4) */}
           <div>
-            <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
+            <h4 className="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">
               Jelajahi & Direktori
             </h4>
             <ul className="space-y-2.5 text-xs">
@@ -103,7 +103,7 @@ export default function Footer() {
 
           {/* Support & Legal (Col 5) */}
           <div>
-            <h4 className="font-heading font-bold text-white text-xs uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
+            <h4 className="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">
               Bantuan & Regulasi Legal
             </h4>
             <ul className="space-y-2.5 text-xs">

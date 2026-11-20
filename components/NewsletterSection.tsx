@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, CheckCircle, AlertCircle, Loader2, Sparkles } from 'lucide-react';
+import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
@@ -39,21 +39,16 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-brand-navy via-brand-dark to-slate-900 text-white relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-kn-700 via-kn-900 to-slate-950 text-white relative overflow-hidden">
       {/* Subtle decorative grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/80 border border-teal-700/60 text-teal-400 text-xs font-semibold mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>ZETARAZ Knowledge Dispatch</span>
-        </div>
-
-        <h2 className="font-heading font-black text-3xl sm:text-4xl text-white tracking-tight mb-4">
+        <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-tight mb-4">
           Dapatkan Kurasi Pengetahuan & Pengalaman Berkala
         </h2>
 
-        <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+        <p className="text-kn-100 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
           Dapatkan rangkuman artikel pilihan seputar teknologi, metodologi riset, sains data terapan, dan catatan pengalaman praktis langsung di email Anda.
         </p>
 
@@ -87,7 +82,7 @@ export default function NewsletterSection() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="px-6 py-3 bg-brand-teal hover:bg-teal-500 disabled:opacity-50 text-white font-bold text-sm rounded-xl transition-all shadow-md hover:shadow-teal-500/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                className="px-6 py-3 bg-sun-400 hover:bg-sun-300 disabled:opacity-50 text-slate-950 font-bold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shrink-0 cursor-pointer"
               >
                 {status === 'loading' ? (
                   <>
@@ -107,7 +102,7 @@ export default function NewsletterSection() {
               </div>
             )}
 
-            <p className="text-[11px] text-slate-400 mt-4">
+            <p className="text-xs text-kn-200 mt-4">
               Privasi Anda aman. Kami hanya mengirimkan konten pengetahuan bermanfaat dan Anda bebas berhenti berlangganan kapan saja.
             </p>
           </form>

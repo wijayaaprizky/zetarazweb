@@ -4,134 +4,339 @@
 
 @layer base {
   :root {
-    --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Judul & antarmuka: grotesk berkarakter. Isi artikel: serif untuk bacaan panjang. */
+    --font-heading: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-ui: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-read: 'Literata', Georgia, 'Times New Roman', serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    background-color: #F8FAFC;
-    color: #1E293B;
-    font-family: var(--font-body);
+    background-color: theme('colors.slate.50');
+    color: theme('colors.slate.800');
+    font-family: var(--font-ui);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    color: #0F172A;
+    color: theme('colors.slate.900');
     letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: theme('colors.kn.200');
+    color: theme('colors.slate.950');
+  }
+
+  /* Fokus keyboard selalu terlihat */
+  :focus-visible {
+    outline: 2px solid theme('colors.kn.500');
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-/* Custom Scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: theme('colors.slate.100');
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: theme('colors.slate.300');
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: theme('colors.slate.400');
 }
 
-/* Editorial Article Typography */
+/* Header kaca */
+.header-glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Peta pengetahuan di beranda: garis digambar satu kali saat dibuka    */
+/* ------------------------------------------------------------------ */
+.node-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: node-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes node-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Ruang baca                                                          */
+/* Panel artikel memakai variabel warna supaya tema Terang / Sepia /   */
+/* Gelap cukup mengganti variabel, tanpa menyentuh markup artikel.     */
+/* ------------------------------------------------------------------ */
+.reading-panel {
+  --rp-bg: #ffffff;
+  --rp-fg: #262a4d;
+  --rp-strong: #0e1128;
+  --rp-muted: #5f6690;
+  --rp-rule: #dde0f0;
+  --rp-link: #2f39c4;
+  --rp-quote-bg: #eef0ff;
+  --rp-quote-bar: #4b5bf7;
+  --rp-code-bg: #edeff8;
+  --rp-pre-bg: #0e1128;
+  --rp-pre-fg: #e4e6f7;
+  --rp-th-bg: #f6f7fc;
+
+  background: var(--rp-bg);
+  color: var(--rp-fg);
+  border-radius: 1.5rem;
+  padding: 1.75rem 1.25rem;
+  box-shadow: 0 0 0 1px var(--rp-rule), 0 18px 40px -24px rgba(23, 26, 58, 0.25);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+@media (min-width: 640px) {
+  .reading-panel {
+    padding: 2.75rem 3rem;
+  }
+}
+
+html[data-read-theme='sepia'] .reading-panel {
+  --rp-bg: #f6eedc;
+  --rp-fg: #3a2e1f;
+  --rp-strong: #22190d;
+  --rp-muted: #7a6a52;
+  --rp-rule: #e2d4b8;
+  --rp-link: #8a3b12;
+  --rp-quote-bg: #efe2c6;
+  --rp-quote-bar: #b8651b;
+  --rp-code-bg: #ebddbf;
+  --rp-pre-bg: #2b2113;
+  --rp-pre-fg: #f3e8d2;
+  --rp-th-bg: #efe2c6;
+}
+
+html[data-read-theme='dark'] .reading-panel {
+  --rp-bg: #14173a;
+  --rp-fg: #d5d9f2;
+  --rp-strong: #ffffff;
+  --rp-muted: #9aa1cc;
+  --rp-rule: #2b3070;
+  --rp-link: #9aa6ff;
+  --rp-quote-bg: #1c2050;
+  --rp-quote-bar: #6e7cff;
+  --rp-code-bg: #1f2459;
+  --rp-pre-bg: #0a0c20;
+  --rp-pre-fg: #e4e6f7;
+  --rp-th-bg: #1c2050;
+}
+
+/* Tipografi isi artikel */
 .article-prose {
-  color: #334155;
-  font-size: 1.125rem;
+  font-family: var(--font-read);
+  font-size: 1.1875rem;
   line-height: 1.85;
+  max-width: 66ch;
+  color: var(--rp-fg);
+  font-optical-sizing: auto;
+  font-kerning: normal;
 }
 
-.article-prose h2 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #E2E8F0;
-  color: #0F172A;
-  scroll-margin-top: 6rem;
+html[data-read-size='sm'] .article-prose {
+  font-size: 1.0625rem;
 }
-
-.article-prose h3 {
-  font-size: 1.45rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.85rem;
-  color: #1E293B;
-  scroll-margin-top: 6rem;
+html[data-read-size='lg'] .article-prose {
+  font-size: 1.3125rem;
 }
 
 .article-prose p {
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.4em;
+  text-wrap: pretty;
+}
+
+.article-prose strong {
+  color: var(--rp-strong);
+  font-weight: 700;
+}
+
+.article-prose em {
+  font-style: italic;
+}
+
+.article-prose a {
+  color: var(--rp-link);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+.article-prose a:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.article-prose h2,
+.article-prose h3,
+.article-prose h4 {
+  font-family: var(--font-heading);
+  color: var(--rp-strong);
+  scroll-margin-top: 6rem;
+}
+
+.article-prose h2 {
+  font-size: 1.7em;
+  font-weight: 750;
+  line-height: 1.2;
+  margin: 2.1em 0 0.7em;
+}
+
+.article-prose h3 {
+  font-size: 1.35em;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1.8em 0 0.6em;
+}
+
+.article-prose h4 {
+  font-size: 1.12em;
+  font-weight: 700;
+  margin: 1.5em 0 0.5em;
+}
+
+.article-prose > :first-child {
+  margin-top: 0;
+}
+
+.article-prose ul,
+.article-prose ol {
+  margin: 0 0 1.4em;
+  padding-left: 1.5em;
+}
+.article-prose ul {
+  list-style: disc;
+}
+.article-prose ol {
+  list-style: decimal;
+}
+.article-prose li {
+  margin-bottom: 0.5em;
+  padding-left: 0.25em;
+}
+.article-prose li::marker {
+  color: var(--rp-quote-bar);
+  font-weight: 700;
 }
 
 .article-prose blockquote {
-  border-left: 4px solid #0F9D8A;
-  padding: 1rem 1.5rem;
-  background-color: #F0FDFA;
-  border-radius: 0 0.5rem 0.5rem 0;
-  margin: 2rem 0;
-  font-style: normal;
-  color: #0F766E;
-  font-weight: 500;
+  margin: 2em 0;
+  padding: 1.1em 1.4em;
+  background: var(--rp-quote-bg);
+  border-left: 4px solid var(--rp-quote-bar);
+  border-radius: 0 0.9rem 0.9rem 0;
+  font-style: italic;
+  color: var(--rp-strong);
 }
 
-.article-prose table {
-  width: 100%;
-  margin: 2rem 0;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+.article-prose hr {
+  margin: 2.5em 0;
+  border: 0;
+  border-top: 1px solid var(--rp-rule);
 }
 
-.article-prose th {
-  background-color: #F1F5F9;
-  color: #0F172A;
-  font-weight: 600;
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border: 1px solid #E2E8F0;
-}
-
-.article-prose td {
-  padding: 0.75rem 1rem;
-  border: 1px solid #E2E8F0;
+.article-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86em;
+  background: var(--rp-code-bg);
+  padding: 0.12em 0.4em;
+  border-radius: 0.35em;
 }
 
 .article-prose pre {
-  background-color: #0E1A2B;
-  color: #E2E8F0;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
+  margin: 1.8em 0;
+  padding: 1.1rem 1.25rem;
+  background: var(--rp-pre-bg);
+  color: var(--rp-pre-fg);
+  border-radius: 0.9rem;
   overflow-x: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.875rem;
-  margin: 1.75rem 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+.article-prose pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
 }
 
-.article-prose ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+.article-prose .table-wrap {
+  margin: 2em 0;
+  overflow-x: auto;
+  border-radius: 0.9rem;
+  box-shadow: 0 0 0 1px var(--rp-rule);
+}
+.article-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 0.8em;
+  line-height: 1.55;
+}
+.article-prose th {
+  background: var(--rp-th-bg);
+  color: var(--rp-strong);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.7em 1em;
+  border-bottom: 1px solid var(--rp-rule);
+}
+.article-prose td {
+  padding: 0.7em 1em;
+  border-top: 1px solid var(--rp-rule);
+  vertical-align: top;
 }
 
-.article-prose ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+.article-prose figure {
+  margin: 2.2em 0;
 }
-
-.article-prose li {
-  margin-bottom: 0.5rem;
+.article-prose img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 1px var(--rp-rule);
 }
-
-/* Glassmorphism Header */
-.header-glass {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+.article-prose figcaption {
+  margin-top: 0.7em;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.78em;
+  color: var(--rp-muted);
 }

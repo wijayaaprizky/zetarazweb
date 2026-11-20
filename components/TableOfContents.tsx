@@ -64,13 +64,13 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <nav className="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm sticky top-28">
+    <nav className="p-5 bg-white rounded-3xl ring-1 ring-slate-200 sticky top-24">
       <div className="flex items-center gap-2 mb-4 pb-2.5 border-b border-slate-100 text-slate-900 font-heading font-bold text-sm">
-        <ListTree className="w-4 h-4 text-brand-teal" />
+        <ListTree className="w-4 h-4 text-kn-600" />
         <span>Daftar Isi Artikel</span>
       </div>
 
-      <ul className="space-y-2 text-xs leading-relaxed max-h-[70vh] overflow-y-auto pr-1">
+      <ul className="space-y-1 text-sm leading-snug max-h-[70vh] overflow-y-auto pr-1">
         {headings.map((h) => {
           const isActive = activeId === h.id;
           return (
@@ -88,10 +88,10 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                     setActiveId(h.id);
                   }
                 }}
-                className={`block transition-colors py-1 ${
+                className={`block transition-colors py-1.5 ${
                   isActive
-                    ? 'text-brand-blue font-bold border-l-2 border-brand-blue pl-2 -ml-2.5'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-kn-700 font-semibold border-l-2 border-kn-600 pl-2 -ml-2.5'
+                    : 'text-slate-600 hover:text-kn-700'
                 }`}
               >
                 {h.text}

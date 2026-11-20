@@ -1,4 +1,6 @@
 import { contentTypeLabel } from '@/lib/contentTypes';
+import { getCategoryTheme } from '@/lib/categoryTheme';
+import ReadingControls from '@/components/ReadingControls';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -113,6 +115,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   // Hitung dari isi sebenarnya, bukan nilai tersimpan yang bisa kedaluwarsa.
   const readTimeMinutes = calculateReadTime(publicContent);
+  const articleTheme = getCategoryTheme(article.category.slug);
 
   // Related articles in the same category
   const relatedArticles = await prisma.article.findMany({
@@ -215,51 +218,54 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
       />
 
-      <article className="min-h-screen bg-white">
+      <article className="min-h-screen bg-slate-50">
         {/* Breadcrumb Bar */}
-        <div className="bg-slate-50 border-b border-slate-200 py-3">
+        <div className="bg-white border-b border-slate-200 py-3">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex items-center space-x-2 text-xs text-slate-500 overflow-x-auto whitespace-nowrap">
-              <Link href="/" className="hover:text-brand-blue">
+              <Link href="/" className="hover:text-kn-700">
                 Beranda
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
               <Link
                 href={`/category/${article.category.slug}`}
-                className="hover:text-brand-blue font-medium text-slate-700"
+                className="hover:text-kn-700 font-medium text-slate-700"
               >
                 {article.category.name}
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-slate-400 truncate max-w-xs">{article.title}</span>
+              <span className="text-slate-500 truncate max-w-xs">{article.title}</span>
             </nav>
           </div>
         </div>
 
         {/* Article Header */}
-        <header className="pt-8 pb-10 bg-gradient-to-b from-slate-50 to-white border-b border-slate-100">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`h-1.5 ${articleTheme.bar}`} aria-hidden="true" />
+        <header className="pt-10 pb-10 bg-white border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="lg:grid lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-8">
             {/* Category badge + content type */}
             <div className="flex flex-wrap items-center gap-2 mb-4">
               <Link
                 href={`/category/${article.category.slug}`}
-                className="px-3 py-1 bg-teal-50 text-brand-teal text-xs font-bold rounded-full border border-teal-200 uppercase tracking-wider hover:bg-teal-100 transition-colors"
+                className={`px-3 py-1 text-xs font-semibold rounded-full transition-opacity hover:opacity-80 ${articleTheme.chip}`}
               >
                 {article.category.name}
               </Link>
-              <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full uppercase tracking-wider">
+              <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full">
                 {contentTypeLabel(article.contentType)}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-brand-navy leading-[1.15] tracking-tight mb-4">
+            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl text-slate-950 leading-[1.08] tracking-tight mb-5">
               {article.title}
             </h1>
 
             {/* Subtitle / Lead Excerpt */}
             {article.subtitle && (
-              <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal mb-6">
+              <p className="font-read text-xl sm:text-[1.375rem] text-slate-600 leading-relaxed mb-6">
                 {article.subtitle}
               </p>
             )}
@@ -297,12 +303,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
                   {formatDateIndonesian(article.publishedAt)}
                 </span>
-                <span>•</span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
                   {readTimeMinutes} menit baca
                 </span>
-                <span>•</span>
                 <span className="flex items-center gap-1">
                   <Eye className="w-3.5 h-3.5 text-slate-400" />
                   {article.viewCount.toLocaleString('id-ID')} pembaca
@@ -314,12 +318,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div className="mt-4 flex justify-end">
               <ShareButtons title={article.title} url={articleUrl} />
             </div>
+            </div>
+           </div>
           </div>
         </header>
 
         {/* Featured Image */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
-          <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-xl bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
+         <div className="lg:grid lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-8">
+          <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-slate-900 ring-1 ring-slate-200">
             <Image
               src={article.featuredImage}
               alt={article.title}
@@ -335,6 +343,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               {article.imageCaption}
             </p>
           )}
+          </div>
+         </div>
         </div>
 
         {/* Main Content Area + Table of Contents Sidebar */}
@@ -342,13 +352,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left Main Article Column (8 cols) */}
             <div className="lg:col-span-8">
-              <ArticleContent content={publicContent} />
+              <div className="reading-panel">
+                <ReadingControls />
+                <ArticleContent content={publicContent} />
+              </div>
 
               {/* Tags Section */}
               {article.tags.length > 0 && (
                 <div className="mt-12 pt-6 border-t border-slate-200">
-                  <div className="flex items-center gap-2 mb-3 text-xs font-bold uppercase tracking-wider text-slate-400">
-                    <TagIcon className="w-3.5 h-3.5 text-brand-teal" />
+                  <div className="flex items-center gap-2 mb-3 text-sm font-semibold text-slate-600">
+                    <TagIcon className="w-4 h-4 text-kn-600" />
                     <span>Topik Terkait</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -356,7 +369,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <Link
                         key={tag.id}
                         href={`/search?q=${encodeURIComponent(tag.name)}`}
-                        className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 text-xs font-medium text-slate-700 transition-colors border border-slate-200/60"
+                        className="px-3 py-1.5 rounded-lg bg-white hover:bg-kn-50 hover:text-kn-700 text-sm font-medium text-slate-700 transition-colors border border-slate-200/60"
                       >
                         #{tag.name}
                       </Link>
@@ -366,7 +379,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               )}
 
               {/* Author Bio Box */}
-              <div className="mt-8 p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              <div className="mt-8 p-6 rounded-3xl bg-white ring-1 ring-slate-200 flex flex-col sm:flex-row items-start sm:items-center gap-5">
                 {article.author.avatar ? (
                   <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm">
                     <Image
@@ -382,8 +395,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </div>
                 )}
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-teal">
-                    Tentang Penulis
+                  <span className="text-sm font-semibold text-ex-700">
+                    Tentang penulis
                   </span>
                   <h4 className="font-heading font-bold text-base text-slate-900 mt-0.5">
                     {article.author.name}
@@ -400,12 +413,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {prevArticle ? (
                   <Link
                     href={`/articles/${prevArticle.slug}`}
-                    className="p-4 rounded-xl border border-slate-200 hover:border-brand-blue hover:bg-blue-50/30 transition-all group flex flex-col justify-between"
+                    className="p-5 rounded-2xl bg-white ring-1 ring-slate-200 hover:ring-kn-400 hover:shadow-lift transition-all group flex flex-col justify-between"
                   >
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1 mb-1">
-                      <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> Artikel Sebelumnya
+                    <span className="text-xs font-semibold text-slate-500 flex items-center gap-1 mb-1">
+                      <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> Artikel sebelumnya
                     </span>
-                    <span className="font-heading font-semibold text-sm text-slate-900 group-hover:text-brand-blue line-clamp-2">
+                    <span className="font-heading font-semibold text-sm text-slate-900 group-hover:text-kn-700 line-clamp-2">
                       {prevArticle.title}
                     </span>
                   </Link>
@@ -416,12 +429,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {nextArticle ? (
                   <Link
                     href={`/articles/${nextArticle.slug}`}
-                    className="p-4 rounded-xl border border-slate-200 hover:border-brand-blue hover:bg-blue-50/30 transition-all group flex flex-col justify-between text-right"
+                    className="p-5 rounded-2xl bg-white ring-1 ring-slate-200 hover:ring-kn-400 hover:shadow-lift transition-all group flex flex-col justify-between text-right"
                   >
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-end gap-1 mb-1">
-                      Artikel Selanjutnya <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <span className="text-xs font-semibold text-slate-500 flex items-center justify-end gap-1 mb-1">
+                      Artikel berikutnya <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </span>
-                    <span className="font-heading font-semibold text-sm text-slate-900 group-hover:text-brand-blue line-clamp-2">
+                    <span className="font-heading font-semibold text-sm text-slate-900 group-hover:text-kn-700 line-clamp-2">
                       {nextArticle.title}
                     </span>
                   </Link>
@@ -440,15 +453,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {/* Related Articles Section */}
         {relatedArticles.length > 0 && (
-          <section className="bg-slate-50 border-t border-slate-200 py-12">
+          <section className="bg-white border-t border-slate-200 py-14">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <span className="text-xs font-black uppercase tracking-widest text-brand-teal">
-                    Telaah Terkait
-                  </span>
-                  <h3 className="font-heading font-extrabold text-2xl text-brand-navy mt-1">
-                    Artikel Terkait di Kategori {article.category.name}
+                  <h3 className="font-heading font-extrabold text-2xl text-slate-900">
+                    Lanjut membaca di {article.category.name}
                   </h3>
                 </div>
               </div>
@@ -457,7 +467,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {relatedArticles.map((rel) => (
                   <article
                     key={rel.id}
-                    className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
+                    className="bg-slate-50 rounded-3xl overflow-hidden ring-1 ring-slate-200 hover:shadow-lift transition-shadow group flex flex-col justify-between"
                   >
                     <div>
                       <Link
@@ -473,20 +483,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         />
                       </Link>
                       <div className="p-5">
-                        <span className="text-[10px] font-bold text-brand-teal uppercase tracking-wider block mb-1.5">
+                        <span className={`text-xs font-semibold block mb-1.5 ${articleTheme.text}`}>
                           {contentTypeLabel(rel.contentType)}
                         </span>
-                        <h4 className="font-heading font-bold text-base text-slate-900 group-hover:text-brand-blue transition-colors line-clamp-2 leading-snug mb-2">
+                        <h4 className="font-heading font-bold text-base text-slate-900 group-hover:text-kn-700 transition-colors line-clamp-2 leading-snug mb-2">
                           <Link href={`/articles/${rel.slug}`}>
                             {rel.title}
                           </Link>
                         </h4>
-                        <p className="text-xs text-slate-500 line-clamp-2">
+                        <p className="text-sm text-slate-600 line-clamp-2">
                           {rel.excerpt}
                         </p>
                       </div>
                     </div>
-                    <div className="p-5 pt-0 text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-100 mt-2">
+                    <div className="p-5 pt-0 text-xs text-slate-500 flex items-center justify-between border-t border-slate-200 mt-2">
                       <span>{rel.readTimeMinutes} menit baca</span>
                       <span>{formatDateIndonesian(rel.publishedAt)}</span>
                     </div>
