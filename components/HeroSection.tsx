@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, ArrowUpRight, BookOpen, Compass, PenTool } from 'lucide-react';
+import { Clock, ArrowUpRight, ArrowRight, BookOpen, Compass, MessageSquareQuote } from 'lucide-react';
 import { formatDateIndonesian } from '@/lib/utils';
 import { getCategoryTheme } from '@/lib/categoryTheme';
 
@@ -13,103 +13,77 @@ interface HeroSectionProps {
 }
 
 /**
- * Pintu masuk per kategori. Warnanya sama dengan warna kategori di seluruh situs,
- * jadi pembaca belajar mengenalinya sejak layar pertama.
+ * Tiga kartu kategori yang bertumpuk seperti kertas catatan. Tiap kartu satu ide:
+ * buku untuk Pengetahuan, kompas untuk Pengalaman, balon ucapan untuk Opini.
+ * Kartunya bisa diklik, jadi visual ini sekaligus pintu masuk ke tiap kategori.
+ * Di layar lebar (xl) kartu bertumpuk menurun; di layar lebih kecil berjajar
+ * sebagai daftar biasa agar teks tidak pernah terpotong.
  */
-const ENTRIES = [
+const CARDS = [
   {
     slug: 'pengetahuan',
     name: 'Pengetahuan',
-    desc: 'Konsep, teori, dan panduan teknis',
+    desc: 'Konsep, teori, dan panduan teknis yang disusun runtut.',
     icon: BookOpen,
-    tile: 'bg-kn-500/20 text-kn-200',
+    surface: 'bg-kn-50 ring-kn-200',
+    tile: 'bg-kn-600 text-white',
+    mark: 'text-kn-700',
+    arrow: 'bg-kn-100 text-kn-700 group-hover:bg-kn-600 group-hover:text-white',
+    pos: 'xl:left-0 xl:top-0 xl:z-10 xl:-rotate-2',
   },
   {
     slug: 'pengalaman',
     name: 'Pengalaman',
-    desc: 'Catatan lapangan dan studi kasus',
+    desc: 'Catatan lapangan, studi kasus, dan pelajaran dari praktik.',
     icon: Compass,
-    tile: 'bg-ex-500/20 text-ex-200',
+    surface: 'bg-ex-50 ring-ex-200',
+    tile: 'bg-ex-600 text-white',
+    mark: 'text-ex-700',
+    arrow: 'bg-ex-100 text-ex-700 group-hover:bg-ex-600 group-hover:text-white',
+    pos: 'xl:left-14 xl:top-[118px] xl:z-20',
   },
   {
     slug: 'opini',
     name: 'Opini',
-    desc: 'Esai dan sudut pandang kritis',
-    icon: PenTool,
-    tile: 'bg-op-500/20 text-op-200',
+    desc: 'Esai dan sudut pandang kritis untuk diajak berpikir.',
+    icon: MessageSquareQuote,
+    surface: 'bg-op-50 ring-op-200',
+    tile: 'bg-op-600 text-white',
+    mark: 'text-op-700',
+    arrow: 'bg-op-100 text-op-700 group-hover:bg-op-600 group-hover:text-white',
+    pos: 'xl:left-28 xl:top-[236px] xl:z-30 xl:rotate-2',
   },
 ];
 
-/**
- * Peta pengetahuan: tiga simpul besar adalah tiga kategori, simpul kecil adalah
- * tulisan, dan garis menunjukkan bahwa ilmu, pengalaman, dan opini saling terhubung.
- * Garis digambar satu kali saat halaman dibuka (lihat .node-line di globals.css),
- * lalu diam. Pengguna dengan "reduce motion" langsung melihat gambar jadi.
- */
-function KnowledgeMap() {
-  const kn = 'stroke-kn-300';
-  const ex = 'stroke-ex-300';
-  const op = 'stroke-op-300';
-  const mix = 'stroke-slate-500';
-  const lines: Array<[string, string]> = [
-    // Pengetahuan
-    ['M180 200 L70 110', kn], ['M180 200 L110 330', kn], ['M180 200 L250 90', kn],
-    // Pengalaman
-    ['M450 150 L570 80', ex], ['M450 150 L580 260', ex], ['M450 150 L380 40', ex],
-    // Opini
-    ['M330 400 L180 480', op], ['M330 400 L480 470', op], ['M330 400 L560 380', op],
-    // Hubungan antarkategori lewat satu gagasan di tengah
-    ['M180 200 L330 270', 'stroke-sun-400'], ['M450 150 L330 270', 'stroke-sun-400'], ['M330 400 L330 270', 'stroke-sun-400'],
-    ['M180 200 L450 150', mix], ['M180 200 L330 400', mix],
-    ['M580 260 L560 380', mix], ['M250 90 L380 40', mix],
-  ];
-  const small: Array<[number, number, number, string]> = [
-    [70, 110, 6, 'fill-kn-300'], [110, 330, 7, 'fill-kn-300'], [250, 90, 7, 'fill-kn-300'],
-    [570, 80, 7, 'fill-ex-300'], [580, 260, 8, 'fill-ex-300'], [380, 40, 6, 'fill-ex-300'],
-    [180, 480, 7, 'fill-op-300'], [480, 470, 8, 'fill-op-300'], [560, 380, 6, 'fill-op-300'],
-    [330, 270, 10, 'fill-sun-400'],
-  ];
-  const hubs: Array<[number, number, string, string, number]> = [
-    [180, 200, 'Pengetahuan', 'fill-kn-300', 38],
-    [450, 150, 'Pengalaman', 'fill-ex-300', 38],
-    [330, 400, 'Opini', 'fill-op-300', 38],
-  ];
-
+function CategoryCards() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 640 540" className="h-auto w-full" fill="none">
-      {lines.map(([d, color], i) => (
-        <path
-          key={d}
-          d={d}
-          pathLength={1}
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          className={`node-line ${color}`}
-          style={{ animationDelay: `${i * 0.07}s` }}
-        />
-      ))}
-      {small.map(([cx, cy, r, fill]) => (
-        <g key={`${cx}-${cy}`}>
-          <circle cx={cx} cy={cy} r={r * 2.4} className={`${fill} opacity-10`} />
-          <circle cx={cx} cy={cy} r={r} className={fill} />
-        </g>
-      ))}
-      {hubs.map(([cx, cy, label, fill, dy]) => (
-        <g key={label}>
-          <circle cx={cx} cy={cy} r={34} className={`${fill} opacity-10`} />
-          <circle cx={cx} cy={cy} r={14} className={fill} />
-          <text
-            x={cx}
-            y={cy + dy}
-            textAnchor="middle"
-            className="fill-white font-heading"
-            style={{ fontSize: 17, fontWeight: 700, paintOrder: 'stroke', stroke: '#0E1128', strokeWidth: 5 }}
+    <div className="flex flex-col gap-3 xl:relative xl:block xl:h-[400px]">
+      {CARDS.map((c) => {
+        const Icon = c.icon;
+        return (
+          <Link
+            key={c.slug}
+            href={`/category/${c.slug}`}
+            className={`group relative flex items-center gap-4 overflow-hidden rounded-3xl p-5 shadow-xl shadow-black/25 ring-1 transition-transform duration-300 hover:-translate-y-1.5 xl:absolute xl:h-[150px] xl:w-[calc(100%-7rem)] xl:p-6 ${c.surface} ${c.pos}`}
           >
-            {label}
-          </text>
-        </g>
-      ))}
-    </svg>
+            <Icon
+              aria-hidden="true"
+              className={`pointer-events-none absolute -bottom-6 right-6 h-32 w-32 opacity-[0.07] ${c.mark}`}
+            />
+            <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${c.tile}`}>
+              <Icon className="h-7 w-7" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-heading text-xl font-bold text-slate-900">{c.name}</span>
+              <span className="mt-1 block text-sm leading-snug text-slate-600">{c.desc}</span>
+            </span>
+            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors ${c.arrow}`}>
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </Link>
+        );
+      })}
+    </div>
   );
 }
 
@@ -136,33 +110,26 @@ export default function HeroSection({ mainArticle, secondaryArticles }: HeroSect
               Gratis dibaca, ditulis agar mudah dipahami.
             </p>
 
-            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {ENTRIES.map((e) => {
-                const Icon = e.icon;
-                return (
-                  <Link
-                    key={e.slug}
-                    href={`/category/${e.slug}`}
-                    className="group rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:ring-white/25"
-                  >
-                    <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${e.tile}`}>
-                      <Icon className="h-[18px] w-[18px]" />
-                    </span>
-                    <span className="mt-3 block font-heading text-base font-bold text-white">
-                      {e.name}
-                    </span>
-                    <span className="mt-0.5 block text-xs leading-snug text-slate-300">
-                      {e.desc}
-                    </span>
-                  </Link>
-                );
-              })}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="/articles"
+                className="inline-flex items-center gap-2 rounded-xl bg-sun-400 px-6 py-3 text-base font-bold text-slate-950 transition-colors hover:bg-sun-300"
+              >
+                Mulai membaca
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold text-white ring-1 ring-white/25 transition-colors hover:bg-white/10"
+              >
+                Kenali ZETARAZ
+              </Link>
             </div>
           </div>
 
-          {/* Peta pengetahuan */}
-          <div className="hidden md:block lg:col-span-5">
-            <KnowledgeMap />
+          {/* Kartu kategori */}
+          <div className="lg:col-span-5">
+            <CategoryCards />
           </div>
         </div>
 

@@ -76,28 +76,6 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Peta pengetahuan di beranda: garis digambar satu kali saat dibuka    */
-/* ------------------------------------------------------------------ */
-.node-line {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: node-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes node-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .node-line {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-}
-
-/* ------------------------------------------------------------------ */
 /* Ruang baca                                                          */
 /* Panel artikel memakai variabel warna supaya tema Terang / Sepia /   */
 /* Gelap cukup mengganti variabel, tanpa menyentuh markup artikel.     */
@@ -120,7 +98,7 @@
   color: var(--rp-fg);
   border-radius: 1.5rem;
   padding: 1.75rem 1.25rem;
-  box-shadow: 0 0 0 1px var(--rp-rule), 0 18px 40px -24px rgba(23, 26, 58, 0.25);
+  box-shadow: 0 0 0 1px var(--rp-rule), 0 1px 2px rgba(23, 26, 58, 0.06), 0 28px 56px -28px rgba(23, 26, 58, 0.35);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 

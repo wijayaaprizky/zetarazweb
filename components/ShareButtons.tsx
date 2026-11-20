@@ -26,24 +26,24 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-1 flex items-center gap-1">
-        <Share2 className="w-3.5 h-3.5" /> Bagikan:
+      <span className="text-sm font-medium text-slate-300 mr-1 flex items-center gap-1.5">
+        <Share2 className="w-4 h-4" /> Bagikan
       </span>
 
       {/* Copy link */}
       <button
         onClick={handleCopy}
-        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors relative"
+        className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white ring-1 ring-inset ring-white/10 transition-colors relative"
         title="Salin tautan"
         aria-label="Salin tautan artikel ke papan klip"
       >
         {copied ? (
-          <Check className="w-4 h-4 text-emerald-600" />
+          <Check className="w-4 h-4 text-ex-300" />
         ) : (
           <LinkIcon className="w-4 h-4" />
         )}
         {copied && (
-          <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-1.5 py-0.5 rounded shadow">
+          <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-xs font-medium px-2 py-1 rounded-md shadow-lg whitespace-nowrap">
             Tersalin!
           </span>
         )}
@@ -54,11 +54,11 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+        className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white ring-1 ring-inset ring-white/10 transition-colors"
         title="Bagikan ke X"
         aria-label="Bagikan artikel ke X (Twitter)"
       >
-        <Twitter className="w-4 h-4 text-slate-800" />
+        <Twitter className="w-4 h-4" />
       </a>
 
       {/* LinkedIn */}
@@ -66,11 +66,11 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+        className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white ring-1 ring-inset ring-white/10 transition-colors"
         title="Bagikan ke LinkedIn"
         aria-label="Bagikan artikel ke LinkedIn"
       >
-        <Linkedin className="w-4 h-4 text-blue-700" />
+        <Linkedin className="w-4 h-4" />
       </a>
 
       {/* WhatsApp */}
@@ -78,7 +78,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
         href={`https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition-colors text-xs font-bold"
+        className="p-2 rounded-lg bg-ex-500/20 hover:bg-ex-500/30 text-ex-200 ring-1 ring-inset ring-ex-400/30 transition-colors text-xs font-bold"
         title="Bagikan ke WhatsApp"
         aria-label="Bagikan artikel ke WhatsApp"
       >

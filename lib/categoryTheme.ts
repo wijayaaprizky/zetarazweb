@@ -25,6 +25,8 @@ export interface CategoryTheme {
   tabActive: string;
   /** Garis atas kartu. */
   borderTop: string;
+  /** Warna cahaya lembut di latar gelap (rgba). */
+  glow: string;
 }
 
 const THEMES: Record<string, CategoryTheme> = {
@@ -38,6 +40,7 @@ const THEMES: Record<string, CategoryTheme> = {
     numeral: 'text-kn-300 group-hover:text-kn-600',
     tabActive: 'bg-kn-600 text-white ring-kn-600',
     borderTop: 'border-t-kn-500',
+    glow: 'rgba(75,91,247,0.40)',
   },
   pengalaman: {
     chip: 'bg-ex-50 text-ex-700 ring-1 ring-inset ring-ex-200',
@@ -49,6 +52,7 @@ const THEMES: Record<string, CategoryTheme> = {
     numeral: 'text-ex-300 group-hover:text-ex-600',
     tabActive: 'bg-ex-600 text-white ring-ex-600',
     borderTop: 'border-t-ex-500',
+    glow: 'rgba(18,168,140,0.34)',
   },
   opini: {
     chip: 'bg-op-50 text-op-700 ring-1 ring-inset ring-op-200',
@@ -60,6 +64,7 @@ const THEMES: Record<string, CategoryTheme> = {
     numeral: 'text-op-300 group-hover:text-op-600',
     tabActive: 'bg-op-600 text-white ring-op-600',
     borderTop: 'border-t-op-500',
+    glow: 'rgba(242,58,103,0.30)',
   },
 };
 
@@ -73,6 +78,7 @@ const FALLBACK: CategoryTheme = {
   numeral: 'text-slate-300 group-hover:text-slate-600',
   tabActive: 'bg-slate-900 text-white ring-slate-900',
   borderTop: 'border-t-slate-400',
+  glow: 'rgba(125,132,171,0.28)',
 };
 
 export function getCategoryTheme(slug?: string | null): CategoryTheme {

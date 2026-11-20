@@ -219,136 +219,139 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       />
 
       <article className="min-h-screen bg-slate-50">
-        {/* Breadcrumb Bar */}
-        <div className="bg-white border-b border-slate-200 py-3">
+        {/* Bagian atas: gelap dengan cahaya warna kategori. Gambar utama menimpa batas
+            gelap-terang di bawahnya supaya halaman terasa berlapis, tidak datar. */}
+        <div
+          className="relative overflow-hidden bg-slate-950 pb-28 sm:pb-36"
+          style={{
+            backgroundImage: `radial-gradient(48rem 24rem at 90% -20%, ${articleTheme.glow}, transparent 62%), radial-gradient(34rem 18rem at -5% 110%, rgba(255,255,255,0.06), transparent 60%)`,
+          }}
+        >
+          <div className={`h-1.5 ${articleTheme.bar}`} aria-hidden="true" />
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center space-x-2 text-xs text-slate-500 overflow-x-auto whitespace-nowrap">
-              <Link href="/" className="hover:text-kn-700">
+            {/* Breadcrumb */}
+            <nav
+              aria-label="Jejak halaman"
+              className="flex items-center gap-2 py-5 text-sm text-slate-300 overflow-x-auto whitespace-nowrap"
+            >
+              <Link href="/" className="hover:text-white">
                 Beranda
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-              <Link
-                href={`/category/${article.category.slug}`}
-                className="hover:text-kn-700 font-medium text-slate-700"
-              >
+              <Link href={`/category/${article.category.slug}`} className="hover:text-white font-medium">
                 {article.category.name}
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-slate-500 truncate max-w-xs">{article.title}</span>
+              <span className="text-slate-400 truncate max-w-xs">{article.title}</span>
             </nav>
+
+            <header className="pt-6 lg:grid lg:grid-cols-12 lg:gap-10">
+              <div className="lg:col-span-8">
+                {/* Kategori dan format */}
+                <div className="flex flex-wrap items-center gap-2 mb-5">
+                  <Link
+                    href={`/category/${article.category.slug}`}
+                    className={`px-3 py-1 text-xs font-semibold rounded-full transition-opacity hover:opacity-80 ${articleTheme.chip}`}
+                  >
+                    {article.category.name}
+                  </Link>
+                  <span className="px-2.5 py-1 bg-white/10 text-slate-200 text-xs font-semibold rounded-full ring-1 ring-inset ring-white/15">
+                    {contentTypeLabel(article.contentType)}
+                  </span>
+                </div>
+
+                {/* Judul */}
+                <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-[3.25rem] text-white leading-[1.08] tracking-tight mb-5">
+                  {article.title}
+                </h1>
+
+                {/* Subjudul */}
+                {article.subtitle && (
+                  <p className="font-read text-xl sm:text-[1.375rem] text-slate-300 leading-relaxed mb-8">
+                    {article.subtitle}
+                  </p>
+                )}
+
+                {/* Penulis dan keterangan terbit */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-white/10">
+                  <div className="flex items-center gap-3">
+                    {article.author.avatar ? (
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20">
+                        <Image
+                          src={article.author.avatar}
+                          alt={article.author.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-slate-300">
+                        <User className="w-6 h-6" />
+                      </div>
+                    )}
+                    <div>
+                      <div className="font-heading font-bold text-sm text-white">
+                        {article.author.name}
+                      </div>
+                      <div className="text-xs text-slate-300">
+                        {article.author.bio || 'Penulis di ZETARAZ Knowledge'}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-300">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                      {formatDateIndonesian(article.publishedAt)}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-slate-400" />
+                      {readTimeMinutes} menit baca
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Eye className="w-3.5 h-3.5 text-slate-400" />
+                      {article.viewCount.toLocaleString('id-ID')} pembaca
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <ShareButtons title={article.title} url={articleUrl} />
+                </div>
+              </div>
+            </header>
           </div>
         </div>
 
-        {/* Article Header */}
-        <div className={`h-1.5 ${articleTheme.bar}`} aria-hidden="true" />
-        <header className="pt-10 pb-10 bg-white border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="lg:grid lg:grid-cols-12 lg:gap-10">
+        {/* Gambar utama: naik menimpa bagian gelap di atasnya */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 sm:-mt-28">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-8">
-            {/* Category badge + content type */}
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Link
-                href={`/category/${article.category.slug}`}
-                className={`px-3 py-1 text-xs font-semibold rounded-full transition-opacity hover:opacity-80 ${articleTheme.chip}`}
-              >
-                {article.category.name}
-              </Link>
-              <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-full">
-                {contentTypeLabel(article.contentType)}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl text-slate-950 leading-[1.08] tracking-tight mb-5">
-              {article.title}
-            </h1>
-
-            {/* Subtitle / Lead Excerpt */}
-            {article.subtitle && (
-              <p className="font-read text-xl sm:text-[1.375rem] text-slate-600 leading-relaxed mb-6">
-                {article.subtitle}
-              </p>
-            )}
-
-            {/* Author and Metadata Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 border-y border-slate-200">
-              <div className="flex items-center gap-3">
-                {article.author.avatar ? (
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-slate-200">
-                    <Image
-                      src={article.author.avatar}
-                      alt={article.author.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600">
-                    <User className="w-6 h-6" />
-                  </div>
-                )}
-                <div>
-                  <div className="font-heading font-bold text-sm text-slate-900">
-                    {article.author.name}
-                  </div>
-                  <div className="text-xs text-slate-500">
-                    {article.author.bio || 'Penulis di ZETARAZ Knowledge'}
-                  </div>
+              <figure>
+                <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-slate-900 shadow-[0_30px_60px_-20px_rgba(14,17,40,0.55)] ring-1 ring-white/10">
+                  <Image
+                    src={article.featuredImage}
+                    alt={article.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1200px) 100vw, 1024px"
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
-              </div>
-
-              {/* Publication details */}
-              <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                  {formatDateIndonesian(article.publishedAt)}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  {readTimeMinutes} menit baca
-                </span>
-                <span className="flex items-center gap-1">
-                  <Eye className="w-3.5 h-3.5 text-slate-400" />
-                  {article.viewCount.toLocaleString('id-ID')} pembaca
-                </span>
-              </div>
+                {article.imageCaption && (
+                  <figcaption className="text-center text-sm text-slate-500 mt-3">
+                    {article.imageCaption}
+                  </figcaption>
+                )}
+              </figure>
             </div>
-
-            {/* Share Buttons */}
-            <div className="mt-4 flex justify-end">
-              <ShareButtons title={article.title} url={articleUrl} />
-            </div>
-            </div>
-           </div>
           </div>
-        </header>
-
-        {/* Featured Image */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
-         <div className="lg:grid lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
-          <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-slate-900 ring-1 ring-slate-200">
-            <Image
-              src={article.featuredImage}
-              alt={article.title}
-              fill
-              priority
-              sizes="(max-width: 1200px) 100vw, 1024px"
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-          {article.imageCaption && (
-            <p className="text-center text-xs text-slate-500 mt-2.5 italic">
-              {article.imageCaption}
-            </p>
-          )}
-          </div>
-         </div>
         </div>
 
         {/* Main Content Area + Table of Contents Sidebar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Left Main Article Column (8 cols) */}
             <div className="lg:col-span-8">
